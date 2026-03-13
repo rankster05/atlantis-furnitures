@@ -273,11 +273,11 @@ const Testimonials: React.FC = () => {
                        </div>
                        
                        <h3 className="font-display text-3xl sm:text-4xl md:text-5xl text-white mb-3 md:mb-4 leading-tight tracking-tight">
-                         București & Ilfov
+                         Acoperire Nationala
                        </h3>
                        
                        <p className="text-gray-400 font-light text-sm sm:text-base max-w-md leading-relaxed">
-                         Oferim servicii complete de măsurători, proiectare și montaj în toată zona București-Ilfov și județul Argeș.
+                         Oferim servicii complete de masuratori, proiectare si montaj la nivel national pentru proiecte premium.
                        </p>
                     </div>
 

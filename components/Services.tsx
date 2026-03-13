@@ -116,7 +116,7 @@ const Services: React.FC = () => {
       <SEO 
         title="Servicii Proiectare si Montaj Mobila | Atlantis Furnitures" 
         description="De la masuratori si proiectare 3D gratuita pana la montaj profesionist. Afla cum realizam mobilierul tau ideal din MDF vopsit si materiale premium."
-        keywords="proiectare 3d mobila gratuita, masuratori mobila la domiciliu, montaj mobilier inclus bucuresti, proces vopsire mdf, consultanta design mobilier, feronerie blum bucuresti, servicii proiectare bucatarii, producator mobila cu montaj inclus"
+        keywords="proiectare 3d mobila gratuita, masuratori mobila la domiciliu, montaj mobilier inclus, proces vopsire mdf, consultanta design mobilier, feronerie blum premium, servicii proiectare bucatarii, producator mobila cu montaj inclus"
       />
 
       {/* Background Ambient Glows */}

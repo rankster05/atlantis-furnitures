@@ -45,16 +45,37 @@ const Hero: React.FC<HeroProps> = ({ startAnimation = true }) => {
 
       // Parallax Effect - Subtle depth
       if (imgRef.current) {
-        gsap.to(imgRef.current, {
-          yPercent: 10, // Moves image down slightly as we scroll down
-          scale: 1.05, // Subtle scale up for drama
-          ease: 'none',
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: 'top top',
-            end: 'bottom top',
-            scrub: true
-          }
+        const mm = gsap.matchMedia();
+        
+        // Desktop Parallax
+        mm.add("(min-width: 768px)", () => {
+          gsap.to(imgRef.current, {
+            yPercent: 10, // Moves image down slightly as we scroll down
+            scale: 1.05, // Subtle scale up for drama
+            ease: 'none',
+            force3D: true,
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: 'top top',
+              end: 'bottom top',
+              scrub: true
+            }
+          });
+        });
+
+        // Mobile Parallax - Simplified to prevent stuttering
+        mm.add("(max-width: 767px)", () => {
+          gsap.to(imgRef.current, {
+            scale: 1.05, // Only scale, no yPercent translation to keep it smooth
+            ease: 'none',
+            force3D: true,
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: 'top top',
+              end: 'bottom top',
+              scrub: true
+            }
+          });
         });
       }
     }, containerRef);
@@ -68,7 +89,7 @@ const Hero: React.FC<HeroProps> = ({ startAnimation = true }) => {
       <img 
         ref={imgRef}
         src="/projects/AP AIR-V/amenajare-open-space-apartament-modern-victoriei-atlantis.webp" 
-        className="absolute w-[120vw] max-w-none h-[130vh] object-cover object-center brightness-[0.65]" 
+        className="absolute w-[120vw] max-w-none h-[130vh] object-cover object-center brightness-[0.65] will-change-transform" 
         style={{ left: '-10vw', top: '-15vh' }}
         alt="Modern Kitchen Hero"
         fetchpriority="high"
@@ -96,7 +117,7 @@ const Hero: React.FC<HeroProps> = ({ startAnimation = true }) => {
               </span>
               <span className="hidden md:inline text-white/40 mx-2 text-xl font-thin">|</span>
               <span className="block md:inline font-body text-sm md:text-base font-normal tracking-[0.15em] uppercase opacity-90 drop-shadow-md mt-1 md:mt-0">
-                Mobila la Comanda &bull; Bucuresti & Ilfov
+                Mobila la Comanda &bull; Calitate Premium
               </span>
             </h1>
           </div>

@@ -116,7 +116,7 @@ const Footer: React.FC = () => {
             <div className="flex flex-col items-center md:items-start">
               <p className="uppercase tracking-widest text-sm text-gray-400 font-medium mb-3">Atelier</p>
               <p className="font-normal text-gray-200 text-base md:text-lg">Aleea Argesului nr. 70</p>
-              <p className="font-normal text-gray-200 text-base md:text-lg">Budeasa Mare, Arges</p>
+              <p className="font-normal text-gray-200 text-base md:text-lg">Budeasa Mare, Romania</p>
             </div>
 
             <div className="flex flex-col items-center md:items-start w-full max-w-xs md:max-w-none">

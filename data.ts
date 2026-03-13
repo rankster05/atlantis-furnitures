@@ -7,7 +7,7 @@ export const portfolioItems: PortfolioItem[] = [
     title: "AP SO", 
     category: "Penthouse", 
     year: "2023", 
-    location: "Vasile Lascar, Bucuresti",
+    location: "Vasile Lascar",
     services: "Implementare proiect arhitect, Executie, Montaj",
     description: "Un proiect de tip penthouse definit prin rafinament si materiale premium unde am transpus viziunea arhitectului in detalii tehnice impecabile. Am imbinat fronturile din mdf vopsit cu insertii de ceramica si accente calde din lemn pentru a crea un ambient unitar si sofisticat. Fiecare piesa de mobilier, de la zona de dining pana la dormitoarele personalizate pentru copii, a fost executata cu atentie sporita la finisaje pentru a oferi un stil de viata modern si functional.",
     mainImage: "/projects/ap-so/penthouse-vasile-lascar-mobilier-living-mdf-vopsit.webp",
@@ -21,9 +21,9 @@ export const portfolioItems: PortfolioItem[] = [
       ]
     ],
     tags: ["MDF VOPSIT", "CERAMICA", "LEMN", "PAL", "PENTHOUSE", "PREMIUM"],
-    seoTitle: "Amenajare Penthouse Vasile Lascar | Mobilier la Comanda Bucuresti",
-    seoDescription: "Proiect penthouse Vasile Lascar. Mobilier la comanda din mdf vopsit si lemn. Design interior premium pentru living si dormitor in Bucuresti.",
-    seoKeywords: "mobilier la comanda bucuresti, mobila mdf vopsit, amenajare penthouse, mobila premium bucuresti, design interior bucuresti"
+    seoTitle: "Amenajare Penthouse Vasile Lascar | Mobilier la Comanda Premium",
+    seoDescription: "Proiect penthouse Vasile Lascar. Mobilier la comanda din mdf vopsit si lemn. Design interior premium pentru living si dormitor.",
+    seoKeywords: "mobilier la comanda premium, mobila mdf vopsit, amenajare penthouse, mobila lux, design interior personalizat"
   },
   { 
     id: 2, 
@@ -31,7 +31,7 @@ export const portfolioItems: PortfolioItem[] = [
     title: "AP COSMO", 
     category: "Apartament", 
     year: "2024", 
-    location: "Cosmopolis, Ilfov",
+    location: "Cosmopolis",
     services: "Implementare proiect arhitect, Executie, Montaj",
     description: "Un proiect modern situat in complexul Cosmopolis unde am pus accent pe functionalitate si estetica minimalista. Am integrat solutii de depozitare inteligente realizate din mdf vopsit si pal, completate de texturi calde de lemn si finisaje din ceramica. Rezultatul este un spatiu echilibrat, lucrat cu precizie dupa planurile arhitectului, care optimizeaza fiecare metru patrat al apartamentului prin linii curate si volume bine definite.",
     mainImage: "/projects/ap-cosmo/mobilier-dormitor-mat-mdf-vopsit-lemn-cosmopolis.webp",
@@ -47,9 +47,9 @@ export const portfolioItems: PortfolioItem[] = [
       ]
     ],
     tags: ["MDF VOPSIT", "CERAMICA", "LEMN", "PAL", "APARTAMENT", "COSMOPOLIS"],
-    seoTitle: "Mobilier Apartament Cosmopolis | Bucatarii la Comanda Ilfov",
-    seoDescription: "Amenajare apartament Cosmopolis Ilfov. Bucatarie open space din mdf vopsit si mobilier baie suspendat. Producator mobila la comanda.",
-    seoKeywords: "bucatarii la comanda ilfov, mobila la comanda pret, producator mobila mdf vopsit, mobila apartament cosmopolis, amenajari interioare ilfov"
+    seoTitle: "Mobilier Apartament Cosmopolis | Bucatarii la Comanda Premium",
+    seoDescription: "Amenajare apartament Cosmopolis. Bucatarie open space din mdf vopsit si mobilier baie suspendat. Producator mobila la comanda.",
+    seoKeywords: "bucatarii la comanda premium, mobila la comanda pret, producator mobila mdf vopsit, mobila apartament cosmopolis, amenajari interioare lux"
   },
   { 
     id: 3, 
@@ -57,7 +57,7 @@ export const portfolioItems: PortfolioItem[] = [
     title: "CSM", 
     category: "Medical", 
     year: "2024", 
-    location: "Pitesti, Arges",
+    location: "Pitesti",
     services: "Implementare proiect arhitect, Executie, Montaj",
     description: "Proiectul CSM din Pitesti a presupus renovarea completa a unei sectii de pediatrie, unde am pus accent pe un design ludic si materiale cu standarde inalte de igiena. Am utilizat corian pentru suprafetele de lucru si mdf vopsit pentru elemente decorative complexe, cum este receptia sub forma de copac. Implementarea a urmarit riguros planurile arhitectului, rezultand un spatiu medical sigur si primitor, dotat cu solutii masive de depozitare si cabinete optimizate pentru nevoile micilor pacienti.",
     mainImage: "/projects/CSM/receptie-pediatrie-corian-mdf-vopsit-csm-pitesti.webp",
@@ -68,9 +68,9 @@ export const portfolioItems: PortfolioItem[] = [
       "/projects/CSM/mobilier-depozitare-medicala-dulapuri-pal-alb-pitesti.webp"
     ],
     tags: ["CORIAN", "MDF VOPSIT", "PAL", "PEDIATRIE", "CSM", "PITESTI", "MEDICAL"],
-    seoTitle: "Mobilier Medical CSM Pitesti | Mobilier la Comanda Arges",
+    seoTitle: "Mobilier Medical CSM Pitesti | Mobilier la Comanda Personalizat",
     seoDescription: "Proiect clinica pediatrie CSM Pitesti. Receptie din corian si mobilier medical din mdf vopsit. Executie mobila la comanda pentru spatii comerciale.",
-    seoKeywords: "mobilier medical la comanda, receptie corian, mobila mdf vopsit pitesti, mobila la comanda arges, producator mobila premium"
+    seoKeywords: "mobilier medical la comanda, receptie corian, mobila mdf vopsit, mobila la comanda personalizata, producator mobila premium"
   },
   { 
     id: 4, 
@@ -78,7 +78,7 @@ export const portfolioItems: PortfolioItem[] = [
     title: "S House", 
     category: "Living & Dormitor", 
     year: "2024", 
-    location: "Pipera, Ilfov",
+    location: "Pipera",
     services: "Implementare proiect arhitect, Executie, Montaj",
     description: "Proiectul S House din Pipera reprezinta o fuziune intre eleganta naturala a mdf-ului furniruit si liniile moderne ale designului contemporan. Am implementat viziunea arhitectului intr-un spatiu definit prin texturi calde si volume minimaliste, optimizand zona de zi si dormitorul pentru un confort absolut. Utilizarea materialelor premium si atentia la imbinari asigura o estetica atemporala, unde fiecare piesa de mobilier completeaza perfect lumina naturala a locuintei.",
     mainImage: "/projects/S House/s-house-living-bucatarie-open-space-mdf-furnir-pipera.webp",
@@ -89,9 +89,9 @@ export const portfolioItems: PortfolioItem[] = [
       "/projects/S House/mobilier-living-minimalist-tv-mdf-furnir-pal-pipera.webp"
     ],
     tags: ["MDF FURNIR", "PAL", "PIPERA", "S HOUSE", "LIVING", "DORMITOR", "MODERN"],
-    seoTitle: "Mobilier Living si Dormitor Pipera | Mobila Premium Ilfov",
-    seoDescription: "Proiect S House Pipera. Mobilier living modern din mdf furniruit si pal. Amenajare dormitor la comanda cu panouri riflate in Ilfov.",
-    seoKeywords: "mobila living moderna mdf, dressing la comanda ilfov, mobilier dormitor personalizat, mobila premium pipera, producator mobila ilfov"
+    seoTitle: "Mobilier Living si Dormitor Pipera | Mobila Premium la Comanda",
+    seoDescription: "Proiect S House Pipera. Mobilier living modern din mdf furniruit si pal. Amenajare dormitor la comanda cu panouri riflate.",
+    seoKeywords: "mobila living moderna mdf, dressing la comanda premium, mobilier dormitor personalizat, mobila lux pipera, producator mobila romania"
   },
   { 
     id: 5, 
@@ -99,7 +99,7 @@ export const portfolioItems: PortfolioItem[] = [
     title: "AP AIR-U", 
     category: "Apartament", 
     year: "2024", 
-    location: "Unirii, Bucuresti",
+    location: "Unirii",
     services: "Proiectare, Executie, Montaj",
     description: "Proiectul AP AIR-U din zona Unirii este un exemplu de amenajare integrata unde am mizat pe o atmosfera calda si primitoare. Am combinat eleganta mdf-ului vopsit in nuante de albastru prafuit cu texturi naturale precum ratanul si lemnul, creand un contrast vizual rafinat. Proiectul a presupus atat partea de proiectare, cat si implementarea completa a mobilierului, rezultand un spatiu aerisit, plin de personalitate si detalii decorative atent alese pentru un stil de viata urban si relaxat.",
     mainImage: "/projects/AP AIR-U/design-interior-apartament-modern-unirii-atlantis-furnitures.webp",
@@ -112,9 +112,9 @@ export const portfolioItems: PortfolioItem[] = [
       "/projects/AP AIR-U/pat-personalizat-dormitor-tineret-ratan-unirii-bucuresti.webp"
     ],
     tags: ["MDF VOPSIT", "LEMN", "RATAN", "TEXTIL", "APARTAMENT", "UNIRII", "DESIGN INTERIOR"],
-    seoTitle: "Amenajare Apartament Unirii | Bucatarie MDF Vopsit Bucuresti",
+    seoTitle: "Amenajare Apartament Unirii | Bucatarie MDF Vopsit Premium",
     seoDescription: "Proiect AP AIR-U zona Unirii. Bucatarie la comanda din mdf vopsit mat albastru si mobilier dormitor cu ratan. Design interior si executie mobila.",
-    seoKeywords: "bucatarie mdf vopsit mat pret, mobila la comanda bucuresti, bucatarii la comanda bucuresti, amenajare apartament unirii, mobila premium bucuresti"
+    seoKeywords: "bucatarie mdf vopsit mat pret, mobila la comanda premium, bucatarii la comanda lux, amenajare apartament unirii, mobila personalizata"
   },
   { 
     id: 6, 
@@ -122,7 +122,7 @@ export const portfolioItems: PortfolioItem[] = [
     title: "AP AIR-V", 
     category: "Apartament", 
     year: "2024", 
-    location: "Victoriei, Bucuresti",
+    location: "Victoriei",
     services: "Implementare proiect mobilier, Executie, Montaj",
     description: "Proiectul AP AIR-V din zona Victoriei este definit prin eleganta si luminozitate. Am mobilat complet acest apartament utilizand mdf vopsit si oglinzi pentru a crea un efect de spatialitate si un design contemporan. Fiecare piesa a fost executata cu atentie la detalii, oferind solutii de depozitare inteligente si finisaje premium care transforma locuinta intr-un spatiu rafinat si confortabil. Implementarea a urmarit un echilibru perfect intre estetica moderna si functionalitatea necesara unei vieti urbane.",
     mainImage: "/projects/AP AIR-V/mobilier-living-modern-mdf-vopsit-albastru-victoriei-bucuresti.webp",
@@ -138,9 +138,9 @@ export const portfolioItems: PortfolioItem[] = [
       "/projects/AP AIR-V/_RGC6091-HDR.webp"
     ],
     tags: ["MDF VOPSIT", "PAL", "OGLINZI", "APARTAMENT", "VICTORIEI", "PREMIUM"],
-    seoTitle: "Mobilier Apartament Victoriei | Dressing la Comanda Bucuresti",
-    seoDescription: "Proiect AP AIR-V Victoriei. Mobilier living modern si dressing la comanda cu oglinzi. Executie mobila premium din mdf vopsit in Bucuresti.",
-    seoKeywords: "dressing la comanda bucuresti, mobila living moderna mdf, mobilier baie personalizat mdf, mobila la comanda bucuresti, producator mobila premium"
+    seoTitle: "Mobilier Apartament Victoriei | Dressing la Comanda Premium",
+    seoDescription: "Proiect AP AIR-V Victoriei. Mobilier living modern si dressing la comanda cu oglinzi. Executie mobila premium din mdf vopsit.",
+    seoKeywords: "dressing la comanda premium, mobila living moderna mdf, mobilier baie personalizat mdf, mobila la comanda lux, producator mobila premium"
   },
   { 
     id: 7, 
@@ -148,7 +148,7 @@ export const portfolioItems: PortfolioItem[] = [
     title: "TEI HOUSE", 
     category: "Casa", 
     year: "2024", 
-    location: "Lacul Tei, Bucuresti",
+    location: "Lacul Tei",
     services: "Implementare proiect mobilier, Executie, Montaj",
     description: "Proiectul Tei House reprezinta o amenajare completa pentru o resedinta eleganta unde am imbinat functionalitatea cu un design contemporan rafinat. Am utilizat mdf furniruit pentru texturi naturale si mdf vopsit pentru suprafete curate, completate de oglinzi care amplifica spatialitatea. Implementarea a cuprins solutii complexe, de la biblioteca monumentala si zona de dining cu accente de lux, pana la dormitoarele tematice pentru copii si un dressing walk-in generos cu iluminat integrat. Fiecare piesa reflecta atentia noastra pentru detalii si calitatea executiei Atlantis Furnitures.",
     mainImage: "/projects/TEI HOUSE/amenajare-open-space-dining-living-casa-tei-house.webp",
@@ -174,9 +174,9 @@ export const portfolioItems: PortfolioItem[] = [
       ]
     ],
     tags: ["MDF VOPSIT", "MDF FURNIR", "OGLINZI", "PAL", "CASA", "LACUL TEI", "PREMIUM"],
-    seoTitle: "Mobilier Casa Lacul Tei | Dressing Walk-in la Comanda Bucuresti",
-    seoDescription: "Proiect Tei House Bucuresti. Amenajare casa cu biblioteca minimalista, dressing walk-in si mobilier dormitor copii. Mobila din mdf vopsit si furniruit.",
-    seoKeywords: "dressing cu usi culisante la comanda, mobila premium bucuresti, mobilier mdf frezat clasic, mobila la comanda bucuresti, amenajari interioare mobilier personalizat"
+    seoTitle: "Mobilier Casa Lacul Tei | Dressing Walk-in la Comanda Premium",
+    seoDescription: "Proiect Tei House. Amenajare casa cu biblioteca minimalista, dressing walk-in si mobilier dormitor copii. Mobila din mdf vopsit si furniruit.",
+    seoKeywords: "dressing cu usi culisante la comanda, mobila premium lux, mobilier mdf frezat clasic, mobila la comanda personalizata, amenajari interioare mobilier"
   },
   { 
     id: 8, 
@@ -184,7 +184,7 @@ export const portfolioItems: PortfolioItem[] = [
     title: "STUDIO AIR-V", 
     category: "Studio", 
     year: "2024", 
-    location: "Victoriei, Bucuresti",
+    location: "Victoriei",
     services: "Implementare proiect mobilier, Executie, Montaj",
     description: "Proiectul AP AIR-V2 din zona Victoriei reprezinta o solutie inteligenta de amenajare pentru un studio modern, unde am maximizat eficienta spatiului fara a compromite estetica. Am utilizat o combinatie de mdf vopsit si mdf furniruit pentru a crea texturi calde si suprafete rezistente. Implementarea a urmarit transformarea spatiului intr-un mediu multifunctional, incluzand o zona de dormit incastrata, un spatiu de lucru compact si o chicineta minimalista perfect integrata in designul general.",
     mainImage: "/projects/STUDIO AIR-V/consola-tv-suspendata-lemn-si-baghete-decorative-perete.webp",
@@ -200,9 +200,9 @@ export const portfolioItems: PortfolioItem[] = [
       ]
     ],
     tags: ["MDF VOPSIT", "MDF FURNIR", "OGLINZI", "PAL", "STUDIO", "VICTORIEI", "AMENAJARE SMART"],
-    seoTitle: "Amenajare Studio Victoriei | Mobila la Comanda Bucuresti",
+    seoTitle: "Amenajare Studio Victoriei | Mobila la Comanda Premium",
     seoDescription: "Proiect Studio AIR-V Victoriei. Chicineta minimalista si mobilier inteligent pentru spatii mici. Executie mobila din mdf vopsit si furniruit.",
-    seoKeywords: "mobila la comanda pret, bucatarii la comanda bucuresti, detalii executie mobila premium, amenajari interioare mobilier personalizat, producator mobila mdf vopsit"
+    seoKeywords: "mobila la comanda pret, bucatarii la comanda lux, detalii executie mobila premium, amenajari interioare mobilier personalizat, producator mobila mdf vopsit"
   },
   { 
     id: 9, 
@@ -210,7 +210,7 @@ export const portfolioItems: PortfolioItem[] = [
     title: "OFFICE", 
     category: "Office", 
     year: "2024", 
-    location: "Victoriei, Bucuresti",
+    location: "Victoriei",
     services: "Implementare proiect mobilier, Executie, Montaj",
     description: "Proiectul Office din zona Victoriei reprezinta o transformare eleganta a unui spatiu intr-o cladire istorica, unde am imbinat detaliile arhitecturale clasice cu solutii moderne de mobilier. Am utilizat mdf furniruit pentru mesele de sedinte impunatoare si zonele de depozitare, creand un contrast rafinat cu peretii albi si parchetul original. Implementarea a cuprins piese de mobilier cu design minimalist, precum mese de birou cu baze de sticla si o chicineta optimizata pentru zona de relaxare, oferind un mediu de lucru premium si functional.",
     mainImage: "/projects/OFFICE/masa-sedinte-lemn-lustra-led-design-atlantis-furnitures.webp",
@@ -242,9 +242,9 @@ export const portfolioItems: PortfolioItem[] = [
       ]
     ],
     tags: ["MDF FURNIR", "OGLINZI", "PAL", "OFFICE", "VICTORIEI", "MASA SEDINTE", "BIBLIOTECA"],
-    seoTitle: "Mobilier Office Victoriei | Masa Sedinte Lemn Bucuresti",
+    seoTitle: "Mobilier Office Victoriei | Masa Sedinte Lemn Masiv",
     seoDescription: "Proiect Office Victoriei. Masa de sedinte din lemn si biblioteca din mdf furniruit. Amenajare spatiu de birouri premium in cladire istorica.",
-    seoKeywords: "mobila premium bucuresti, mobilier la comanda bucuresti, producator mobila premium, amenajari interioare mobilier personalizat, mobila mdf vopsit"
+    seoKeywords: "mobila premium lux, mobilier la comanda personalizat, producator mobila premium, amenajari interioare mobilier, mobila mdf vopsit"
   }
 ];
 

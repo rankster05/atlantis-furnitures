@@ -66,15 +66,35 @@ const ProjectDetail: React.FC = () => {
 
       // 2. Parallax Background Effect (Background moves at 50% speed)
       if (heroRef.current && heroBgRef.current) {
-        gsap.to(heroBgRef.current, {
-          yPercent: 50,
-          ease: "none",
-          scrollTrigger: {
-            trigger: heroRef.current,
-            start: "top top",
-            end: "bottom top",
-            scrub: true,
-          }
+        const mm = gsap.matchMedia();
+        
+        mm.add("(min-width: 768px)", () => {
+          gsap.to(heroBgRef.current, {
+            yPercent: 50,
+            ease: "none",
+            force3D: true,
+            scrollTrigger: {
+              trigger: heroRef.current,
+              start: "top top",
+              end: "bottom top",
+              scrub: true,
+            }
+          });
+        });
+
+        mm.add("(max-width: 767px)", () => {
+          // Simplified for mobile
+          gsap.to(heroBgRef.current, {
+            yPercent: 15,
+            ease: "none",
+            force3D: true,
+            scrollTrigger: {
+              trigger: heroRef.current,
+              start: "top top",
+              end: "bottom top",
+              scrub: true,
+            }
+          });
         });
       }
 
@@ -108,24 +128,45 @@ const ProjectDetail: React.FC = () => {
 
       // 5. Grid Image Parallax (Pure Parallax, static scale)
       const gridImages = document.querySelectorAll('.dt-grid-image-wrapper .dt-parallax-inner');
+      const mmGrid = gsap.matchMedia();
+
       gridImages.forEach((inner) => {
-        // Apply a static scale so the image has room to move up and down
-        // without revealing the container's background.
         gsap.set(inner, { scale: 1.15 });
         
-        gsap.fromTo(inner, 
-          { yPercent: -8 }, 
-          { 
-            yPercent: 8, 
-            ease: "none",
-            scrollTrigger: {
-              trigger: inner.parentElement,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: true 
+        mmGrid.add("(min-width: 768px)", () => {
+          gsap.fromTo(inner, 
+            { yPercent: -8 }, 
+            { 
+              yPercent: 8, 
+              ease: "none",
+              force3D: true,
+              scrollTrigger: {
+                trigger: inner.parentElement,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: true 
+              }
             }
-          }
-        );
+          );
+        });
+
+        mmGrid.add("(max-width: 767px)", () => {
+          // Very subtle or no translation on mobile for grid images to keep it smooth
+          gsap.fromTo(inner, 
+            { yPercent: -2 }, 
+            { 
+              yPercent: 2, 
+              ease: "none",
+              force3D: true,
+              scrollTrigger: {
+                trigger: inner.parentElement,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: true 
+              }
+            }
+          );
+        });
       });
 
       // Refresh ScrollTrigger after a short delay to ensure DOM is fully painted

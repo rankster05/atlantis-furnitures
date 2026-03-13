@@ -319,7 +319,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
               {/* Footer Info */}
               <div className="flex flex-col items-center gap-6 mt-6 w-full">
                 <div className="mobile-nav-info flex flex-col items-center gap-2 text-center">
-                    <p className="uppercase tracking-widest text-[10px] sm:text-xs text-gray-500">Bucuresti & Ilfov & Arges</p>
+                    <p className="uppercase tracking-widest text-[10px] sm:text-xs text-gray-500">Acoperire Nationala</p>
                     <a href="tel:0732717666" className="font-light text-2xl sm:text-3xl hover:text-gray-300 transition-colors">
                       0732 717 666
                     </a>

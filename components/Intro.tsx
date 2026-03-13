@@ -63,9 +63,9 @@ const Intro: React.FC = () => {
             {splitText("Intelegem provocarile apartamentelor noi, de aceea suntem specializati in amenajari interioare inteligente si mobilier incastrat.")}
           </span>
         </p>
-        <p className="mb-8 split-animate" aria-label="In atelierul nostru din Arges, transformam materie prima de top – de la MDF vopsit si frezat pana la lemn masiv – in piese de mobilier unicat. Oferim solutii complete de bucatarii la comanda, dressinguri walk-in si mobilier comercial, folosind exclusiv feronerie de durata si finisaje premium.">
+        <p className="mb-8 split-animate" aria-label="In atelierul nostru, transformam materie prima de top – de la MDF vopsit si frezat pana la lemn masiv – in piese de mobilier unicat. Oferim solutii complete de bucatarii la comanda, dressinguri walk-in si mobilier comercial, folosind exclusiv feronerie de durata si finisaje premium.">
           <span aria-hidden="true">
-            {splitText("In atelierul nostru din Arges, transformam materie prima de top – de la MDF vopsit si frezat pana la lemn masiv – in piese de mobilier unicat. Oferim solutii complete de bucatarii la comanda, dressinguri walk-in si mobilier comercial, folosind exclusiv feronerie de durata si finisaje premium.")}
+            {splitText("In atelierul nostru, transformam materie prima de top – de la MDF vopsit si frezat pana la lemn masiv – in piese de mobilier unicat. Oferim solutii complete de bucatarii la comanda, dressinguri walk-in si mobilier comercial, folosind exclusiv feronerie de durata si finisaje premium.")}
           </span>
         </p>
         <div className="h-px w-full bg-black/10 my-8"></div>
@@ -75,8 +75,8 @@ const Intro: React.FC = () => {
             <p className="text-sm uppercase tracking-widest font-medium text-gray-900">MDF Vopsit Mat / Lucios / Frezat / Infoliat / Furnir / Lemn Masiv</p>
           </div>
           <div>
-            <h3 className="text-sm uppercase tracking-widest text-gray-500 mb-1 font-medium">Locatie</h3>
-            <p className="text-sm uppercase tracking-widest font-medium text-gray-900">Arges / Bucuresti / Ilfov</p>
+            <h3 className="text-sm uppercase tracking-widest text-gray-500 mb-1 font-medium">Acoperire</h3>
+            <p className="text-sm uppercase tracking-widest font-medium text-gray-900">Nationala / Calitate Premium</p>
           </div>
         </div>
       </div>

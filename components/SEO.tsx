@@ -13,15 +13,15 @@ interface SEOProps {
 
 const SEO: React.FC<SEOProps> = ({ 
   title, 
-  description = "Mobila la comanda premium in Pitesti si Bucuresti. Bucatarii MDF, Dressinguri, Amenajari interioare complete.",
+  description = "Mobila la comanda premium. Bucatarii MDF, Dressinguri, Amenajari interioare complete.",
   image = "/projects/AP AIR-U/design-interior-apartament-modern-unirii-atlantis-furnitures.webp",
   schema,
   canonicalUrl,
-  keywords = "mobila la comanda, bucatarii mdf, dressinguri, amenajari interioare, mobila bucuresti, mobila pitesti, atlantis furnitures",
+  keywords = "mobila la comanda, bucatarii mdf, dressinguri, amenajari interioare, mobila premium, atlantis furnitures",
   noindex = false
 }) => {
   const siteTitle = "Atlantis Furnitures";
-  const fullTitle = title.includes('|') ? title : (title === "Home" ? `Mobilier la Comanda Bucuresti | ${siteTitle}` : `${title} | ${siteTitle}`);
+  const fullTitle = title.includes('|') ? title : (title === "Home" ? `Mobilier la Comanda Premium | ${siteTitle}` : `${title} | ${siteTitle}`);
   // Use a fallback URL if window is undefined during build time (SSR safe)
   const currentUrl = canonicalUrl || (typeof window !== 'undefined' ? window.location.href : 'https://atlantisfurnitures.ro');
 
@@ -54,7 +54,7 @@ const SEO: React.FC<SEOProps> = ({
         "closes": "19:00"
       }
     ],
-    "areaServed": ["București", "Ilfov", "Argeș", "Pitești"],
+    "areaServed": "RO",
     "priceRange": "$$$",
     "sameAs": [
       "https://www.facebook.com/profile.php?id=100057578914043",

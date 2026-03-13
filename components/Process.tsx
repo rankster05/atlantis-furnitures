@@ -10,7 +10,7 @@ const steps = [
     id: 1,
     icon: Ruler,
     title: "Consultanta & Masuratori",
-    desc: "Ne deplasam gratuit la locatia ta (Bucuresti/Ilfov/Arges) pentru masuratori exacte si discutii despre materiale, culori si functionalitate."
+    desc: "Ne deplasam la locatia ta pentru masuratori exacte si discutii despre materiale, culori si functionalitate."
   },
   {
     id: 2,
