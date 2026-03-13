@@ -163,7 +163,7 @@ const Portfolio: React.FC = () => {
                     alt={`Proiectul ${item.title} - ${item.category}`} 
                     loading="lazy"
                     decoding="async"
-                    fetchPriority="low"
+                    fetchpriority="low"
                     className="pf-img w-full h-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-110 opacity-90 group-hover:opacity-100"
                   />
 

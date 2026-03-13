@@ -64,14 +64,14 @@ const Hero: React.FC<HeroProps> = ({ startAnimation = true }) => {
 
   return (
     <section ref={containerRef} id="hero" className="h-screen w-full relative flex items-center justify-center overflow-hidden">
-      {/* OPTIMIZATION: fetchPriority="high" and decoding="sync" ensures this LCP element loads ASAP */}
+      {/* OPTIMIZATION: fetchpriority="high" and decoding="sync" ensures this LCP element loads ASAP */}
       <img 
         ref={imgRef}
         src="/projects/AP AIR-V/amenajare-open-space-apartament-modern-victoriei-atlantis.webp" 
         className="absolute w-[120vw] max-w-none h-[130vh] object-cover object-center brightness-[0.65]" 
         style={{ left: '-10vw', top: '-15vh' }}
         alt="Modern Kitchen Hero"
-        fetchPriority="high"
+        fetchpriority="high"
         decoding="sync"
       />
       

@@ -82,7 +82,7 @@ const ProjectCard = React.memo(({ project }: { project: ProjectWithTarget }) => 
             src={getOptimizedImageUrl(project.imageUrl)} 
             loading="lazy"
             decoding="async"
-            fetchPriority="low"
+            fetchpriority="low"
             className="card-img w-full h-full object-cover transition-all duration-[1200ms] ease-out group-hover:scale-105 group-hover:brightness-110" 
             alt={project.title} 
           />
