@@ -258,7 +258,7 @@ const ProjectDetail: React.FC = () => {
           <img 
             src={project.mainImage} 
             alt={`Main view of ${project.title}`}
-            className="w-full h-full object-cover object-center cursor-pointer transition-transform duration-700 hover:scale-105"
+            className="w-full h-full object-cover object-center cursor-pointer transition-transform duration-700 hover:scale-105 brightness-125 contrast-105"
             onClick={() => openLightbox(project.mainImage)}
             fetchpriority="high"
             decoding="async"
@@ -297,7 +297,7 @@ const ProjectDetail: React.FC = () => {
                         <img 
                           src={item[0]} 
                           alt={`${project.title} detail ${idx}-1`} 
-                          className="w-full h-full object-cover cursor-pointer transition-transform duration-700 hover:scale-105" 
+                          className="w-full h-full object-cover cursor-pointer transition-transform duration-700 hover:scale-105 brightness-110 contrast-105" 
                           onClick={() => openLightbox(item[0])}
                           loading="lazy" 
                           decoding="async"
@@ -310,7 +310,7 @@ const ProjectDetail: React.FC = () => {
                         <img 
                           src={item[1]} 
                           alt={`${project.title} detail ${idx}-2`} 
-                          className="w-full h-full object-cover cursor-pointer transition-transform duration-700 hover:scale-105" 
+                          className="w-full h-full object-cover cursor-pointer transition-transform duration-700 hover:scale-105 brightness-110 contrast-105" 
                           onClick={() => openLightbox(item[1])}
                           loading="lazy" 
                           decoding="async"
@@ -336,7 +336,7 @@ const ProjectDetail: React.FC = () => {
                       <img 
                         src={item[0]} 
                         alt={`${project.title} detail ${idx}-1`} 
-                        className="w-full h-full object-cover cursor-pointer transition-transform duration-700 hover:scale-105" 
+                        className="w-full h-full object-cover cursor-pointer transition-transform duration-700 hover:scale-105 brightness-110 contrast-105" 
                         onClick={() => openLightbox(item[0])}
                         loading="lazy" 
                         decoding="async"
@@ -354,7 +354,7 @@ const ProjectDetail: React.FC = () => {
                            <img 
                              src={subImg} 
                              alt={`${project.title} detail ${idx}-${subIdx+2}`} 
-                             className="w-full h-full object-cover cursor-pointer transition-transform duration-700 hover:scale-105" 
+                             className="w-full h-full object-cover cursor-pointer transition-transform duration-700 hover:scale-105 brightness-110 contrast-105" 
                              onClick={() => openLightbox(subImg)}
                              loading="lazy" 
                              decoding="async"
@@ -374,7 +374,7 @@ const ProjectDetail: React.FC = () => {
                   <img 
                     src={item} 
                     alt={`${project.title} detail ${idx + 1}`}
-                    className="w-full h-full object-cover cursor-pointer transition-transform duration-700 hover:scale-105"
+                    className="w-full h-full object-cover cursor-pointer transition-transform duration-700 hover:scale-105 brightness-110 contrast-105"
                     onClick={() => openLightbox(item)}
                     loading="lazy"
                     decoding="async"
@@ -437,7 +437,7 @@ const ProjectDetail: React.FC = () => {
            <img 
              src={nextProject.mainImage} 
              alt={`Urmatorul proiect: ${nextProject.title}`} 
-             className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-105 brightness-50 group-hover:brightness-75"
+             className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-105 brightness-[0.9] group-hover:brightness-[1.1]"
            />
            <div className="absolute inset-0 flex flex-col items-center justify-center z-10 px-4 text-center">
               <span className="text-[10px] md:text-sm uppercase tracking-[0.3em] mb-3 md:mb-4 opacity-80 text-white font-medium">Urmatorul Proiect</span>

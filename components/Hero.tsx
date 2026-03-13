@@ -89,7 +89,7 @@ const Hero: React.FC<HeroProps> = ({ startAnimation = true }) => {
       <img 
         ref={imgRef}
         src="/projects/AP AIR-V/amenajare-open-space-apartament-modern-victoriei-atlantis.webp" 
-        className="absolute w-[120vw] max-w-none h-[130vh] object-cover object-center brightness-[0.65] will-change-transform" 
+        className="absolute w-[120vw] max-w-none h-[130vh] object-cover object-center brightness-[0.85] contrast-[1.05] will-change-transform" 
         style={{ left: '-10vw', top: '-15vh' }}
         alt="Modern Kitchen Hero"
         fetchpriority="high"

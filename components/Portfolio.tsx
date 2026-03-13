@@ -164,7 +164,7 @@ const Portfolio: React.FC = () => {
                     loading="lazy"
                     decoding="async"
                     fetchpriority="low"
-                    className="pf-img w-full h-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-110 opacity-90 group-hover:opacity-100"
+                    className="pf-img w-full h-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-110 opacity-90 group-hover:opacity-100 brightness-110 contrast-105"
                   />
 
                   {/* Hover Overlay - Minimal Tint */}

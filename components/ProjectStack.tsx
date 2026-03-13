@@ -83,7 +83,7 @@ const ProjectCard = React.memo(({ project }: { project: ProjectWithTarget }) => 
             loading="lazy"
             decoding="async"
             fetchpriority="low"
-            className="card-img w-full h-full object-cover transition-all duration-[1200ms] ease-out group-hover:scale-105 group-hover:brightness-110" 
+            className="card-img w-full h-full object-cover transition-all duration-[1200ms] ease-out group-hover:scale-105 group-hover:brightness-120 brightness-110 contrast-105" 
             alt={project.title} 
           />
         </div>
