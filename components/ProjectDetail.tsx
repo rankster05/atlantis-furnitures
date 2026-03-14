@@ -225,9 +225,7 @@ const ProjectDetail: React.FC = () => {
     }
   };
 
-  const canonicalUrl = typeof window !== 'undefined' 
-    ? `${window.location.origin}/proiecte/${project.slug}`
-    : `https://atlantisfurnitures.ro/proiecte/${project.slug}`;
+  const canonicalUrl = `https://atlantisfurnitures.ro/proiecte/${project.slug}`;
 
   return (
     <div ref={containerRef} className="bg-atl-dark text-atl-bg min-h-screen">
