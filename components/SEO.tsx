@@ -67,7 +67,7 @@ const SEO: React.FC<SEOProps> = ({
     "@type": "Organization",
     "name": "Atlantis Furnitures",
     "url": "https://atlantisfurnitures.ro",
-    "logo": "https://atlantisfurnitures.ro/vite.svg",
+    "logo": "https://atlantisfurnitures.ro/favicon.svg",
     "contactPoint": {
       "@type": "ContactPoint",
       "telephone": "+40732717666",

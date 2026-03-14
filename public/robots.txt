@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin/
 Disallow: /private/
 
-Sitemap: https://www.atlantisfurnitures.ro/sitemap.xml
+Sitemap: https://atlantisfurnitures.ro/sitemap.xml

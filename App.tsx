@@ -69,11 +69,11 @@ const AppContent: React.FC = () => {
     }
     
     // Refresh ScrollTrigger to recalculate positions for the new page content
-    const timer = setTimeout(() => {
+    requestAnimationFrame(() => {
         ScrollTrigger.refresh();
-    }, 100);
+    });
 
-    return () => clearTimeout(timer);
+    return () => {};
   }, [pathname, navType]);
 
   const handleLoadComplete = () => {

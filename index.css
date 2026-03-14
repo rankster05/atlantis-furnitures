@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Syncopate", sans-serif;
+  --font-body: "Manrope", sans-serif;
+  --color-atl-bg: #E3E1DC;
+  --color-atl-dark: #121212;
+  --color-atl-accent: #374336;
+}
+
+body {
+  background-color: #E3E1DC;
+  color: #121212;
+  margin: 0;
+  overflow-x: hidden;
+}
+/* Hide scrollbar for smooth scroll feel */
+html.lenis {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Utilities */
+.word-wrap {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.1em;
+}
+.word-inner {
+  display: inline-block;
+  transform: translateY(110%);
+}
