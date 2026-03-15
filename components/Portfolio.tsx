@@ -94,8 +94,8 @@ const Portfolio: React.FC = () => {
   return (
     <>
       <SEO 
-        title="Portofoliu Mobilier Premium | Proiecte Atlantis Furnitures" 
-        description="Vezi galeria noastra de proiecte recente: bucatarii moderne, dressinguri si mobilier living realizate la comanda pentru proiecte premium." 
+        title="Portofoliu de Proiecte si Mobilier Premium | Atlantis Furnitures" 
+        description="Proiecte de mobilier la comanda din mdf vopsit ✓ materiale premium. Design modern ⭐ solutii inteligente pentru casa ta. Vezi galeria noastra!" 
         keywords="portofoliu mobila mdf vopsit, poze bucatarii moderne la comanda, proiecte mobilier casa premium, design interior bucatarii premium, modele dressinguri dormitor, galerie proiecte mobila personalizata, executie mobilier mdf poze"
         canonicalUrl="https://atlantisfurnitures.ro/proiecte"
       />
