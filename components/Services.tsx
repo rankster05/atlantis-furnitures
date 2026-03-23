@@ -40,11 +40,6 @@ const partnerCategories = [
     icon: <Component className="w-8 h-8 md:w-10 md:h-10" strokeWidth={1} />,
     partners: [
       {
-        name: 'Vila Home Design',
-        url: 'https://vilahomedesign.ro/',
-        description: 'Producator romanesc specializat in solutii decorative inovatoare, de la panouri volumetrice si riflaje din lemn, pana la masti de calorifer si decoratiuni personalizate. Vila Home Design imbina estetica moderna cu functionalitatea, oferind elemente arhitecturale care transforma orice spatiu intr-un ambient rafinat.'
-      },
-      {
         name: 'Radical RP',
         url: 'https://radicalrp.ro/',
         description: 'Cu o experienta solida pe piata din 1994, Radical RP este un furnizor de incredere pentru accesorii de mobilier si feronerie premium. Portofoliul lor vast include manere de design, adezivi profesionali si solutii tehnice de inalta calitate, esentiale pentru realizarea unui mobilier durabil si impecabil finisat.'
@@ -53,6 +48,11 @@ const partnerCategories = [
         name: 'Brico Wood Trade',
         url: 'https://bricowoodtrade.ro/',
         description: 'Partener de incredere in distributia de materiale si accesorii pentru industria mobilei, Brico Wood Trade se distinge prin calitatea superioara a produselor si promptitudinea serviciilor. Oferind solutii tehnice de top, precum sistemele avansate Hettich, ei asigura functionalitatea perfecta si fiabilitatea fiecarui proiect.'
+      },
+      {
+        name: 'Vila Home Design',
+        url: 'https://vilahomedesign.ro/',
+        description: 'Producator romanesc specializat in solutii decorative inovatoare, de la panouri volumetrice si riflaje din lemn, pana la masti de calorifer si decoratiuni personalizate. Vila Home Design imbina estetica moderna cu functionalitatea, oferind elemente arhitecturale care transforma orice spatiu intr-un ambient rafinat.'
       }
     ]
   },
