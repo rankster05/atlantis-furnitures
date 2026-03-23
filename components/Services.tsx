@@ -35,28 +35,6 @@ const partnerCategories = [
     ]
   },
   {
-    title: 'Finisaje Interioare',
-    description: 'Lucram cu cei mai buni furnizori de materiale pentru a garanta calitatea si durabilitatea fiecarui detaliu din casa ta.',
-    icon: <Layers className="w-8 h-8 md:w-10 md:h-10" strokeWidth={1} />,
-    partners: [
-      {
-        name: 'Varese',
-        url: 'https://varese.ro',
-        description: 'Distribuitor unic al brandului premium Betek, Varese ofera o gama completa de finisaje in constructii fabricate dupa o tehnologie germana de ultima generatie. Portofoliul lor include vopsele lavabile pentru interior si exterior, tencuieli decorative, lacuri si vopsele pentru lemn, oferind totodata productia de culori personalizate pe loc prin sistemul inovator Betekmix.'
-      },
-      {
-        name: 'House of VLAdiLA',
-        url: 'https://vladila.ro',
-        description: 'Brand romanesc de lux, recunoscut international pentru colectiile sale spectaculoase de tapet realizate de designeri talentati. Pe langa tapetul cu un puternic impact vizual, portofoliul lor s-a extins cu linii de mobilier exclusivist si materiale textile premium, oferind solutii complete pentru amenajari interioare cu o personalitate artistica inconfundabila.'
-      },
-      {
-        name: 'Orient Ceramic',
-        url: 'https://orientceramic.ro',
-        description: 'Cu o experienta de peste 15 ani, Orient Ceramic este cel mai mare importator si distribuitor de finisaje premium. Ofera o selectie impresionanta de gresie portelanata rectificata, faianta, parchet laminat, covoare ceramice, mozaic, piatra naturala, marmura si granit, punand la dispozitie si un simulator AI avansat pentru vizualizarea finisajelor in spatiul tau.'
-      }
-    ]
-  },
-  {
     title: 'Accesorii Mobilier si Pereti Volumetrici',
     description: 'Detaliile fac diferenta. Colaboram cu furnizori de top pentru feronerie premium, sisteme inteligente si elemente decorative volumetrice care completeaza perfect designul mobilierului.',
     icon: <Component className="w-8 h-8 md:w-10 md:h-10" strokeWidth={1} />,
@@ -75,6 +53,28 @@ const partnerCategories = [
         name: 'Brico Wood Trade',
         url: 'https://bricowoodtrade.ro/',
         description: 'Partener de incredere in distributia de materiale si accesorii pentru industria mobilei, Brico Wood Trade se distinge prin calitatea superioara a produselor si promptitudinea serviciilor. Oferind solutii tehnice de top, precum sistemele avansate Hettich, ei asigura functionalitatea perfecta si fiabilitatea fiecarui proiect.'
+      }
+    ]
+  },
+  {
+    title: 'Finisaje Interioare',
+    description: 'Lucram cu cei mai buni furnizori de materiale pentru a garanta calitatea si durabilitatea fiecarui detaliu din casa ta.',
+    icon: <Layers className="w-8 h-8 md:w-10 md:h-10" strokeWidth={1} />,
+    partners: [
+      {
+        name: 'Varese',
+        url: 'https://varese.ro',
+        description: 'Distribuitor unic al brandului premium Betek, Varese ofera o gama completa de finisaje in constructii fabricate dupa o tehnologie germana de ultima generatie. Portofoliul lor include vopsele lavabile pentru interior si exterior, tencuieli decorative, lacuri si vopsele pentru lemn, oferind totodata productia de culori personalizate pe loc prin sistemul inovator Betekmix.'
+      },
+      {
+        name: 'House of VLAdiLA',
+        url: 'https://vladila.ro',
+        description: 'Brand romanesc de lux, recunoscut international pentru colectiile sale spectaculoase de tapet realizate de designeri talentati. Pe langa tapetul cu un puternic impact vizual, portofoliul lor s-a extins cu linii de mobilier exclusivist si materiale textile premium, oferind solutii complete pentru amenajari interioare cu o personalitate artistica inconfundabila.'
+      },
+      {
+        name: 'Orient Ceramic',
+        url: 'https://orientceramic.ro',
+        description: 'Cu o experienta de peste 15 ani, Orient Ceramic este cel mai mare importator si distribuitor de finisaje premium. Ofera o selectie impresionanta de gresie portelanata rectificata, faianta, parchet laminat, covoare ceramice, mozaic, piatra naturala, marmura si granit, punand la dispozitie si un simulator AI avansat pentru vizualizarea finisajelor in spatiul tau.'
       }
     ]
   }
