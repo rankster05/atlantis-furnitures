@@ -2,7 +2,7 @@ import React, { useRef, useLayoutEffect } from 'react';
 import SEO from './SEO';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowRight, PenTool, Layers, Handshake } from 'lucide-react';
+import { ArrowRight, PenTool, Layers, Handshake, Component } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -53,6 +53,28 @@ const partnerCategories = [
         name: 'Orient Ceramic',
         url: 'https://orientceramic.ro',
         description: 'Cu o experienta de peste 15 ani, Orient Ceramic este cel mai mare importator si distribuitor de finisaje premium. Ofera o selectie impresionanta de gresie portelanata rectificata, faianta, parchet laminat, covoare ceramice, mozaic, piatra naturala, marmura si granit, punand la dispozitie si un simulator AI avansat pentru vizualizarea finisajelor in spatiul tau.'
+      }
+    ]
+  },
+  {
+    title: 'Accesorii Mobilier si Pereti Volumetrici',
+    description: 'Detaliile fac diferenta. Colaboram cu furnizori de top pentru feronerie premium, sisteme inteligente si elemente decorative volumetrice care completeaza perfect designul mobilierului.',
+    icon: <Component className="w-8 h-8 md:w-10 md:h-10" strokeWidth={1} />,
+    partners: [
+      {
+        name: 'Vila Home Design',
+        url: 'https://vilahomedesign.ro/',
+        description: 'Producator romanesc specializat in solutii decorative inovatoare, de la panouri volumetrice si riflaje din lemn, pana la masti de calorifer si decoratiuni personalizate. Vila Home Design imbina estetica moderna cu functionalitatea, oferind elemente arhitecturale care transforma orice spatiu intr-un ambient rafinat.'
+      },
+      {
+        name: 'Radical RP',
+        url: 'https://radicalrp.ro/',
+        description: 'Cu o experienta solida pe piata din 1994, Radical RP este un furnizor de incredere pentru accesorii de mobilier si feronerie premium. Portofoliul lor vast include manere de design, adezivi profesionali si solutii tehnice de inalta calitate, esentiale pentru realizarea unui mobilier durabil si impecabil finisat.'
+      },
+      {
+        name: 'Brico Wood Trade',
+        url: 'https://bricowoodtrade.ro/',
+        description: 'Partener de incredere in distributia de materiale si accesorii pentru industria mobilei, Brico Wood Trade se distinge prin calitatea superioara a produselor si promptitudinea serviciilor. Oferind solutii tehnice de top, precum sistemele avansate Hettich, ei asigura functionalitatea perfecta si fiabilitatea fiecarui proiect.'
       }
     ]
   }
