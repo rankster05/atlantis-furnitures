@@ -138,6 +138,7 @@ const Services: React.FC = () => {
       <SEO
         title="Servicii Mobilier la Comanda | Atlantis Furnitures"
         description="Bucatarii, livinguri, dormitoare si mobilier office la comanda in Bucuresti si Ilfov. Materiale premium, montaj inclus. Solicita oferta gratuita!"
+        canonicalUrl="https://atlantisfurnitures.ro/servicii"
       />
 
       {/* Background Ambient Glows */}

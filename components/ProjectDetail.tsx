@@ -26,44 +26,53 @@ const ProjectDetail: React.FC = () => {
 
   const allImages = project ? [project.mainImage, ...project.gallery.flat()] : [];
 
-  const projectSEO: Record<string, { title: string; description: string }> = {
+  const projectSEO: Record<string, { title: string; description: string; canonicalUrl: string }> = {
     "ap-so": {
       title: "Penthouse Vasile Lascar – Mobilier Premium | Atlantis",
-      description: "Proiect mobilier la comanda pentru penthouse in zona Vasile Lascar, Bucuresti. MDF furniruit, design minimalist. Vrei un rezultat similar? Contacteaza-ne!"
+      description: "Proiect mobilier la comanda pentru penthouse in zona Vasile Lascar, Bucuresti. MDF furniruit, design minimalist. Vrei un rezultat similar? Contacteaza-ne!",
+      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/ap-so"
     },
     "ap-cosmo": {
       title: "Mobilier Apartament Cosmopolis Ilfov | Atlantis Furnitures",
-      description: "Mobilier dormitor si living la comanda pentru apartament in Cosmopolis, Ilfov. PAL si MDF premium, executie si montaj 2024. Cere oferta pentru proiectul tau!"
+      description: "Mobilier dormitor si living la comanda pentru apartament in Cosmopolis, Ilfov. PAL si MDF premium, executie si montaj 2024. Cere oferta pentru proiectul tau!",
+      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/ap-cosmo"
     },
     "csm": {
       title: "Mobilier Cabinet Medical Pitesti | Atlantis Furnitures",
-      description: "Mobilier la comanda pentru cabinet medical in Pitesti. Executie precisa, materiale durabile, montaj profesional. Ai un spatiu similar? Hai sa discutam!"
+      description: "Mobilier la comanda pentru cabinet medical in Pitesti. Executie precisa, materiale durabile, montaj profesional. Ai un spatiu similar? Hai sa discutam!",
+      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/csm"
     },
     "s-house": {
       title: "Living si Dormitor la Comanda Pipera | Atlantis",
-      description: "Proiect S House Pipera – mobilier living si dormitor din MDF furniruit. Design minimalist, texturi calde. Transforma-ti spatiul – cere oferta gratuita!"
+      description: "Proiect S House Pipera – mobilier living si dormitor din MDF furniruit. Design minimalist, texturi calde. Transforma-ti spatiul – cere oferta gratuita!",
+      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/s-house"
     },
     "ap-air-u": {
       title: "Mobilier Apartament Modern Bucuresti | Atlantis Furnitures",
-      description: "Mobilier complet la comanda pentru apartament in Bucuresti. MDF si PAL premium, design personalizat, montaj inclus. Hai sa construim impreuna spatiul ideal!"
+      description: "Mobilier complet la comanda pentru apartament in Bucuresti. MDF si PAL premium, design personalizat, montaj inclus. Hai sa construim impreuna spatiul ideal!",
+      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/ap-air-u"
     },
     "studio-air-v": {
       title: "Mobilier Studio la Comanda Bucuresti | Atlantis Furnitures",
-      description: "Amenajare mobilier la comanda pentru studio in Bucuresti. Solutii inteligente de depozitare, materiale premium. Maximeaza spatiul – cere oferta acum!"
+      description: "Amenajare mobilier la comanda pentru studio in Bucuresti. Solutii inteligente de depozitare, materiale premium. Maximeaza spatiul – cere oferta acum!",
+      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/studio-air-v"
     },
     "tei-house": {
       title: "Mobilier Casa Zona Tei Bucuresti | Atlantis Furnitures",
-      description: "Mobilier la comanda pentru casa in zona Tei, Bucuresti. Living, dormitor si spatii functionale din MDF si PAL. Vrei acelasi rezultat? Contacteaza-ne!"
+      description: "Mobilier la comanda pentru casa in zona Tei, Bucuresti. Living, dormitor si spatii functionale din MDF si PAL. Vrei acelasi rezultat? Contacteaza-ne!",
+      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/tei-house"
     },
     "office": {
       title: "Mobilier Office la Comanda Bucuresti | Atlantis Furnitures",
-      description: "Mobilier de birou la comanda in Bucuresti. Birouri, dulapuri si spatii de lucru personalizate din MDF si PAL premium. Solicita oferta pentru biroul tau!"
+      description: "Mobilier de birou la comanda in Bucuresti. Birouri, dulapuri si spatii de lucru personalizate din MDF si PAL premium. Solicita oferta pentru biroul tau!",
+      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/office"
     }
   };
 
   const seo = (slug && projectSEO[slug]) || {
     title: "Proiect Mobilier la Comanda | Atlantis Furnitures",
-    description: "Proiect de mobilier la comanda executat de Atlantis Furnitures in Bucuresti si Ilfov. Cere oferta!"
+    description: "Proiect de mobilier la comanda executat de Atlantis Furnitures in Bucuresti si Ilfov. Cere oferta!",
+    canonicalUrl: "https://atlantisfurnitures.ro/proiecte"
   };
 
   const openLightbox = (imgSrc: string) => {
@@ -245,6 +254,7 @@ const ProjectDetail: React.FC = () => {
       <SEO 
         title={seo.title} 
         description={seo.description}
+        canonicalUrl={seo.canonicalUrl}
       />
       
       {/* Parallax Hero Section */}
