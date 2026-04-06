@@ -142,7 +142,7 @@ ${formData.message || '-'}`;
           
           <div className="flex justify-between items-center mb-4 shrink-0">
             <div>
-              <h2 id="modal-title" className="font-display text-xl md:text-3xl text-atl-dark">Discuta Proiectul</h2>
+              <p id="modal-title" className="font-display text-xl md:text-3xl text-atl-dark">Discuta Proiectul</p>
               <p className="text-xs uppercase tracking-widest text-gray-600 font-medium mt-1">Completeaza formularul</p>
             </div>
             <button 

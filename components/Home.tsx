@@ -15,7 +15,7 @@ const Home: React.FC<HomeProps> = ({ isLoaded = true }) => {
     <>
       <SEO 
         title="Mobilier la Comanda Bucuresti | Atlantis Furnitures" 
-        description="Producem mobilier la comanda din MDF si PAL pentru Bucuresti si Ilfov. Bucatarii, livinguri, dormitoare, office. Oferta gratuita!"
+        description="Producem mobilier la comanda din MDF si PAL pentru Bucuresti si Ilfov. Bucatarii, livinguri, dormitoare, dressing-uri, office. Cere oferta gratuita azi!"
         keywords="mobilier la comanda premium, mobila la comanda pret, producator mobila mdf vopsit, bucatarii la comanda premium, dressing la comanda lux, mobila premium, atlantis furnitures mobila, amenajari interioare mobilier personalizat"
         canonicalUrl="https://atlantisfurnitures.ro/"
       />

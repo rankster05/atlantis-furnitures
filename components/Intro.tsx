@@ -9,9 +9,12 @@ const Intro: React.FC = () => {
   
   const splitText = (text: string) => {
     return text.split(' ').map((word, i) => (
-      <span key={i} className="word-wrap mr-[0.2em]">
-        <span className="word-inner">{word}</span>
-      </span>
+      <React.Fragment key={i}>
+        <span className="word-wrap inline-block">
+          <span className="word-inner">{word}</span>
+        </span>
+        {" "}
+      </React.Fragment>
     ));
   };
 
@@ -46,18 +49,15 @@ const Intro: React.FC = () => {
 
   return (
     <section ref={containerRef} id="about" className="py-24 md:py-32 px-6 md:px-20 grid md:grid-cols-2 gap-12 md:gap-16 max-w-[1800px] mx-auto bg-atl-bg">
-      <div>
-        <h2 className="font-display text-3xl md:text-5xl leading-tight" aria-label="Mobilier Modern Adaptat Nevoilor Tale">
+      <div className="text-center md:text-left">
+        <h2 className="font-display text-3xl md:text-4xl lg:text-5xl leading-[1.2] md:leading-tight" aria-label="Mobilier Modern Adaptat Nevoilor Tale">
+          <span className="sr-only">Mobilier Modern Adaptat Nevoilor Tale</span>
           <span className="split-animate block" aria-hidden="true">
             {splitText("Mobilier Modern Adaptat Nevoilor Tale")}
           </span>
-          <br/>
-          <span className="text-atl-accent italic mt-2 block split-animate" aria-hidden="true">
-            {splitText("Atlantis Furnitures.")}
-          </span>
         </h2>
       </div>
-      <div className="text-lg md:text-xl font-normal leading-relaxed text-gray-900">
+      <div className="text-lg md:text-xl font-normal leading-relaxed text-gray-900 text-center md:text-left">
         <p className="mb-8 split-animate" aria-label="Intelegem provocarile apartamentelor noi, de aceea suntem specializati in amenajari interioare inteligente si mobilier incastrat.">
           <span aria-hidden="true">
             {splitText("Intelegem provocarile apartamentelor noi, de aceea suntem specializati in amenajari interioare inteligente si mobilier incastrat.")}
@@ -68,15 +68,17 @@ const Intro: React.FC = () => {
             {splitText("In atelierul nostru, transformam materie prima de top – de la MDF vopsit si frezat pana la lemn masiv – in piese de mobilier unicat. Oferim solutii complete de bucatarii la comanda, dressinguri walk-in si mobilier comercial, folosind exclusiv feronerie de durata si finisaje premium.")}
           </span>
         </p>
+        
         <div className="h-px w-full bg-black/10 my-8"></div>
-        <div className="flex flex-col md:flex-row gap-6 md:gap-12 split-animate">
+        
+        <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-8 md:gap-12 split-animate">
           <div>
-            <h3 className="text-sm uppercase tracking-widest text-gray-500 mb-1 font-medium">Materiale Premium</h3>
-            <p className="text-sm uppercase tracking-widest font-medium text-gray-900">MDF Vopsit Mat / Lucios / Frezat / Infoliat / Furnir / Lemn Masiv</p>
+            <h3 className="text-xs uppercase tracking-[0.2em] text-gray-500 mb-2 font-bold">Materiale Premium</h3>
+            <p className="text-xs uppercase tracking-widest font-medium text-gray-900">MDF Vopsit / Frezat / Furnir / Lemn Masiv</p>
           </div>
           <div>
-            <h3 className="text-sm uppercase tracking-widest text-gray-500 mb-1 font-medium">Acoperire Bucuresti si Ilfov</h3>
-            <p className="text-sm uppercase tracking-widest font-medium text-gray-900">Nationala / Calitate Premium</p>
+            <h3 className="text-xs uppercase tracking-[0.2em] text-gray-500 mb-2 font-bold">Acoperire Bucuresti si Ilfov</h3>
+            <p className="text-xs uppercase tracking-widest font-medium text-gray-900">Nationala / Calitate Premium</p>
           </div>
         </div>
       </div>
