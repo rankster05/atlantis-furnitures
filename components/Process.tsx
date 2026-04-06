@@ -9,25 +9,25 @@ const steps = [
   {
     id: 1,
     icon: Ruler,
-    title: "Consultanta & Masuratori",
+    title: "Consultanta si Masuratori Gratuite",
     desc: "Ne deplasam la locatia ta pentru masuratori exacte si discutii despre materiale, culori si functionalitate."
   },
   {
     id: 2,
     icon: PenTool,
-    title: "Proiectare 3D",
+    title: "Proiectare 3D Personalizata",
     desc: "Transformam ideile in realitate virtuala. Primesti randari fotorealiste pentru a vizualiza exact cum va arata mobilierul in spatiul tau."
   },
   {
     id: 3,
     icon: Hammer,
-    title: "Productie Custom",
+    title: "Productie Custom in Atelier Propriu",
     desc: "Folosim utilaje de precizie si finisaje premium (MDF vopsit, frezat, lemn) in atelierul nostru propriu, garantand calitatea executiei."
   },
   {
     id: 4,
     icon: Home,
-    title: "Montaj & Livrare",
+    title: "Montaj si Livrare Bucuresti",
     desc: "Echipa noastra de montaj asigura instalarea perfecta, curatenia la locul de munca si verificarile finale de functionalitate."
   }
 ];
@@ -74,7 +74,7 @@ const Process: React.FC = () => {
       <div className="max-w-[1400px] mx-auto">
         <div className="text-center mb-20 md:mb-28">
            <span className="text-sm uppercase tracking-[0.3em] text-atl-accent mb-4 block opacity-90">Metodologia Noastra</span>
-           <h2 className="font-display text-3xl md:text-5xl lg:text-6xl">CUM LUCRAM</h2>
+           <h2 className="font-display text-3xl md:text-5xl lg:text-6xl">Cum Lucram</h2>
         </div>
 
         <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">

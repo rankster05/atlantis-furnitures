@@ -16,7 +16,7 @@ const projects: ProjectWithTarget[] = [
   {
     id: 1,
     number: "01",
-    title: "BUCATARII LA COMANDA",
+    title: "Bucatarii la Comanda",
     location: "MDF VOPSIT / FREZAT / PROIECTARE 3D",
     description: "Transformam inima casei tale intr-un spatiu functional si elegant. Producem mobila de bucatarie personalizata, optimizata pentru orice tip de spatiu, de la apartamente de bloc la case spatioase. Folosim exclusiv fronturi din MDF vopsit sau infoliat si sisteme de feronerie Blum cu amortizare, garantand durabilitate si un design unitar.",
     imageUrl: "/projects/S House/s-house-living-bucatarie-open-space-mdf-furnir-pipera.webp",
@@ -25,7 +25,7 @@ const projects: ProjectWithTarget[] = [
   {
     id: 2,
     number: "02",
-    title: "DRESSINGURI & LIVING",
+    title: "Dressing-uri si Livinguri",
     location: "COMPARTIMENTARE INTELIGENTA / USI GLISANTE",
     description: "Solutii complete de amenajare pentru linistea ta. Realizam dressinguri la comanda cu usi glisante, ideale pentru holuri inguste sau dormitoare matrimoniale, unde fiecare centimetru conteaza. Completam designul casei cu mobilier de living minimalist, comode TV suspendate si biblioteci care mascheaza cablurile sau elementele tehnice.",
     imageUrl: "/projects/S House/amenajare-living-modern-panouri-lemn-atlantis-furnitures.webp",
@@ -34,7 +34,7 @@ const projects: ProjectWithTarget[] = [
   {
     id: 3,
     number: "03",
-    title: "OFFICE & COMERCIAL",
+    title: "Office si Spatii Comerciale",
     location: "RECEPTII / BIROURI / SPATII HORECA",
     description: "Imaginea afacerii tale construita prin design. Proiectam si executam mobilier pentru spatii comerciale, receptii custom si birouri ergonomice care rezista la trafic intens. Oferim solutii de amenajare interioara care imbina estetica brandului tau cu functionalitatea necesara echipei, totul la un pret de producator direct.",
     imageUrl: "/projects/OFFICE/amenajare-sala-meeting-moderna-masa-organica-lemn.webp",
@@ -128,7 +128,7 @@ const ProjectStack: React.FC = () => {
       <div className="text-center mb-16 px-6">
         <span className="block text-sm uppercase tracking-widest mb-4 opacity-70">Expertiza Noastra</span>
         <h2 className="font-display text-3xl md:text-6xl flex items-center justify-center gap-3 md:gap-5">
-          PROIECTE RECENTE
+          Proiecte Recente de Mobilier la Comanda
         </h2>
       </div>
 

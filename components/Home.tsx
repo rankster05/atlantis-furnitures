@@ -14,8 +14,8 @@ const Home: React.FC<HomeProps> = ({ isLoaded = true }) => {
   return (
     <>
       <SEO 
-        title="Mobila la Comanda Premium in Bucuresti | Atlantis Furnitures" 
-        description="Producator de mobilier la comanda din MDF vopsit si pal ✓ Design premium ⭐ pentru bucatarii si dressinguri. Cere o oferta gratuita!"
+        title="Mobilier la Comanda Bucuresti | Atlantis Furnitures" 
+        description="Producem mobilier la comanda din MDF si PAL pentru Bucuresti si Ilfov. Bucatarii, livinguri, dormitoare, office. Oferta gratuita!"
         keywords="mobilier la comanda premium, mobila la comanda pret, producator mobila mdf vopsit, bucatarii la comanda premium, dressing la comanda lux, mobila premium, atlantis furnitures mobila, amenajari interioare mobilier personalizat"
         canonicalUrl="https://atlantisfurnitures.ro/"
       />
@@ -31,7 +31,8 @@ const Home: React.FC<HomeProps> = ({ isLoaded = true }) => {
       
       {/* Philosophy / CTA Section before footer */}
       <section className="py-32 md:py-40 bg-atl-bg text-center flex flex-col items-center justify-center relative z-10 px-6">
-        <h2 className="font-display text-3xl md:text-5xl mb-8">De la Idee la Realitate</h2>
+        <h2 className="sr-only">Solicita o Oferta Gratuita</h2>
+        <p className="font-display text-3xl md:text-5xl mb-8 m-0">De la Idee la Realitate</p>
         <div className="max-w-3xl text-gray-800 font-light mb-12 leading-relaxed text-lg md:text-xl">
           Fie ca ai nevoie de o bucatarie moderna optimizata pentru spatii mici sau de un dressing complex, 
           echipa noastra se ocupa de tot procesul: <strong>masuratori, proiectare 3D, executie si montaj</strong> in 

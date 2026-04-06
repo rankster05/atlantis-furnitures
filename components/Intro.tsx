@@ -47,9 +47,9 @@ const Intro: React.FC = () => {
   return (
     <section ref={containerRef} id="about" className="py-24 md:py-32 px-6 md:px-20 grid md:grid-cols-2 gap-12 md:gap-16 max-w-[1800px] mx-auto bg-atl-bg">
       <div>
-        <h2 className="font-display text-3xl md:text-5xl leading-tight" aria-label="Design modern adaptat nevoilor tale. Atlantis Furnitures.">
+        <h2 className="font-display text-3xl md:text-5xl leading-tight" aria-label="Mobilier Modern Adaptat Nevoilor Tale">
           <span className="split-animate block" aria-hidden="true">
-            {splitText("Design modern adaptat nevoilor tale.")}
+            {splitText("Mobilier Modern Adaptat Nevoilor Tale")}
           </span>
           <br/>
           <span className="text-atl-accent italic mt-2 block split-animate" aria-hidden="true">
@@ -71,11 +71,11 @@ const Intro: React.FC = () => {
         <div className="h-px w-full bg-black/10 my-8"></div>
         <div className="flex flex-col md:flex-row gap-6 md:gap-12 split-animate">
           <div>
-            <h3 className="text-sm uppercase tracking-widest text-gray-500 mb-1 font-medium">Materiale</h3>
+            <h3 className="text-sm uppercase tracking-widest text-gray-500 mb-1 font-medium">Materiale Premium</h3>
             <p className="text-sm uppercase tracking-widest font-medium text-gray-900">MDF Vopsit Mat / Lucios / Frezat / Infoliat / Furnir / Lemn Masiv</p>
           </div>
           <div>
-            <h3 className="text-sm uppercase tracking-widest text-gray-500 mb-1 font-medium">Acoperire</h3>
+            <h3 className="text-sm uppercase tracking-widest text-gray-500 mb-1 font-medium">Acoperire Bucuresti si Ilfov</h3>
             <p className="text-sm uppercase tracking-widest font-medium text-gray-900">Nationala / Calitate Premium</p>
           </div>
         </div>

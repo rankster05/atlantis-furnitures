@@ -100,12 +100,12 @@ const Hero: React.FC<HeroProps> = ({ startAnimation = true }) => {
         {/* Artistic Text - H2 - Background Element */}
         {/* Optimized sizing: text-[12vw] instead of 13vw for mobile breathing room */}
         <div className="text-center text-white mix-blend-difference mb-8 md:mb-10 select-none">
-          <h2 className="font-display text-[12vw] md:text-[10.5vw] leading-[0.9] overflow-hidden">
+          <p className="font-display text-[12vw] md:text-[10.5vw] leading-[0.9] overflow-hidden m-0">
             <span className="block hero-line translate-y-full will-change-transform opacity-0">DESIGN</span>
-          </h2>
-          <h2 className="font-display text-[12vw] md:text-[10.5vw] leading-[0.9] overflow-hidden">
+          </p>
+          <p className="font-display text-[12vw] md:text-[10.5vw] leading-[0.9] overflow-hidden m-0">
             <span className="block hero-line translate-y-full will-change-transform opacity-0">UNIC</span>
-          </h2>
+          </p>
         </div>
         
         {/* Main SEO Title - H1 - High Visibility Glass Card */}
@@ -113,11 +113,11 @@ const Hero: React.FC<HeroProps> = ({ startAnimation = true }) => {
           <div className="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl md:rounded-full p-1.5 shadow-2xl">
             <h1 className="bg-black/60 rounded-xl md:rounded-full px-5 py-4 md:px-10 md:py-5 text-center text-white border border-white/5 shadow-lg">
               <span className="block md:inline font-display text-xl md:text-2xl tracking-widest mb-1 md:mb-0 md:mr-3 drop-shadow-md">
-                ATLANTIS FURNITURES
+                Mobilier la Comanda in Bucuresti si Ilfov
               </span>
               <span className="hidden md:inline text-white/40 mx-2 text-xl font-thin">|</span>
               <span className="block md:inline font-body text-sm md:text-base font-normal tracking-[0.15em] uppercase opacity-90 drop-shadow-md mt-1 md:mt-0">
-                Mobila la Comanda &bull; Calitate Premium
+                Atlantis Furnitures
               </span>
             </h1>
           </div>

@@ -136,8 +136,8 @@ const Services: React.FC = () => {
   return (
     <div ref={containerRef} className="min-h-screen bg-atl-dark text-atl-bg relative overflow-hidden">
       <SEO 
-        title="Servicii de Proiectare si Montaj Mobila | Atlantis Furnitures" 
-        description="Consultanta design premium ✓ productie din mdf vopsit ✓ montaj profesional. Transforma-ti ideile in realitate ⭐ cu Atlantis Furnitures. Cere o oferta!"
+        title="Mobilier la Comanda pentru Casa si Birou | Atlantis" 
+        description="Bucatarii, livinguri, dormitoare, dressing-uri si office la comanda in Bucuresti si Ilfov. Materiale premium, montaj inclus. Cere oferta!"
         keywords="proiectare 3d mobila gratuita, masuratori mobila la domiciliu, montaj mobilier inclus, proces vopsire mdf, consultanta design mobilier, feronerie blum premium, servicii proiectare bucatarii, producator mobila cu montaj inclus"
         canonicalUrl="https://atlantisfurnitures.ro/servicii"
       />

@@ -151,11 +151,11 @@ const Testimonials: React.FC = () => {
           <div className="header-anim max-w-2xl w-full">
             <div className="flex items-center gap-3 mb-6">
                <GoogleLogo />
-               <span className="text-sm font-bold text-white tracking-wide">Google Reviews</span>
+               <h3 className="text-sm font-bold text-white tracking-wide m-0">Recenzii Verificate Google</h3>
             </div>
             
             <h2 className="font-display text-3xl sm:text-4xl md:text-6xl mb-8 leading-[1.1] md:leading-none">
-              Ce Spun <br/> Clientii Nostri
+              Ce Spun Clientii Nostri
             </h2>
             
             {/* Google Badge - Official Look */}
@@ -204,7 +204,7 @@ const Testimonials: React.FC = () => {
                                 {review.initial}
                             </div>
                             <div>
-                                <h4 className="font-bold text-sm text-white">{review.name}</h4>
+                                <p className="font-bold text-sm text-white m-0">{review.name}</p>
                                 <span className="text-xs text-gray-500">{review.date}</span>
                             </div>
                         </div>
@@ -272,9 +272,9 @@ const Testimonials: React.FC = () => {
                           <span className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.25em] text-white/80">Zona de Acoperire</span>
                        </div>
                        
-                       <h3 className="font-display text-3xl sm:text-4xl md:text-5xl text-white mb-3 md:mb-4 leading-tight tracking-tight">
+                       <p className="font-display text-3xl sm:text-4xl md:text-5xl text-white mb-3 md:mb-4 leading-tight tracking-tight m-0">
                          Acoperire Nationala
-                       </h3>
+                       </p>
                        
                        <p className="text-gray-400 font-light text-sm sm:text-base max-w-md leading-relaxed">
                          Oferim servicii complete de masuratori, proiectare si montaj la nivel national pentru proiecte premium.
