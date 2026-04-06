@@ -3,17 +3,17 @@ import { Helmet } from 'react-helmet-async';
 
 interface SEOProps {
   title: string;
-  description?: string;
+  description: string;
+  canonicalUrl: string;
   image?: string;
   schema?: object;
-  canonicalUrl?: string;
   keywords?: string;
   noindex?: boolean;
 }
 
 const SEO: React.FC<SEOProps> = ({ 
   title, 
-  description = "Mobila la comanda premium. Bucatarii MDF, Dressinguri, Amenajari interioare complete.",
+  description,
   image = "/projects/AP AIR-U/design-interior-apartament-modern-unirii-atlantis-furnitures.webp",
   schema,
   canonicalUrl,
@@ -21,97 +21,24 @@ const SEO: React.FC<SEOProps> = ({
   noindex = false
 }) => {
   const siteTitle = "Atlantis Furnitures";
-  const fullTitle = title.includes('|') ? title : (title === "Home" ? `Mobilier la Comanda Premium | ${siteTitle}` : `${title} | ${siteTitle}`);
-  // Use a fallback URL if window is undefined during build time (SSR safe)
-  const currentUrl = canonicalUrl || (typeof window !== 'undefined' ? window.location.href : 'https://atlantisfurnitures.ro');
-
-  // Default Schema.org Structured Data for Local Business
-  const localBusinessSchema = {
-    "@context": "https://schema.org",
-    "@type": "FurnitureStore",
-    "name": "Atlantis Furnitures",
-    "image": [image],
-    "description": description,
-    "url": "https://atlantisfurnitures.ro",
-    "telephone": "+40732717666",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Aleea Argesului nr. 70",
-      "addressLocality": "Budeasa Mare",
-      "addressRegion": "Arges",
-      "addressCountry": "RO"
-    },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": 44.9189,
-      "longitude": 24.8392
-    },
-    "openingHoursSpecification": [
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        "opens": "08:00",
-        "closes": "19:00"
-      }
-    ],
-    "areaServed": "RO",
-    "priceRange": "$$$",
-    "sameAs": [
-      "https://www.facebook.com/profile.php?id=100057578914043",
-      "https://www.instagram.com/atlantis_furnitures66/"
-    ]
-  };
-
-  const organizationSchema = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Atlantis Furnitures",
-    "url": "https://atlantisfurnitures.ro",
-    "logo": "https://atlantisfurnitures.ro/favicon.svg",
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "telephone": "+40732717666",
-      "contactType": "customer service",
-      "areaServed": "RO",
-      "availableLanguage": "Romanian"
-    },
-    "sameAs": [
-      "https://www.facebook.com/profile.php?id=100057578914043",
-      "https://www.instagram.com/atlantis_furnitures66/"
-    ]
-  };
-
-  const structuredData = schema || [localBusinessSchema, organizationSchema];
+  const fullTitle = title.includes('|') ? title : `${title} | ${siteTitle}`;
 
   return (
-    <Helmet>
-      {/* Standard Metadata */}
+    <Helmet prioritizeSeoTags>
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
       <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
-      {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
-
-      {/* Open Graph / Facebook */}
+      <link rel="canonical" href={canonicalUrl} />
       <meta property="og:type" content="website" />
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
-      <meta property="og:url" content={currentUrl} />
-      <meta property="og:locale" content="ro_RO" />
-      <meta property="og:site_name" content="Atlantis Furnitures" />
-
-      {/* Twitter */}
+      <meta property="og:url" content={canonicalUrl} />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image} />
-      <meta name="twitter:creator" content="@atlantisfurnitures" />
-
-      {/* Structured Data (JSON-LD) */}
-      <script type="application/ld+json">
-        {JSON.stringify(structuredData)}
-      </script>
     </Helmet>
   );
 };

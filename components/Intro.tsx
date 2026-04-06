@@ -51,7 +51,6 @@ const Intro: React.FC = () => {
     <section ref={containerRef} id="about" className="py-24 md:py-32 px-6 md:px-20 grid md:grid-cols-2 gap-12 md:gap-16 max-w-[1800px] mx-auto bg-atl-bg">
       <div className="text-center md:text-left">
         <h2 className="font-display text-2xl md:text-3xl lg:text-4xl leading-[1.3] md:leading-[1.2] text-gray-900" aria-label="Mobilier Modern Adaptat Nevoilor Tale">
-          <span className="sr-only">Mobilier Modern Adaptat Nevoilor Tale</span>
           <span className="split-animate block" aria-hidden="true">
             {splitText("Mobilier Modern Adaptat Nevoilor Tale")}
           </span>
