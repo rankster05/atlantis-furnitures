@@ -109,11 +109,15 @@ const Hero: React.FC<HeroProps> = ({ startAnimation = true }) => {
         </div>
         
         {/* Main SEO Title - H1 - High Visibility Glass Card */}
-        <div className="hero-subtitle opacity-0 translate-y-10 w-full max-w-[95%] md:max-w-5xl mx-auto">
+        <div className="hero-subtitle opacity-0 translate-y-10 w-full max-w-[90%] md:max-w-5xl mx-auto">
           <div className="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl md:rounded-full p-1.5 shadow-2xl">
-            <h1 className="bg-black/60 rounded-xl md:rounded-full px-6 py-5 md:px-12 md:py-6 text-center text-white border border-white/5 shadow-lg">
-              <span className="block font-display text-lg sm:text-xl md:text-3xl tracking-[0.1em] md:tracking-[0.2em] drop-shadow-md uppercase leading-tight">
-                Mobilier Modern Adaptat Nevoilor Tale
+            <h1 className="bg-black/60 rounded-xl md:rounded-full px-5 py-4 md:px-10 md:py-5 text-center text-white border border-white/5 shadow-lg flex flex-col md:flex-row items-center justify-center gap-1 md:gap-0">
+              <span className="font-display text-base md:text-lg tracking-[0.2em] drop-shadow-md">
+                Mobilier la Comanda in Bucuresti
+              </span>
+              <span className="text-white/40 mx-3 text-lg font-thin hidden md:inline"> | </span>
+              <span className="font-display text-xs md:text-sm tracking-[0.25em] uppercase opacity-90 drop-shadow-md">
+                Atlantis Furnitures
               </span>
             </h1>
           </div>

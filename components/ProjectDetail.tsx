@@ -26,6 +26,46 @@ const ProjectDetail: React.FC = () => {
 
   const allImages = project ? [project.mainImage, ...project.gallery.flat()] : [];
 
+  const projectSEO: Record<string, { title: string; description: string }> = {
+    "ap-so": {
+      title: "Penthouse Vasile Lascar – Mobilier Premium | Atlantis",
+      description: "Proiect mobilier la comanda pentru penthouse in zona Vasile Lascar, Bucuresti. MDF furniruit, design minimalist. Vrei un rezultat similar? Contacteaza-ne!"
+    },
+    "ap-cosmo": {
+      title: "Mobilier Apartament Cosmopolis Ilfov | Atlantis Furnitures",
+      description: "Mobilier dormitor si living la comanda pentru apartament in Cosmopolis, Ilfov. PAL si MDF premium, executie si montaj 2024. Cere oferta pentru proiectul tau!"
+    },
+    "csm": {
+      title: "Mobilier Cabinet Medical Pitesti | Atlantis Furnitures",
+      description: "Mobilier la comanda pentru cabinet medical in Pitesti. Executie precisa, materiale durabile, montaj profesional. Ai un spatiu similar? Hai sa discutam!"
+    },
+    "s-house": {
+      title: "Living si Dormitor la Comanda Pipera | Atlantis",
+      description: "Proiect S House Pipera – mobilier living si dormitor din MDF furniruit. Design minimalist, texturi calde. Transforma-ti spatiul – cere oferta gratuita!"
+    },
+    "ap-air-u": {
+      title: "Mobilier Apartament Modern Bucuresti | Atlantis Furnitures",
+      description: "Mobilier complet la comanda pentru apartament in Bucuresti. MDF si PAL premium, design personalizat, montaj inclus. Hai sa construim impreuna spatiul ideal!"
+    },
+    "studio-air-v": {
+      title: "Mobilier Studio la Comanda Bucuresti | Atlantis Furnitures",
+      description: "Amenajare mobilier la comanda pentru studio in Bucuresti. Solutii inteligente de depozitare, materiale premium. Maximeaza spatiul – cere oferta acum!"
+    },
+    "tei-house": {
+      title: "Mobilier Casa Zona Tei Bucuresti | Atlantis Furnitures",
+      description: "Mobilier la comanda pentru casa in zona Tei, Bucuresti. Living, dormitor si spatii functionale din MDF si PAL. Vrei acelasi rezultat? Contacteaza-ne!"
+    },
+    "office": {
+      title: "Mobilier Office la Comanda Bucuresti | Atlantis Furnitures",
+      description: "Mobilier de birou la comanda in Bucuresti. Birouri, dulapuri si spatii de lucru personalizate din MDF si PAL premium. Solicita oferta pentru biroul tau!"
+    }
+  };
+
+  const seo = (slug && projectSEO[slug]) || {
+    title: "Proiect Mobilier la Comanda | Atlantis Furnitures",
+    description: "Proiect de mobilier la comanda executat de Atlantis Furnitures in Bucuresti si Ilfov. Cere oferta!"
+  };
+
   const openLightbox = (imgSrc: string) => {
     const index = allImages.indexOf(imgSrc);
     if (index !== -1) {
@@ -200,42 +240,11 @@ const ProjectDetail: React.FC = () => {
 
   if (!project) return null;
 
-  // Construct Schema.org data for the project
-  const projectSchema = {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    "name": project.title,
-    "image": [project.mainImage, ...project.gallery.flat()],
-    "description": project.description,
-    "brand": {
-      "@type": "Brand",
-      "name": "Atlantis Furnitures"
-    },
-    "category": project.category,
-    "material": project.services || "MDF Vopsit, Lemn, PAL",
-    "productionDate": project.year,
-    "offers": {
-      "@type": "Offer",
-      "priceCurrency": "RON",
-      "availability": "https://schema.org/InStock",
-      "seller": {
-        "@type": "Organization",
-        "name": "Atlantis Furnitures"
-      }
-    }
-  };
-
-  const canonicalUrl = `https://atlantisfurnitures.ro/proiecte/${project.slug}`;
-
   return (
     <div ref={containerRef} className="bg-atl-dark text-atl-bg min-h-screen">
       <SEO 
-        title={project.seoTitle || project.title} 
-        description={project.seoDescription || `Vezi detalii despre proiectul ${project.title} (${project.category}). ${project.description.substring(0, 100)}...`}
-        keywords={project.seoKeywords}
-        image={project.mainImage}
-        schema={projectSchema}
-        canonicalUrl={canonicalUrl}
+        title={seo.title} 
+        description={seo.description}
       />
       
       {/* Parallax Hero Section */}
