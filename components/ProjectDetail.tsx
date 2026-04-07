@@ -52,6 +52,11 @@ const ProjectDetail: React.FC = () => {
       description: "Mobilier complet la comanda pentru apartament in Bucuresti. MDF si PAL premium, design personalizat, montaj inclus. Hai sa construim impreuna spatiul ideal!",
       canonicalUrl: "https://atlantisfurnitures.ro/proiecte/ap-air-u"
     },
+    "ap-air-v": {
+      title: "Mobilier Apartament Modern la Comanda | Atlantis Furnitures",
+      description: "Proiect mobilier la comanda pentru apartament modern in Bucuresti. MDF si PAL premium, design personalizat, montaj inclus. Vrei acelasi rezultat? Contacteaza-ne!",
+      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/ap-air-v"
+    },
     "studio-air-v": {
       title: "Mobilier Studio la Comanda Bucuresti | Atlantis Furnitures",
       description: "Amenajare mobilier la comanda pentru studio in Bucuresti. Solutii inteligente de depozitare, materiale premium. Maximeaza spatiul – cere oferta acum!",
