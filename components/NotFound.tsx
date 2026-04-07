@@ -27,6 +27,7 @@ const NotFound: React.FC = () => {
       <SEO 
         title="Pagina Nu A Fost Gasita | Atlantis Furnitures" 
         description="Ne cerem scuze, dar pagina pe care o cautati nu exista sau a fost mutata."
+        canonicalUrl="https://atlantisfurnitures.ro/404"
         noindex={true}
       />
       

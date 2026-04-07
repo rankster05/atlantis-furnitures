@@ -97,7 +97,7 @@ const Footer: React.FC = () => {
         ref={bgRef}
         src="/projects/S House/mobilier-dormitor-modern-perete-riflat-lemn-s-house.webp" 
         loading="lazy"
-        fetchpriority="low"
+        fetchPriority="low"
         className="absolute inset-0 w-full h-full object-cover opacity-10 pointer-events-none grayscale"
         alt="Fundal Footer Atlantis Furnitures"
       />

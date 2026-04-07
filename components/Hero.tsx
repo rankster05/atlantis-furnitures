@@ -92,7 +92,7 @@ const Hero: React.FC<HeroProps> = ({ startAnimation = true }) => {
         className="absolute w-[120vw] max-w-none h-[130vh] object-cover object-center brightness-[0.85] contrast-[1.05] will-change-transform" 
         style={{ left: '-10vw', top: '-15vh' }}
         alt="Modern Kitchen Hero"
-        fetchpriority="high"
+        fetchPriority="high"
         decoding="sync"
       />
       

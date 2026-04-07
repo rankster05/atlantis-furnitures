@@ -49,7 +49,7 @@ const Portfolio: React.FC = () => {
 
       // Items Scroll Animation - Fade In & Slide Up
       const items = gsap.utils.toArray('.pf-item');
-      items.forEach((item: HTMLElement) => {
+      items.forEach((item: any) => {
         gsap.from(item, {
           scrollTrigger: {
             trigger: item,
@@ -163,7 +163,7 @@ const Portfolio: React.FC = () => {
                     alt={`Proiectul ${item.title} - ${item.category}`} 
                     loading="lazy"
                     decoding="async"
-                    fetchpriority="low"
+                    fetchPriority="low"
                     className="pf-img w-full h-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-110 opacity-90 group-hover:opacity-100 brightness-110 contrast-105"
                   />
 

@@ -282,7 +282,7 @@ const ProjectDetail: React.FC = () => {
             alt={`Main view of ${project.title}`}
             className="w-full h-full object-cover object-center cursor-pointer transition-transform duration-700 hover:scale-105 brightness-125 contrast-105"
             onClick={() => openLightbox(project.mainImage)}
-            fetchpriority="high"
+            fetchPriority="high"
             decoding="async"
           />
         </div>

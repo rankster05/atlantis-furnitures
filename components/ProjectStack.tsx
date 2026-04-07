@@ -82,7 +82,7 @@ const ProjectCard = React.memo(({ project }: { project: ProjectWithTarget }) => 
             src={getOptimizedImageUrl(project.imageUrl)} 
             loading="lazy"
             decoding="async"
-            fetchpriority="low"
+            fetchPriority="low"
             className="card-img w-full h-full object-cover transition-all duration-[1200ms] ease-out group-hover:scale-105 group-hover:brightness-120 brightness-110 contrast-105" 
             alt={project.title} 
           />
@@ -100,7 +100,7 @@ const ProjectStack: React.FC = () => {
     const ctx = gsap.context(() => {
       const cards = gsap.utils.toArray('.card-item');
       
-      cards.forEach((card: HTMLElement, i) => {
+      cards.forEach((card: any, i) => {
         const nextCard = cards[i + 1] as HTMLElement;
         const innerCard = card.querySelector('.card-inner');
 

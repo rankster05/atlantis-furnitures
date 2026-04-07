@@ -23,7 +23,7 @@ const Intro: React.FC = () => {
       // Select all elements that need splitting animation
       const splitElements = gsap.utils.toArray('.split-animate');
       
-      splitElements.forEach((el: HTMLElement) => {
+      splitElements.forEach((el: any) => {
         // Find inner words
         const words = el.querySelectorAll('.word-inner');
         
