@@ -1,4 +1,5 @@
 import React, { useLayoutEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Instagram, Facebook, ArrowUp } from 'lucide-react';
@@ -187,10 +188,18 @@ const Footer: React.FC = () => {
           <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 md:absolute md:left-1/2 md:-translate-x-1/2">
             <span className="leading-none">© {new Date().getFullYear()} ATLANTIS FURNITURES</span>
             <span className="hidden md:block leading-none opacity-20 text-gray-500">|</span>
-            <a 
-              href="https://www.rankster.ro" 
-              target="_blank" 
-              rel="noopener noreferrer" 
+            <Link
+              to="/politica-confidentialitate"
+              className="leading-none opacity-60 hover:opacity-100 hover:text-white transition-all duration-300"
+              aria-label="Politica de Confidentialitate GDPR"
+            >
+              Confidentialitate
+            </Link>
+            <span className="hidden md:block leading-none opacity-20 text-gray-500">|</span>
+            <a
+              href="https://www.rankster.ro"
+              target="_blank"
+              rel="noopener noreferrer"
               className="group flex items-center gap-1.5 opacity-60 hover:opacity-100 hover:text-white transition-all duration-300 leading-none"
               aria-label="Website creat de Rankster"
             >

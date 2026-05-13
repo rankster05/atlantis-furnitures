@@ -1,6 +1,111 @@
+# Atlantis Furnitures — robots.txt
+# https://atlantisfurnitures.ro
+
+# ─────────────────────────────────────────
+# Crawleri standard (search engines)
+# ─────────────────────────────────────────
 User-agent: *
 Allow: /
+Disallow: /politica-confidentialitate
 Disallow: /admin/
 Disallow: /private/
 
+# ─────────────────────────────────────────
+# Crawleri AI — permisi explicit pentru GEO
+# (Generative Engine Optimization)
+# Permite recomandarea brandului in ChatGPT,
+# Claude, Gemini, Perplexity, Copilot etc.
+# ─────────────────────────────────────────
+
+# OpenAI (ChatGPT, ChatGPT Search)
+User-agent: GPTBot
+Allow: /
+Disallow: /politica-confidentialitate
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /politica-confidentialitate
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Anthropic (Claude, claude.ai)
+User-agent: ClaudeBot
+Allow: /
+Disallow: /politica-confidentialitate
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+# Google AI (Gemini, AI Overviews, Bard)
+User-agent: Google-Extended
+Allow: /
+Disallow: /politica-confidentialitate
+
+# Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+Disallow: /politica-confidentialitate
+
+User-agent: Perplexity-User
+Allow: /
+
+# Microsoft (Bing AI, Copilot)
+User-agent: bingbot
+Allow: /
+Disallow: /politica-confidentialitate
+
+# Apple Intelligence
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /politica-confidentialitate
+
+# Meta AI (Llama, Meta AI Search)
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: Meta-ExternalFetcher
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+# ByteDance / TikTok AI
+User-agent: Bytespider
+Allow: /
+
+# Common Crawl (folosit ca date training de multe AI-uri)
+User-agent: CCBot
+Allow: /
+Disallow: /politica-confidentialitate
+
+# DuckDuckGo
+User-agent: DuckDuckBot
+Allow: /
+
+# You.com
+User-agent: YouBot
+Allow: /
+
+# Mistral AI
+User-agent: MistralAI-User
+Allow: /
+
+# Cohere
+User-agent: cohere-ai
+Allow: /
+
+# Diffbot (knowledge graph)
+User-agent: Diffbot
+Allow: /
+
+# ─────────────────────────────────────────
+# Sitemap & LLM context
+# ─────────────────────────────────────────
 Sitemap: https://atlantisfurnitures.ro/sitemap.xml

@@ -85,15 +85,15 @@ const Hero: React.FC<HeroProps> = ({ startAnimation = true }) => {
 
   return (
     <section ref={containerRef} id="hero" className="h-screen w-full relative flex items-center justify-center overflow-hidden">
-      {/* OPTIMIZATION: fetchpriority="high" and decoding="sync" ensures this LCP element loads ASAP */}
-      <img 
+      {/* LCP element — preloaded in index.html via <link rel="preload"> */}
+      <img
         ref={imgRef}
-        src="/projects/AP AIR-V/amenajare-open-space-apartament-modern-victoriei-atlantis.webp" 
-        className="absolute w-[120vw] max-w-none h-[130vh] object-cover object-center brightness-[0.85] contrast-[1.05] will-change-transform" 
+        src="/projects/AP AIR-V/amenajare-open-space-apartament-modern-victoriei-atlantis.webp"
+        className="absolute w-[120vw] max-w-none h-[130vh] object-cover object-center brightness-[0.85] contrast-[1.05]"
         style={{ left: '-10vw', top: '-15vh' }}
-        alt="Modern Kitchen Hero"
+        alt="Mobilier la comanda - apartament modern Bucuresti, design interior premium"
         fetchPriority="high"
-        decoding="sync"
+        decoding="async"
       />
       
       <div ref={textRef} className="relative z-10 flex flex-col items-center justify-center w-full px-6 h-full pt-16 md:pt-0">
@@ -101,10 +101,10 @@ const Hero: React.FC<HeroProps> = ({ startAnimation = true }) => {
         {/* Optimized sizing: text-[12vw] instead of 13vw for mobile breathing room */}
         <div className="text-center text-white mix-blend-difference mb-8 md:mb-10 select-none">
           <p className="font-display text-[12vw] md:text-[10.5vw] leading-[0.9] overflow-hidden m-0">
-            <span className="block hero-line translate-y-full will-change-transform opacity-0">DESIGN</span>
+            <span className="block hero-line translate-y-full opacity-0">DESIGN</span>
           </p>
           <p className="font-display text-[12vw] md:text-[10.5vw] leading-[0.9] overflow-hidden m-0">
-            <span className="block hero-line translate-y-full will-change-transform opacity-0">UNIC</span>
+            <span className="block hero-line translate-y-full opacity-0">UNIC</span>
           </p>
         </div>
         

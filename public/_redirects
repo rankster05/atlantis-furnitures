@@ -1,1 +1,7 @@
-/* /index.html 200
+# Fisierele pre-renderate au prioritate (Netlify le servește automat dacă există).
+# Pentru orice rută necunoscută, servim index.html dar cu status 200 (SPA fallback)
+# pentru ca React Router să afișeze pagina NotFound (care are deja noindex).
+# Nota: paginile NotFound nu sunt indexabile datorită <meta name="robots" content="noindex">
+# din componenta NotFound.tsx.
+
+/*    /index.html   200

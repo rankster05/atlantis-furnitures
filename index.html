@@ -6,57 +6,57 @@
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#d4af37">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <!-- SEO Meta Tags - Default -->
+
+    <!-- SEO Meta Tags - Default (overwritten per route via prerender) -->
     <title>Mobilier la Comanda Bucuresti | Atlantis Furnitures</title>
-    <meta name="keywords" content="mobilier la comanda premium, mobila mdf vopsit, mobila la comanda, producator mobila premium, bucatarii la comanda, dressinguri la comanda">
+    <meta name="description" content="Producem mobilier la comanda din MDF si PAL pentru Bucuresti si Ilfov. Bucatarii, livinguri, dormitoare, dressing-uri, office. Cere oferta gratuita azi!">
+    <meta name="keywords" content="mobilier la comanda bucuresti, mobila mdf vopsit, bucatarii la comanda, dressinguri la comanda, mobila premium, atlantis furnitures">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="author" content="Atlantis Furnitures" />
+    <link rel="canonical" href="https://atlantisfurnitures.ro/">
 
-    <!-- Open Graph / Facebook / Instagram -->
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Atlantis Furnitures">
+    <meta property="og:locale" content="ro_RO">
     <meta property="og:url" content="https://atlantisfurnitures.ro/">
-    <meta property="og:title" content="Mobilier la Comanda Premium | Atlantis Furnitures">
-    <meta property="og:description" content="Transformam spatiul tau cu mobilier la comanda din MDF vopsit. Masuratori si proiectare 3D pentru proiecte premium.">
-    <meta property="og:image" content="https://atlantisfurnitures.ro/images/og-image-bucatarie-mdf.jpg">
-    
+    <meta property="og:title" content="Mobilier la Comanda Bucuresti | Atlantis Furnitures">
+    <meta property="og:description" content="Producem mobilier la comanda din MDF si PAL pentru Bucuresti si Ilfov. Bucatarii, livinguri, dormitoare, dressing-uri, office. Cere oferta gratuita azi!">
+    <meta property="og:image" content="https://atlantisfurnitures.ro/projects/AP%20AIR-U/design-interior-apartament-modern-unirii-atlantis-furnitures.webp">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Mobilier la comanda - apartament modern Bucuresti">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Mobilier la Comanda Bucuresti | Atlantis Furnitures">
+    <meta name="twitter:description" content="Producem mobilier la comanda din MDF si PAL pentru Bucuresti si Ilfov. Bucatarii, livinguri, dormitoare, dressing-uri, office. Cere oferta gratuita azi!">
+    <meta name="twitter:image" content="https://atlantisfurnitures.ro/projects/AP%20AIR-U/design-interior-apartament-modern-unirii-atlantis-furnitures.webp">
+
+    <!-- Performance: preload LCP hero image so fetch starts before JS executes -->
+    <link rel="preload" as="image" href="/projects/AP%20AIR-V/amenajare-open-space-apartament-modern-victoriei-atlantis.webp" fetchpriority="high">
+
+    <!-- Fonts (Google Fonts) — preconnect + display=swap to avoid FOIT -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
-  <script type="importmap">
-{
-  "imports": {
-    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
-    "react/": "https://esm.sh/react@^19.2.4/",
-    "react": "https://esm.sh/react@^19.2.4",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "react-dom": "https://esm.sh/react-dom@^19.2.4",
-    "gsap/": "https://esm.sh/gsap@^3.14.2/",
-    "gsap": "https://esm.sh/gsap@^3.14.2",
-    "lenis": "https://esm.sh/lenis@^1.3.17",
-    "react-router-dom": "https://esm.sh/react-router-dom@6.22.3?external=react,react-dom",
-    "@remix-run/router": "https://esm.sh/@remix-run/router@1.15.3",
-    "react-helmet-async": "https://esm.sh/react-helmet-async@^2.0.4?external=react,react-dom",
-    "@emailjs/browser": "https://esm.sh/@emailjs/browser@3.12.1"
-  }
-}
-</script>
 </head>
   <body>
     <div id="root"></div>
   <script type="module" src="/index.tsx"></script>
 
-  <!-- Structured Data (Schema.org) -->
+  <!-- Structured Data: LocalBusiness -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
+    "@id": "https://atlantisfurnitures.ro/#business",
     "name": "Atlantis Furnitures",
-    "image": "https://atlantisfurnitures.ro/images/logo.png",
-    "@id": "https://atlantisfurnitures.ro/",
+    "description": "Producator mobilier la comanda premium din MDF si PAL pentru Bucuresti, Ilfov si toata tara. Bucatarii, livinguri, dormitoare, dressing-uri si mobilier office.",
+    "image": "https://atlantisfurnitures.ro/projects/AP%20AIR-U/design-interior-apartament-modern-unirii-atlantis-furnitures.webp",
+    "logo": "https://atlantisfurnitures.ro/favicon.svg",
     "url": "https://atlantisfurnitures.ro/",
-    "telephone": "+40700000000",
+    "telephone": "+40732717666",
     "priceRange": "$$$",
     "address": {
       "@type": "PostalAddress",
@@ -71,41 +71,57 @@
       "latitude": 44.9189,
       "longitude": 24.8392
     },
+    "areaServed": [
+      { "@type": "City", "name": "Bucuresti" },
+      { "@type": "AdministrativeArea", "name": "Ilfov" },
+      { "@type": "Country", "name": "Romania" }
+    ],
     "openingHoursSpecification": {
       "@type": "OpeningHoursSpecification",
-      "dayOfWeek": [
-        "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"
-      ],
-      "opens": "09:00",
-      "closes": "18:00"
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "08:00",
+      "closes": "19:00"
     },
     "sameAs": [
-      "https://www.facebook.com/atlantisfurnitures",
-      "https://www.instagram.com/atlantisfurnitures"
+      "https://www.facebook.com/profile.php?id=100057578914043",
+      "https://www.instagram.com/atlantis_furnitures66/"
     ]
   }
   </script>
+
+  <!-- Structured Data: Organization -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "ImageGallery",
-    "name": "Portofoliu Bucatarii si Dressinguri la Comanda",
-    "description": "Imagini cu proiecte recente de mobilier la comanda realizate de Atlantis Furnitures.",
-    "url": "https://atlantisfurnitures.ro/#portofoliu",
-    "mainEntity": [
-      {
-        "@type": "ImageObject",
-        "contentUrl": "https://atlantisfurnitures.ro/images/bucatarie-mdf-vopsit-mat.jpg",
-        "description": "Bucatarie la comanda din MDF vopsit mat cu insula si feronerie Blum.",
-        "name": "Bucatarie MDF Vopsit Mat"
-      },
-      {
-        "@type": "ImageObject",
-        "contentUrl": "https://atlantisfurnitures.ro/images/dressing-usi-culisante.jpg",
-        "description": "Dressing la comanda cu usi culisante si iluminare LED interioara.",
-        "name": "Dressing Modern Usi Culisante"
-      }
+    "@type": "Organization",
+    "@id": "https://atlantisfurnitures.ro/#organization",
+    "name": "Atlantis Furnitures",
+    "url": "https://atlantisfurnitures.ro/",
+    "logo": "https://atlantisfurnitures.ro/favicon.svg",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+40732717666",
+      "contactType": "customer service",
+      "areaServed": "RO",
+      "availableLanguage": ["Romanian"]
+    },
+    "sameAs": [
+      "https://www.facebook.com/profile.php?id=100057578914043",
+      "https://www.instagram.com/atlantis_furnitures66/"
     ]
+  }
+  </script>
+
+  <!-- Structured Data: WebSite -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "https://atlantisfurnitures.ro/#website",
+    "url": "https://atlantisfurnitures.ro/",
+    "name": "Atlantis Furnitures",
+    "publisher": { "@id": "https://atlantisfurnitures.ro/#organization" },
+    "inLanguage": "ro-RO"
   }
   </script>
 </body>
