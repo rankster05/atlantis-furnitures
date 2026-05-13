@@ -161,10 +161,15 @@ for (const route of routes) {
     );
   }
 
+  // Write as flat .html files (e.g. dist/servicii.html) rather than
+  // dist/servicii/index.html. With Netlify's pretty URLs, the file-path form
+  // determines the canonical URL: foo.html → /foo (no trailing slash) while
+  // foo/index.html → /foo/ (forced trailing slash). We want no trailing slash
+  // to match our canonical tags exactly.
   const outPath =
     route.path === '/'
       ? path.join(distDir, 'index.html')
-      : path.join(distDir, route.path.replace(/^\//, ''), 'index.html');
+      : path.join(distDir, route.path.replace(/^\//, '') + '.html');
 
   await fs.mkdir(path.dirname(outPath), { recursive: true });
   await fs.writeFile(outPath, html, 'utf-8');
