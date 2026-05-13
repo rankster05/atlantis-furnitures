@@ -28,7 +28,7 @@ const PrivacyPolicy: React.FC = () => {
       <SEO
         title="Politica de Confidentialitate | Atlantis Furnitures"
         description="Politica de confidentialitate si protectie a datelor personale conform GDPR pentru Atlantis Furnitures."
-        canonicalUrl="https://atlantisfurnitures.ro/politica-confidentialitate"
+        canonicalUrl="https://atlantisfurnitures.ro/politica-confidentialitate/"
         noindex={true}
       />
 

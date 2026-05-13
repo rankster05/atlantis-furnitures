@@ -2,58 +2,21 @@
   publish = "dist"
   command = "npm run build"
 
-# Pretty URLs strip .html extensions and normalize trailing slashes
-# based on the file structure (we use foo.html → /foo, no trailing slash).
-[build.processing]
-  skip_processing = false
-
-[build.processing.html]
-  pretty_urls = true
-
 # ─────────────────────────────────────────
-# Force-strip trailing slashes (belt & suspenders)
-# Guarantees /servicii/ → /servicii regardless of Netlify defaults.
+# Redirects
+# We use a directory-index file structure (dist/servicii/index.html →
+# /servicii/) so Netlify serves trailing-slash URLs natively. Canonical
+# tags and sitemap entries match. The only redirect is the SPA fallback
+# for unknown routes (NotFound component carries its own noindex meta).
 # ─────────────────────────────────────────
-[[redirects]]
-  from = "/servicii/"
-  to = "/servicii"
-  status = 301
-  force = true
 
-[[redirects]]
-  from = "/proiecte/"
-  to = "/proiecte"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/proiecte/:slug/"
-  to = "/proiecte/:slug"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/politica-confidentialitate/"
-  to = "/politica-confidentialitate"
-  status = 301
-  force = true
-
-# Strip .html if someone hits it directly
-[[redirects]]
-  from = "/*.html"
-  to = "/:splat"
-  status = 301
-  force = false
-
-# SPA fallback for unknown routes (NotFound page has noindex)
-# Must come AFTER static files & trailing-slash rules.
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
 
 # ─────────────────────────────────────────
-# Long-term cache for static assets (Vite uses content-hashed filenames)
+# Long-term caching for hashed Vite assets and project images
 # ─────────────────────────────────────────
 [[headers]]
   for = "/assets/*"
@@ -65,11 +28,12 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# Security headers — basic hardening
+# ─────────────────────────────────────────
+# Security headers
+# ─────────────────────────────────────────
 [[headers]]
   for = "/*"
   [headers.values]
     X-Content-Type-Options = "nosniff"
-    X-Frame-Options = "SAMEORIGIN"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "geolocation=(), microphone=(), camera=()"

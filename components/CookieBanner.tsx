@@ -78,7 +78,7 @@ const CookieBanner: React.FC = () => {
               Folosim cookie-uri esentiale pentru a-ti oferi cea mai buna experienta pe site.
               Detalii in{' '}
               <Link
-                to="/politica-confidentialitate"
+                to="/politica-confidentialitate/"
                 className="underline underline-offset-2 hover:text-white transition-colors"
               >
                 Politica de Confidentialitate

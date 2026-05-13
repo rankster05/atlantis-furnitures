@@ -187,14 +187,14 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
               </Link>
 
               <Link 
-                to="/proiecte" 
+                to="/proiecte/" 
                 className={`hover:text-gray-300 transition-colors ${isActive('/proiecte') ? 'underline underline-offset-4 decoration-white/50' : ''}`}
               >
                 Proiecte
               </Link>
 
               <Link 
-                to="/servicii" 
+                to="/servicii/" 
                 className={`hover:text-gray-300 transition-colors ${isActive('/servicii') ? 'underline underline-offset-4 decoration-white/50' : ''}`}
               >
                 Servicii
@@ -291,7 +291,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
               </Link>
 
               <Link 
-                to="/proiecte" 
+                to="/proiecte/" 
                 onClick={closeMenu}
                 className="mobile-nav-link font-display text-4xl tracking-widest hover:text-gray-400 transition-colors text-center"
               >
@@ -299,7 +299,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
               </Link>
 
               <Link 
-                to="/servicii" 
+                to="/servicii/" 
                 onClick={closeMenu}
                 className="mobile-nav-link font-display text-4xl tracking-widest hover:text-gray-400 transition-colors text-center"
               >

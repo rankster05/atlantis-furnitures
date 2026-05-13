@@ -30,54 +30,54 @@ const ProjectDetail: React.FC = () => {
     "ap-so": {
       title: "Penthouse Vasile Lascar – Mobilier Premium | Atlantis",
       description: "Proiect mobilier la comanda pentru penthouse in zona Vasile Lascar, Bucuresti. MDF furniruit, design minimalist. Vrei un rezultat similar? Contacteaza-ne!",
-      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/ap-so"
+      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/ap-so/"
     },
     "ap-cosmo": {
       title: "Mobilier Apartament Cosmopolis Ilfov | Atlantis Furnitures",
       description: "Mobilier dormitor si living la comanda pentru apartament in Cosmopolis, Ilfov. PAL si MDF premium, executie si montaj 2024. Cere oferta pentru proiectul tau!",
-      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/ap-cosmo"
+      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/ap-cosmo/"
     },
     "csm": {
       title: "Mobilier Cabinet Medical Pitesti | Atlantis Furnitures",
       description: "Mobilier la comanda pentru cabinet medical in Pitesti. Executie precisa, materiale durabile, montaj profesional. Ai un spatiu similar? Hai sa discutam!",
-      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/csm"
+      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/csm/"
     },
     "s-house": {
       title: "Living si Dormitor la Comanda Pipera | Atlantis",
       description: "Proiect S House Pipera – mobilier living si dormitor din MDF furniruit. Design minimalist, texturi calde. Transforma-ti spatiul – cere oferta gratuita!",
-      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/s-house"
+      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/s-house/"
     },
     "ap-air-u": {
       title: "Mobilier Apartament Modern Bucuresti | Atlantis Furnitures",
       description: "Mobilier complet la comanda pentru apartament in Bucuresti. MDF si PAL premium, design personalizat, montaj inclus. Hai sa construim impreuna spatiul ideal!",
-      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/ap-air-u"
+      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/ap-air-u/"
     },
     "ap-air-v": {
       title: "Mobilier Apartament Modern la Comanda | Atlantis Furnitures",
       description: "Proiect mobilier la comanda pentru apartament modern in Bucuresti. MDF si PAL premium, design personalizat, montaj inclus. Vrei acelasi rezultat? Contacteaza-ne!",
-      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/ap-air-v"
+      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/ap-air-v/"
     },
     "studio-air-v": {
       title: "Mobilier Studio la Comanda Bucuresti | Atlantis Furnitures",
       description: "Amenajare mobilier la comanda pentru studio in Bucuresti. Solutii inteligente de depozitare, materiale premium. Maximeaza spatiul – cere oferta acum!",
-      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/studio-air-v"
+      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/studio-air-v/"
     },
     "tei-house": {
       title: "Mobilier Casa Zona Tei Bucuresti | Atlantis Furnitures",
       description: "Mobilier la comanda pentru casa in zona Tei, Bucuresti. Living, dormitor si spatii functionale din MDF si PAL. Vrei acelasi rezultat? Contacteaza-ne!",
-      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/tei-house"
+      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/tei-house/"
     },
     "office": {
       title: "Mobilier Office la Comanda Bucuresti | Atlantis Furnitures",
       description: "Mobilier de birou la comanda in Bucuresti. Birouri, dulapuri si spatii de lucru personalizate din MDF si PAL premium. Solicita oferta pentru biroul tau!",
-      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/office"
+      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/office/"
     }
   };
 
   const seo = (slug && projectSEO[slug]) || {
     title: "Proiect Mobilier la Comanda | Atlantis Furnitures",
     description: "Proiect de mobilier la comanda executat de Atlantis Furnitures in Bucuresti si Ilfov. Cere oferta!",
-    canonicalUrl: "https://atlantisfurnitures.ro/proiecte"
+    canonicalUrl: "https://atlantisfurnitures.ro/proiecte/"
   };
 
   const openLightbox = (imgSrc: string) => {
@@ -99,7 +99,7 @@ const ProjectDetail: React.FC = () => {
       const nextIndex = (currentIndex + 1) % portfolioItems.length;
       setNextProject(portfolioItems[nextIndex]);
     } else {
-      navigate('/proiecte');
+      navigate('/proiecte/');
     }
   }, [slug, navigate]);
 
@@ -266,7 +266,7 @@ const ProjectDetail: React.FC = () => {
       <div ref={heroRef} className="relative w-full h-[100dvh] overflow-hidden bg-atl-dark">
         {/* Back Button */}
         <Link 
-          to="/proiecte" 
+          to="/proiecte/" 
           className="absolute top-24 md:top-32 left-5 md:left-12 z-50 flex items-center gap-3 text-white/70 hover:text-white transition-all duration-300 group"
           aria-label="Inapoi la proiecte"
         >
@@ -452,7 +452,7 @@ const ProjectDetail: React.FC = () => {
       {/* Next Project Footer */}
       {nextProject && (
         <Link 
-          to={`/proiecte/${nextProject.slug}`} 
+          to={`/proiecte/${nextProject.slug}/`}
           className="block group relative h-[40dvh] md:h-[50dvh] overflow-hidden"
           aria-label={`Vezi urmatorul proiect: ${nextProject.title}`}
         >

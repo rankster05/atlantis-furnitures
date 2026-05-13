@@ -96,7 +96,7 @@ const Portfolio: React.FC = () => {
       <SEO
         title="Portofoliu Mobilier la Comanda | Atlantis Furnitures"
         description="Vezi proiectele noastre finalizate de mobilier la comanda in Bucuresti si Ilfov. Bucatarii, livinguri, dormitoare si spatii comerciale. Inspira-te acum!"
-        canonicalUrl="https://atlantisfurnitures.ro/proiecte"
+        canonicalUrl="https://atlantisfurnitures.ro/proiecte/"
       />
       
       <section ref={containerRef} className="pt-28 md:pt-48 pb-16 md:pb-20 min-h-screen bg-atl-dark text-atl-bg px-4 md:px-12 relative overflow-hidden">
@@ -150,7 +150,7 @@ const Portfolio: React.FC = () => {
           <div id="project-grid" className="pf-grid grid grid-cols-1 md:grid-cols-2 gap-x-6 md:gap-x-10 gap-y-12 md:gap-y-32 min-h-[50vh]">
             {filteredItems.map((item, index) => (
               <Link 
-                to={`/proiecte/${item.slug}`} 
+                to={`/proiecte/${item.slug}/`} 
                 key={item.id} 
                 className="pf-item group cursor-pointer block w-full"
                 aria-label={`Vezi proiectul ${item.title}`}

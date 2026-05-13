@@ -63,7 +63,7 @@ const ProjectCard = React.memo(({ project }: { project: ProjectWithTarget }) => 
           {/* Button Area */}
           <div className="mt-4 pt-4 md:mt-6 md:pt-6 border-t border-white/5 w-full shrink-0">
             <Link 
-              to="/proiecte"
+              to="/proiecte/"
               aria-label={`Vezi detalii despre ${project.title}`}
               className="group/btn relative inline-flex items-center gap-3 px-6 py-3 md:px-8 md:py-4 bg-transparent border border-white/20 overflow-hidden transition-all duration-500 hover:border-white hover:bg-white"
             >

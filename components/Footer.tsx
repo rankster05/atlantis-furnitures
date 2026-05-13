@@ -189,7 +189,7 @@ const Footer: React.FC = () => {
             <span className="leading-none">© {new Date().getFullYear()} ATLANTIS FURNITURES</span>
             <span className="hidden md:block leading-none opacity-20 text-gray-500">|</span>
             <Link
-              to="/politica-confidentialitate"
+              to="/politica-confidentialitate/"
               className="leading-none opacity-60 hover:opacity-100 hover:text-white transition-all duration-300"
               aria-label="Politica de Confidentialitate GDPR"
             >

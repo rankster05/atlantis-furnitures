@@ -101,7 +101,10 @@ const baseHtml = await fs.readFile(path.join(distDir, 'index.html'), 'utf-8');
 
 let count = 0;
 for (const route of routes) {
-  const canonical = `${SITE}${route.path === '/' ? '/' : route.path}`;
+  // Trailing slash on all routes — matches the directory-index structure
+  // (dist/servicii/index.html → /servicii/) that Netlify serves by default.
+  const canonical =
+    route.path === '/' ? `${SITE}/` : `${SITE}${route.path}/`;
   const ogImage = encodeOgImage(route.image);
   const titleEsc = escapeHtml(route.title);
   const descEsc = escapeHtml(route.description);
@@ -161,15 +164,13 @@ for (const route of routes) {
     );
   }
 
-  // Write as flat .html files (e.g. dist/servicii.html) rather than
-  // dist/servicii/index.html. With Netlify's pretty URLs, the file-path form
-  // determines the canonical URL: foo.html → /foo (no trailing slash) while
-  // foo/index.html → /foo/ (forced trailing slash). We want no trailing slash
-  // to match our canonical tags exactly.
+  // Directory-index structure (dist/servicii/index.html → /servicii/).
+  // Netlify serves these naturally with a trailing slash, which we match
+  // in the canonical and sitemap URLs for full consistency.
   const outPath =
     route.path === '/'
       ? path.join(distDir, 'index.html')
-      : path.join(distDir, route.path.replace(/^\//, '') + '.html');
+      : path.join(distDir, route.path.replace(/^\//, ''), 'index.html');
 
   await fs.mkdir(path.dirname(outPath), { recursive: true });
   await fs.writeFile(outPath, html, 'utf-8');
