@@ -179,3 +179,26 @@ for (const route of routes) {
 }
 
 console.log(`\n✅ Prerendered ${count} routes to dist/`);
+
+// ─────────────────────────────────────────
+// Generate dist/404.html — Netlify auto-serves this for unknown paths,
+// so we don't need a catch-all SPA fallback in netlify.toml (which
+// otherwise risks intercepting valid routes too aggressively).
+// ─────────────────────────────────────────
+const notFoundHtml = baseHtml
+  .replace(
+    /<title>[\s\S]*?<\/title>/,
+    `<title>Pagina Nu A Fost Gasita | Atlantis Furnitures</title>`
+  )
+  .replace(
+    /<meta name="description" content="[^"]*">/,
+    `<meta name="description" content="Pagina cautata nu exista sau a fost mutata.">`
+  )
+  .replace(
+    /<meta name="robots" content="[^"]*">/,
+    `<meta name="robots" content="noindex, nofollow">`
+  );
+
+await fs.writeFile(path.join(distDir, '404.html'), notFoundHtml, 'utf-8');
+console.log('  ✓ /404 (Netlify default 404 page)');
+
