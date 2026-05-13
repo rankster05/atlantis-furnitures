@@ -3,8 +3,6 @@ import { BrowserRouter as Router, Routes, Route, useLocation, useNavigationType 
 import Lenis from 'lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { HelmetProvider } from 'react-helmet-async';
-
 import Loader from './components/Loader';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -165,11 +163,9 @@ const AppContent: React.FC = () => {
 
 const App: React.FC = () => {
   return (
-    <HelmetProvider>
-      <Router>
-        <AppContent />
-      </Router>
-    </HelmetProvider>
+    <Router>
+      <AppContent />
+    </Router>
   );
 };
 
