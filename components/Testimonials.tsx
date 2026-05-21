@@ -160,7 +160,7 @@ const Testimonials: React.FC = () => {
             
             {/* Google Badge - Official Look */}
             <a 
-              href="https://maps.app.goo.gl/XTWjkhW4PmYDpWGG8" 
+              href="https://www.google.com/maps?cid=5080307166075099712" 
               target="_blank" 
               rel="noopener noreferrer"
               className="group inline-flex items-center gap-4 bg-[#1a1a1a] border border-white/10 rounded-lg p-4 hover:border-white/30 transition-all duration-300"
@@ -236,7 +236,7 @@ const Testimonials: React.FC = () => {
         {/* Service Area Map Module - Optimized Visibility */}
         <div className="map-section px-4 sm:px-6 md:px-12 lg:px-20 max-w-[1600px] mx-auto">
            <a 
-             href="https://maps.app.goo.gl/XTWjkhW4PmYDpWGG8"
+             href="https://www.google.com/maps?cid=5080307166075099712"
              target="_blank"
              rel="noopener noreferrer"
              className="map-card group block relative w-full h-[400px] sm:h-[450px] md:h-[550px] lg:h-[600px] overflow-hidden rounded-2xl md:rounded-3xl border border-white/5 shadow-2xl"
@@ -244,16 +244,16 @@ const Testimonials: React.FC = () => {
            >
               {/* Map Container - Deep Dark Premium Filter */}
               <div className="absolute inset-0 bg-[#050505] transition-transform duration-[2s] group-hover:scale-105">
-                 <iframe 
-                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d182276.57463765476!2d25.95455268487771!3d44.43792697843339!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b1f93abf3cad4f%3A0xac0632e37c9ca628!2sBucure%C8%99ti!5e0!3m2!1sen!2sro!4v1710000000000!5m2!1sen!2sro" 
-                   width="100%" 
-                   height="100%" 
-                   style={{border:0, filter: 'grayscale(100%) invert(92%) contrast(83%) brightness(85%) hue-rotate(180deg)'}} 
-                   allowFullScreen={false} 
-                   loading="lazy" 
+                 <iframe
+                   src="https://maps.google.com/maps?cid=5080307166075099712&z=13&output=embed"
+                   width="100%"
+                   height="100%"
+                   style={{border:0, filter: 'grayscale(100%) invert(92%) contrast(83%) brightness(85%) hue-rotate(180deg)'}}
+                   allowFullScreen={false}
+                   loading="lazy"
                    referrerPolicy="no-referrer-when-downgrade"
                    className="opacity-50 group-hover:opacity-40 transition-opacity duration-700 pointer-events-none"
-                   title="Zona de Acoperire Atlantis Furnitures"
+                   title="Locatia Atlantis Furnitures pe Google Maps"
                  ></iframe>
               </div>
               
