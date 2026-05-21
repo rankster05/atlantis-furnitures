@@ -18,6 +18,11 @@ const partnerCategories = [
         description: 'Studio de arhitectura si design interior cu o vasta experienta in proiecte rezidentiale premium. Echipa se remarca prin amenajari spectaculoase pentru apartamente si penthouse-uri, oferind un design rafinat, atentie obsesiva la detalii si solutii personalizate care redefinesc standardele locuirii moderne.'
       },
       {
+        name: 'Armonia Studio',
+        url: 'https://armoniastudiodesign.ro/',
+        description: 'Studio de design interior care creeaza amenajari echilibrate, unde fiecare element contribuie la o atmosfera coerenta si rafinata. Echipa abordeaza proiectele rezidentiale cu atentie deosebita la cromatica, texturi si compozitia spatiala, transformand locuintele in ambiente armonioase care reflecta perfect stilul de viata al clientului.'
+      },
+      {
         name: 'Above Interiors',
         url: 'https://aboveinteriors.ro',
         description: 'Echipa dedicata de designeri ce ofera servicii complete si integrate. Procesul lor acopera absolut totul: de la conceptul initial, relevee si randari 3D ultra-realiste, pana la schite tehnice, planuri detaliate, coordonarea atenta a santierului si executia finala a proiectului, transformand orice spatiu intr-un camin ideal.'
@@ -185,7 +190,15 @@ const Services: React.FC = () => {
                 </div>
               </div>
 
-              <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ${category.partners.length >= 4 ? 'xl:grid-cols-4' : 'xl:grid-cols-3'} gap-6 md:gap-8`}>
+              <div
+                className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ${
+                  category.partners.length === 5
+                    ? 'xl:grid-cols-3 2xl:grid-cols-5'
+                    : category.partners.length >= 4
+                    ? 'xl:grid-cols-4'
+                    : 'xl:grid-cols-3'
+                } gap-6 md:gap-8 auto-rows-fr`}
+              >
                 {category.partners.map((partner, pIndex) => (
                   <a 
                     key={pIndex}
