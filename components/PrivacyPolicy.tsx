@@ -65,7 +65,7 @@ const PrivacyPolicy: React.FC = () => {
               Prezenta politica de confidentialitate reglementeaza modul in care
               <strong> Atlantis Furnitures</strong> colecteaza, prelucreaza si protejeaza datele cu
               caracter personal ale utilizatorilor website-ului{' '}
-              <a href="https://atlantisfurnitures.ro" className="underline hover:no-underline">atlantisfurnitures.ro</a>,
+              <a href="https://atlantisfurnitures.ro/" className="underline hover:no-underline">atlantisfurnitures.ro</a>,
               in conformitate cu Regulamentul (UE) 2016/679 (GDPR) si legislatia romana aplicabila.
             </p>
             <p className="mt-4">
@@ -75,7 +75,7 @@ const PrivacyPolicy: React.FC = () => {
               <li>Denumire: <strong>Atlantis Furnitures</strong></li>
               <li>Adresa: Aleea Argesului nr. 70, Budeasa Mare, judetul Arges, Romania</li>
               <li>Telefon: 0732 717 666</li>
-              <li>Website: <a href="https://atlantisfurnitures.ro" className="underline">atlantisfurnitures.ro</a></li>
+              <li>Website: <a href="https://atlantisfurnitures.ro/" className="underline">atlantisfurnitures.ro</a></li>
             </ul>
           </section>
 
