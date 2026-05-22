@@ -10,7 +10,6 @@
     <!-- SEO Meta Tags - Default (overwritten per route via prerender) -->
     <title>Mobilier la Comanda Bucuresti | Atlantis Furnitures</title>
     <meta name="description" content="Producem mobilier la comanda din MDF si PAL pentru Bucuresti si Ilfov. Bucatarii, livinguri, dormitoare, dressing-uri, office. Cere oferta gratuita azi!">
-    <meta name="keywords" content="mobilier la comanda bucuresti, mobila mdf vopsit, bucatarii la comanda, dressinguri la comanda, mobila premium, atlantis furnitures">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="author" content="Atlantis Furnitures" />
     <link rel="canonical" href="https://atlantisfurnitures.ro/">
@@ -45,36 +44,22 @@
     <div id="root"></div>
   <script type="module" src="/index.tsx"></script>
 
-  <!-- Structured Data: LocalBusiness -->
+  <!-- Structured Data: FurnitureStore (service-area business, no street address) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": "FurnitureStore",
     "@id": "https://atlantisfurnitures.ro/#business",
     "name": "Atlantis Furnitures",
-    "description": "Producator mobilier la comanda premium din MDF si PAL pentru Bucuresti, Ilfov si toata tara. Bucatarii, livinguri, dormitoare, dressing-uri si mobilier office.",
+    "description": "Producator mobilier la comanda premium din MDF si PAL pentru Bucuresti si Ilfov. Bucatarii, livinguri, dormitoare, dressing-uri si mobilier office.",
     "image": "https://atlantisfurnitures.ro/projects/AP%20AIR-U/design-interior-apartament-modern-unirii-atlantis-furnitures.webp",
     "logo": "https://atlantisfurnitures.ro/favicon.svg",
     "url": "https://atlantisfurnitures.ro/",
     "telephone": "+40732717666",
     "priceRange": "$$$",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Aleea Argesului nr. 70",
-      "addressLocality": "Budeasa Mare",
-      "addressRegion": "Arges",
-      "postalCode": "117156",
-      "addressCountry": "RO"
-    },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": 44.9189,
-      "longitude": 24.8392
-    },
     "areaServed": [
       { "@type": "City", "name": "Bucuresti" },
-      { "@type": "AdministrativeArea", "name": "Ilfov" },
-      { "@type": "Country", "name": "Romania" }
+      { "@type": "AdministrativeArea", "name": "Ilfov" }
     ],
     "openingHoursSpecification": {
       "@type": "OpeningHoursSpecification",

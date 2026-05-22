@@ -293,10 +293,13 @@ const ProjectDetail: React.FC = () => {
           <div className="dt-reveal flex items-center gap-3 md:gap-4 text-xs md:text-sm uppercase tracking-[0.2em] md:tracking-[0.3em] text-gray-300 mb-6 md:mb-8 font-medium">
             <span>{project.category}</span>
             <span className="w-8 md:w-12 h-px bg-white/50" />
+            <span>{project.title}</span>
+            <span className="w-8 md:w-12 h-px bg-white/50" />
             <span>{project.year}</span>
           </div>
-          <h1 className="dt-reveal font-display text-4xl sm:text-6xl md:text-8xl lg:text-9xl leading-[0.9] text-white max-w-6xl drop-shadow-2xl uppercase">
-            {project.title}
+          {/* Descriptive H1 (semantic + visual). Project code moved to eyebrow above. */}
+          <h1 className="dt-reveal font-display text-3xl sm:text-5xl md:text-7xl lg:text-8xl leading-[1.05] text-white max-w-6xl drop-shadow-2xl m-0">
+            {project.seoH1 || `Mobilier la comanda - ${project.title}`}
           </h1>
         </div>
       </div>

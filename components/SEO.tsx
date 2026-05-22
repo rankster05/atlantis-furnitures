@@ -6,15 +6,12 @@ interface SEOProps {
   canonicalUrl: string;
   image?: string;
   schema?: object;
-  keywords?: string;
   noindex?: boolean;
 }
 
 const SITE_URL = 'https://atlantisfurnitures.ro';
 const DEFAULT_IMAGE =
   '/projects/AP AIR-U/design-interior-apartament-modern-unirii-atlantis-furnitures.webp';
-const DEFAULT_KEYWORDS =
-  'mobila la comanda, bucatarii mdf, dressinguri, amenajari interioare, mobila premium, atlantis furnitures';
 
 /**
  * Ensure exactly one <meta> tag with the given attribute key exists in <head>,
@@ -57,7 +54,6 @@ const SEO: React.FC<SEOProps> = ({
   description,
   image = DEFAULT_IMAGE,
   canonicalUrl,
-  keywords = DEFAULT_KEYWORDS,
   noindex = false,
 }) => {
   const siteTitle = 'Atlantis Furnitures';
@@ -76,7 +72,6 @@ const SEO: React.FC<SEOProps> = ({
 
     // Standard meta
     setMeta('name', 'description', description);
-    setMeta('name', 'keywords', keywords);
     setMeta(
       'name',
       'robots',
@@ -105,7 +100,6 @@ const SEO: React.FC<SEOProps> = ({
     description,
     canonicalUrl,
     absoluteImage,
-    keywords,
     noindex,
   ]);
 

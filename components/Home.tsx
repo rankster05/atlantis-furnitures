@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 import Hero from './Hero';
 import Intro from './Intro';
 import ProjectStack from './ProjectStack';
@@ -33,9 +35,25 @@ const Home: React.FC<HomeProps> = ({ isLoaded = true }) => {
         <h2 className="sr-only">Solicita o Oferta Gratuita</h2>
         <p className="font-display text-3xl md:text-5xl mb-8 m-0">De la Idee la Realitate</p>
         <div className="max-w-3xl text-gray-800 font-light mb-12 leading-relaxed text-lg md:text-xl">
-          Fie ca ai nevoie de o bucatarie moderna optimizata pentru spatii mici sau de un dressing complex, 
-          echipa noastra se ocupa de tot procesul: <strong>masuratori, proiectare 3D, executie si montaj</strong> in 
+          Fie ca ai nevoie de o bucatarie moderna optimizata pentru spatii mici sau de un dressing complex,
+          echipa noastra se ocupa de tot procesul: <strong>masuratori, proiectare 3D, executie si montaj</strong> in
           toata tara pentru proiecte premium.
+        </div>
+        <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+          <Link
+            to="/servicii/"
+            className="group inline-flex items-center gap-3 px-8 py-4 bg-atl-dark text-atl-bg rounded-full hover:bg-atl-accent transition-colors duration-300"
+          >
+            <span className="text-xs uppercase tracking-[0.2em] font-medium">Vezi serviciile noastre</span>
+            <ArrowRight size={16} className="transform group-hover:translate-x-1 transition-transform" />
+          </Link>
+          <Link
+            to="/contact/"
+            className="group inline-flex items-center gap-3 px-8 py-4 border border-atl-dark/30 text-atl-dark rounded-full hover:bg-atl-dark hover:text-atl-bg transition-colors duration-300"
+          >
+            <span className="text-xs uppercase tracking-[0.2em] font-medium">Cere oferta</span>
+            <ArrowRight size={16} className="transform group-hover:translate-x-1 transition-transform" />
+          </Link>
         </div>
       </section>
     </>

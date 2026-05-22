@@ -16,6 +16,7 @@ const Portfolio = React.lazy(() => import('./components/Portfolio'));
 const ProjectDetail = React.lazy(() => import('./components/ProjectDetail'));
 const Services = React.lazy(() => import('./components/Services'));
 const PrivacyPolicy = React.lazy(() => import('./components/PrivacyPolicy'));
+const Contact = React.lazy(() => import('./components/Contact'));
 
 // Register GSAP plugins globally
 gsap.registerPlugin(ScrollTrigger);
@@ -147,6 +148,7 @@ const AppContent: React.FC = () => {
             <Route path="/proiecte" element={<Portfolio />} />
             <Route path="/proiecte/:slug" element={<ProjectDetail />} />
             <Route path="/servicii" element={<Services />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="/politica-confidentialitate" element={<PrivacyPolicy />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

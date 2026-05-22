@@ -22,6 +22,12 @@ const routes = [
     image: '/projects/S House/s-house-living-bucatarie-open-space-mdf-furnir-pipera.webp',
   },
   {
+    path: '/contact',
+    title: 'Contact | Atlantis Furnitures',
+    description: 'Contacteaza Atlantis Furnitures pentru mobilier la comanda in Bucuresti si Ilfov. Telefon 0732 717 666, WhatsApp, formular online. Oferta gratuita in 24h.',
+    image: '/projects/AP AIR-U/design-interior-apartament-modern-unirii-atlantis-furnitures.webp',
+  },
+  {
     path: '/proiecte',
     title: 'Portofoliu Mobilier la Comanda | Atlantis Furnitures',
     description: 'Vezi proiectele noastre finalizate de mobilier la comanda in Bucuresti si Ilfov. Bucatarii, livinguri, dormitoare si spatii comerciale. Inspira-te acum!',

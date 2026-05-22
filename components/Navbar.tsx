@@ -193,20 +193,19 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                 Proiecte
               </Link>
 
-              <Link 
-                to="/servicii/" 
+              <Link
+                to="/servicii/"
                 className={`hover:text-gray-300 transition-colors ${isActive('/servicii') ? 'underline underline-offset-4 decoration-white/50' : ''}`}
               >
                 Servicii
               </Link>
-              
-              <a 
-                href="#contact" 
-                onClick={handleContactClick}
-                className="hover:text-gray-300 transition-colors"
+
+              <Link
+                to="/contact/"
+                className={`hover:text-gray-300 transition-colors ${isActive('/contact') ? 'underline underline-offset-4 decoration-white/50' : ''}`}
               >
-                Cere Oferta
-              </a>
+                Contact
+              </Link>
             </div>
 
             {/* Desktop Socials Separator */}
@@ -298,14 +297,22 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                 PROIECTE
               </Link>
 
-              <Link 
-                to="/servicii/" 
+              <Link
+                to="/servicii/"
                 onClick={closeMenu}
                 className="mobile-nav-link font-display text-4xl tracking-widest hover:text-gray-400 transition-colors text-center"
               >
                 SERVICII
               </Link>
-              
+
+              <Link
+                to="/contact/"
+                onClick={closeMenu}
+                className="mobile-nav-link font-display text-4xl tracking-widest hover:text-gray-400 transition-colors text-center"
+              >
+                CONTACT
+              </Link>
+
               <div className="mobile-nav-link w-full max-w-[280px] pt-4">
                 <a 
                   href="#contact" 

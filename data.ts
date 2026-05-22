@@ -23,7 +23,8 @@ export const portfolioItems: PortfolioItem[] = [
     tags: ["MDF VOPSIT", "CERAMICA", "LEMN", "PAL", "PENTHOUSE", "PREMIUM"],
     seoTitle: "Penthouse Vasile Lascar – Mobilier Premium | Atlantis",
     seoDescription: "Proiect mobilier la comanda pentru penthouse in zona Vasile Lascar, Bucuresti. MDF furniruit, design minimalist. Vrei un rezultat similar? Contacteaza-ne!",
-    seoKeywords: "mobilier la comanda premium, mobila mdf vopsit, amenajare penthouse, mobila lux, design interior personalizat"
+    seoKeywords: "mobilier la comanda premium, mobila mdf vopsit, amenajare penthouse, mobila lux, design interior personalizat",
+    seoH1: "Mobilier la comanda pentru penthouse in Vasile Lascar"
   },
   { 
     id: 2, 
@@ -49,7 +50,8 @@ export const portfolioItems: PortfolioItem[] = [
     tags: ["MDF VOPSIT", "CERAMICA", "LEMN", "PAL", "APARTAMENT", "COSMOPOLIS"],
     seoTitle: "Mobilier Apartament Cosmopolis Ilfov | Atlantis Furnitures",
     seoDescription: "Mobilier dormitor si living la comanda pentru apartament in Cosmopolis, Ilfov. PAL si MDF premium, executie si montaj 2024. Cere oferta pentru proiectul tau!",
-    seoKeywords: "bucatarii la comanda premium, mobila la comanda pret, producator mobila mdf vopsit, mobila apartament cosmopolis, amenajari interioare lux"
+    seoKeywords: "bucatarii la comanda premium, mobila la comanda pret, producator mobila mdf vopsit, mobila apartament cosmopolis, amenajari interioare lux",
+    seoH1: "Mobilier la comanda pentru apartament in Cosmopolis"
   },
   { 
     id: 3, 
@@ -70,7 +72,8 @@ export const portfolioItems: PortfolioItem[] = [
     tags: ["CORIAN", "MDF VOPSIT", "PAL", "PEDIATRIE", "CSM", "PITESTI", "MEDICAL"],
     seoTitle: "Mobilier Cabinet Medical Pitesti | Atlantis Furnitures",
     seoDescription: "Mobilier la comanda pentru cabinet medical in Pitesti. Executie precisa, materiale durabile, montaj profesional. Ai un spatiu similar? Hai sa discutam!",
-    seoKeywords: "mobilier medical la comanda, receptie corian, mobila mdf vopsit, mobila la comanda personalizata, producator mobila premium"
+    seoKeywords: "mobilier medical la comanda, receptie corian, mobila mdf vopsit, mobila la comanda personalizata, producator mobila premium",
+    seoH1: "Mobilier la comanda pentru cabinet medical"
   },
   { 
     id: 4, 
@@ -91,7 +94,8 @@ export const portfolioItems: PortfolioItem[] = [
     tags: ["MDF FURNIR", "PAL", "PIPERA", "S HOUSE", "LIVING", "DORMITOR", "MODERN"],
     seoTitle: "Living si Dormitor la Comanda Pipera | Atlantis",
     seoDescription: "Proiect S House Pipera – mobilier living si dormitor din MDF furniruit. Design minimalist, texturi calde. Transforma-ti spatiul – cere oferta gratuita!",
-    seoKeywords: "mobila living moderna mdf, dressing la comanda premium, mobilier dormitor personalizat, mobila lux pipera, producator mobila romania"
+    seoKeywords: "mobila living moderna mdf, dressing la comanda premium, mobilier dormitor personalizat, mobila lux pipera, producator mobila romania",
+    seoH1: "Mobilier living si dormitor la comanda in Pipera"
   },
   { 
     id: 5, 
@@ -114,7 +118,8 @@ export const portfolioItems: PortfolioItem[] = [
     tags: ["MDF VOPSIT", "LEMN", "RATAN", "TEXTIL", "APARTAMENT", "UNIRII", "DESIGN INTERIOR"],
     seoTitle: "Mobilier Apartament Modern Bucuresti | Atlantis Furnitures",
     seoDescription: "Mobilier complet la comanda pentru apartament in Bucuresti. MDF si PAL premium, design personalizat, montaj inclus. Hai sa construim impreuna spatiul ideal!",
-    seoKeywords: "bucatarie mdf vopsit mat pret, mobila la comanda premium, bucatarii la comanda lux, amenajare apartament unirii, mobila personalizata"
+    seoKeywords: "bucatarie mdf vopsit mat pret, mobila la comanda premium, bucatarii la comanda lux, amenajare apartament unirii, mobila personalizata",
+    seoH1: "Mobilier la comanda pentru apartament in zona Unirii"
   },
   { 
     id: 6, 
@@ -140,7 +145,8 @@ export const portfolioItems: PortfolioItem[] = [
     tags: ["MDF VOPSIT", "PAL", "OGLINZI", "APARTAMENT", "VICTORIEI", "PREMIUM"],
     seoTitle: "Mobilier Apartament la Comanda Premium | Atlantis Furnitures",
     seoDescription: "Proiect AP AIR-V Victoriei. Mobilier living modern si dressing la comanda cu oglinzi. Executie mobila premium din mdf vopsit.",
-    seoKeywords: "dressing la comanda premium, mobila living moderna mdf, mobilier baie personalizat mdf, mobila la comanda lux, producator mobila premium"
+    seoKeywords: "dressing la comanda premium, mobila living moderna mdf, mobilier baie personalizat mdf, mobila la comanda lux, producator mobila premium",
+    seoH1: "Mobilier la comanda pentru apartament in zona Victoriei"
   },
   { 
     id: 7, 
@@ -176,7 +182,8 @@ export const portfolioItems: PortfolioItem[] = [
     tags: ["MDF VOPSIT", "MDF FURNIR", "OGLINZI", "PAL", "CASA", "LACUL TEI", "PREMIUM"],
     seoTitle: "Mobilier Casa Zona Tei Bucuresti | Atlantis Furnitures",
     seoDescription: "Mobilier la comanda pentru casa in zona Tei, Bucuresti. Living, dormitor si spatii functionale din MDF si PAL. Vrei acelasi rezultat? Contacteaza-ne!",
-    seoKeywords: "dressing cu usi culisante la comanda, mobila premium lux, mobilier mdf frezat clasic, mobila la comanda personalizata, amenajari interioare mobilier"
+    seoKeywords: "dressing cu usi culisante la comanda, mobila premium lux, mobilier mdf frezat clasic, mobila la comanda personalizata, amenajari interioare mobilier",
+    seoH1: "Mobilier la comanda pentru casa in zona Lacul Tei"
   },
   { 
     id: 8, 
@@ -202,7 +209,8 @@ export const portfolioItems: PortfolioItem[] = [
     tags: ["MDF VOPSIT", "MDF FURNIR", "OGLINZI", "PAL", "STUDIO", "VICTORIEI", "AMENAJARE SMART"],
     seoTitle: "Mobilier Studio la Comanda Bucuresti | Atlantis Furnitures",
     seoDescription: "Amenajare mobilier la comanda pentru studio in Bucuresti. Solutii inteligente de depozitare, materiale premium. Maximeaza spatiul – cere oferta acum!",
-    seoKeywords: "mobila la comanda pret, bucatarii la comanda lux, detalii executie mobila premium, amenajari interioare mobilier personalizat, producator mobila mdf vopsit"
+    seoKeywords: "mobila la comanda pret, bucatarii la comanda lux, detalii executie mobila premium, amenajari interioare mobilier personalizat, producator mobila mdf vopsit",
+    seoH1: "Mobilier la comanda pentru studio in zona Victoriei"
   },
   { 
     id: 9, 
@@ -244,7 +252,8 @@ export const portfolioItems: PortfolioItem[] = [
     tags: ["MDF FURNIR", "OGLINZI", "PAL", "OFFICE", "VICTORIEI", "MASA SEDINTE", "BIBLIOTECA"],
     seoTitle: "Mobilier Office la Comanda Bucuresti | Atlantis Furnitures",
     seoDescription: "Mobilier de birou la comanda in Bucuresti. Birouri, dulapuri si spatii de lucru personalizate din MDF si PAL premium. Solicita oferta pentru biroul tau!",
-    seoKeywords: "mobila premium lux, mobilier la comanda personalizat, producator mobila premium, amenajari interioare mobilier, mobila mdf vopsit"
+    seoKeywords: "mobila premium lux, mobilier la comanda personalizat, producator mobila premium, amenajari interioare mobilier, mobila mdf vopsit",
+    seoH1: "Mobilier office la comanda in zona Victoriei"
   }
 ];
 

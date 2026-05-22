@@ -3,12 +3,68 @@
   command = "npm run build"
 
 # ─────────────────────────────────────────
-# NO redirects.
-# All routes are prerendered as dist/<route>/index.html.
-# Netlify auto-resolves directory-index files (/<route>/ → /<route>/index.html).
-# For unknown paths, Netlify auto-serves dist/404.html (also prerendered, noindex).
-# A catch-all SPA fallback would risk intercepting valid routes, so we omit it.
+# Redirects
+# 1) 301 from legacy root-level project URLs (Google indexed these before
+#    we settled on the canonical /proiecte/[slug]/ structure). These MUST
+#    be force=true so they override any other handling.
+# 2) Static prerendered files in dist/<route>/index.html are served
+#    natively by Netlify for /<route>/. No catch-all fallback (so unknown
+#    URLs fall through to dist/404.html with proper HTTP 404 status).
 # ─────────────────────────────────────────
+
+[[redirects]]
+  from = "/ap-so"
+  to = "/proiecte/ap-so/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/ap-cosmo"
+  to = "/proiecte/ap-cosmo/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/csm"
+  to = "/proiecte/csm/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/s-house"
+  to = "/proiecte/s-house/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/ap-air-u"
+  to = "/proiecte/ap-air-u/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/ap-air-v"
+  to = "/proiecte/ap-air-v/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/studio-air-v"
+  to = "/proiecte/studio-air-v/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tei-house"
+  to = "/proiecte/tei-house/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/office"
+  to = "/proiecte/office/"
+  status = 301
+  force = true
 
 # Long-term caching for hashed Vite assets and project images
 [[headers]]

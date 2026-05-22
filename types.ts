@@ -23,6 +23,7 @@ export interface PortfolioItem {
   seoTitle?: string;
   seoDescription?: string;
   seoKeywords?: string;
+  seoH1?: string;
 }
 
 export interface NavItem {
