@@ -8,11 +8,26 @@
   --color-atl-accent: #374336;
 }
 
+html {
+  /* Remove the 300ms tap delay on mobile + the gray tap flash on iOS/Android */
+  -webkit-tap-highlight-color: transparent;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
   background-color: #E3E1DC;
   color: #121212;
   margin: 0;
   overflow-x: hidden;
+  /* Smoother font rendering on mobile + crisp text */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Interactive elements respond instantly to taps (no 300ms delay) */
+a, button, [role="button"], summary, input, select, textarea {
+  touch-action: manipulation;
 }
 /* Hide scrollbar for smooth scroll feel */
 html.lenis {

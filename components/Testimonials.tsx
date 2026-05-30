@@ -1,9 +1,39 @@
 import React, { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Star, ExternalLink, Map, ArrowRight, Quote } from 'lucide-react';
+import { Star, ExternalLink, Map, ArrowRight, Quote, Instagram } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
+
+// VIP / featured testimonials — personalitati cunoscute.
+// Inlocuieste `image` cu calea reala (pune fisierele in /public/testimonials-vip/)
+// si `name` + `text` cu datele primite. Pastreaza aspectul portret (3:4).
+const vipReviews = [
+  {
+    id: 'vip-alexia',
+    name: 'Alexia Talavutis',
+    role: 'Artist & Prezentator TV',
+    image: '/testimonials-vip/alexia-talavutis.jpg',
+    instagram: 'https://www.instagram.com/alexia.talavutis',
+    text: 'Mi-am dorit ca fiecare colt din casa noastra sa aiba personalitate, asa ca am ales mobilier facut complet la comanda. Un proiect mare, pe 3 nivele, cu multe detalii si idei curajoase. Nicu si echipa de la Atlantis Furnitures au inteles exact ce ne dorim si au dus totul pana la capat cu multa rabdare si implicare. Cred ca asta face diferenta: oamenii care pun suflet in ceea ce construiesc.',
+  },
+  {
+    id: 'vip-sore',
+    name: 'Sore',
+    role: 'Artista',
+    image: '/testimonials-vip/sore-mihalache.jpg',
+    instagram: 'https://www.instagram.com/soreonline',
+    text: 'Orice idei creative pentru mobilier am avut, Atlantis Furnitures a fost alaturi de mine. La ei nu exista „nu se poate!”.',
+  },
+  {
+    id: 'vip-pautov',
+    name: 'Dr. Mihail Pautov',
+    role: 'Medic',
+    image: '/testimonials-vip/dr-mihail-pautov.jpg',
+    instagram: 'https://www.instagram.com/doctor.mihail',
+    text: 'Sunt genul de om care observa detaliile. Iar spatiul in care filmez trebuia sa fie exact cum imi imaginam: simplu, curat si fara nimic in plus. Echipa Atlantis Furnitures a avut rabdarea sa faca totul pana la ultimul detaliu. Si cred ca asta face diferenta intre ceva facut „ok” si ceva facut foarte bine. Un spatiu bine gandit iti da liniste si claritate fara sa-ti dai seama.',
+  },
+];
 
 // Google Logo Component for authenticity
 const GoogleLogo = () => (
@@ -109,6 +139,32 @@ const Testimonials: React.FC = () => {
         }
       });
 
+      // VIP Cards — start rotated/offset, snap into a clean grid on scroll.
+      // Respect prefers-reduced-motion: skip the entrance, show cards as-is.
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!reduceMotion) {
+        const vipCards = gsap.utils.toArray<HTMLElement>('.vip-card');
+        vipCards.forEach((card, i) => {
+          const rotateFrom = i % 2 === 0 ? -10 : 10; // alternanta stanga/dreapta
+          gsap.fromTo(
+            card,
+            { rotation: rotateFrom, y: 60, opacity: 0 },
+            {
+              rotation: 0,
+              y: 0,
+              opacity: 1,
+              duration: 1.5,
+              ease: 'power4.out',
+              scrollTrigger: {
+                trigger: '.vip-grid',
+                start: 'top 80%',
+              },
+              delay: i * 0.12, // stagger usor
+            }
+          );
+        });
+      }
+
       // Map Animation
       gsap.from('.map-card', {
         scale: 0.98,
@@ -143,7 +199,42 @@ const Testimonials: React.FC = () => {
 
   return (
     <section ref={containerRef} className="py-20 md:py-32 bg-[#0a0a0a] text-white relative overflow-hidden border-t border-white/5">
-      
+
+      {/* VIP card interactions — Instagram pulse + hover-only review reveal */}
+      <style>{`
+        /* Instagram CTA attention pulse */
+        @keyframes vipIgPulse {
+          0%   { transform: scale(1);   opacity: 0.7; }
+          70%  { transform: scale(1.7); opacity: 0;   }
+          100% { transform: scale(1.7); opacity: 0;   }
+        }
+        .vip-ig-ring { animation: vipIgPulse 2.4s cubic-bezier(0.22,1,0.36,1) infinite; }
+        .vip-ig:hover .vip-ig-ring { animation-play-state: paused; opacity: 0; }
+
+        /* MOBILE / TOUCH (default): everything visible in color, no hover needed */
+        .vip-review      { grid-template-rows: 1fr; }
+        .vip-review-text { opacity: 1; transform: translateY(0); }
+        .vip-accent      { transform: scaleX(1); }
+        .vip-img         { filter: grayscale(0); transform: scale(1); }
+
+        /* DESKTOP (hover-capable pointers): collapse, then reveal on hover */
+        @media (hover: hover) and (pointer: fine) {
+          .vip-review      { grid-template-rows: 0fr; }
+          .vip-review-text { opacity: 0; transform: translateY(8px); transition-delay: 150ms; }
+          .vip-accent      { transform: scaleX(0); }
+          .vip-img         { filter: grayscale(1); }
+          .vip-card:hover .vip-review      { grid-template-rows: 1fr; }
+          .vip-card:hover .vip-review-text { opacity: 1; transform: translateY(0); }
+          .vip-card:hover .vip-accent      { transform: scaleX(1); }
+          .vip-card:hover .vip-name        { transform: translateY(-4px); }
+          .vip-card:hover .vip-img         { filter: grayscale(0); transform: scale(1.05); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .vip-ig-ring { animation: none; opacity: 0.4; }
+        }
+      `}</style>
+
       <div className="max-w-[1920px] mx-auto relative z-10">
         
         {/* Header Section */}
@@ -181,6 +272,84 @@ const Testimonials: React.FC = () => {
                 </div>
                 <ArrowRight size={20} className="text-gray-500 group-hover:text-white group-hover:translate-x-1 transition-all" />
             </a>
+          </div>
+        </div>
+
+        {/* VIP / Featured Testimonials — editorial portrait cards */}
+        <div className="px-6 md:px-20 mb-24 md:mb-32">
+          <div className="header-anim flex items-center gap-3 mb-10 md:mb-14">
+            <span className="uppercase tracking-[0.3em] text-[10px] md:text-xs text-atl-accent font-medium">
+              Au ales Atlantis
+            </span>
+            <span className="w-12 h-px bg-white/20" />
+          </div>
+
+          <div className="vip-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {vipReviews.map((vip) => (
+              <article
+                key={vip.id}
+                className="vip-card group relative aspect-[3/4] overflow-hidden rounded-2xl md:rounded-3xl bg-[#161616] border border-white/10 will-change-transform"
+              >
+                {/* Portrait */}
+                <img
+                  src={vip.image}
+                  alt={`${vip.name} — recenzie Atlantis Furnitures`}
+                  loading="lazy"
+                  decoding="async"
+                  className="vip-img absolute inset-0 w-full h-full object-cover object-center transition-all duration-700 ease-out"
+                />
+
+                {/* Gradient scrim for text legibility */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+
+                {/* Instagram CTA (top-right) — always visible, gently pulsing to invite a click */}
+                {vip.instagram && (
+                  <a
+                    href={vip.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Vezi profilul de Instagram al lui ${vip.name}`}
+                    className="vip-ig group/ig absolute top-5 right-5 z-30 w-11 h-11"
+                  >
+                    {/* Expanding glow ring — draws the eye */}
+                    <span className="vip-ig-ring absolute inset-0 rounded-full border border-white/40 pointer-events-none" />
+                    {/* Button face */}
+                    <span className="relative flex items-center justify-center w-11 h-11 rounded-full bg-white/10 backdrop-blur-md border border-white/30 text-white transition-all duration-300 group-hover/ig:scale-110 group-hover/ig:border-transparent group-hover/ig:bg-[linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5)] group-hover/ig:shadow-[0_0_28px_rgba(214,41,118,0.6)]">
+                      <Instagram size={20} strokeWidth={1.8} />
+                    </span>
+                  </a>
+                )}
+
+                {/* Content: name + review.
+                    Mobile/touch: review always visible (no hover available).
+                    Desktop (hover devices): elegant reveal on hover. */}
+                <div className="absolute inset-x-0 bottom-0 z-10 p-6 md:p-8">
+                  {/* Role + Name */}
+                  <div className="vip-name transform-gpu transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]">
+                    {vip.role && (
+                      <p className="text-[11px] md:text-xs uppercase tracking-[0.2em] text-white/60 mb-2 font-medium">
+                        {vip.role}
+                      </p>
+                    )}
+                    <h3 className="font-display text-2xl md:text-3xl text-white leading-tight">
+                      {vip.name}
+                    </h3>
+                  </div>
+
+                  {/* Accent line */}
+                  <div className="vip-accent mt-4 h-px w-10 bg-atl-accent origin-left transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]" />
+
+                  {/* Review — smooth height reveal via grid-rows, no layout jump */}
+                  <div className="vip-review grid transition-[grid-template-rows] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]">
+                    <div className="overflow-hidden">
+                      <p className="vip-review-text pt-4 text-sm md:text-[15px] text-gray-200 font-light leading-relaxed transition-all duration-500 ease-out">
+                        {vip.text}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
 

@@ -23,7 +23,7 @@ const NotFound: React.FC = () => {
   }, []);
 
   return (
-    <div ref={containerRef} className="h-screen w-full bg-atl-dark text-atl-bg flex flex-col items-center justify-center px-6 relative overflow-hidden">
+    <div ref={containerRef} className="min-h-[100dvh] w-full bg-atl-dark text-atl-bg flex flex-col items-center justify-center px-6 py-24 relative overflow-hidden">
       <SEO 
         title="Pagina Nu A Fost Gasita | Atlantis Furnitures" 
         description="Ne cerem scuze, dar pagina pe care o cautati nu exista sau a fost mutata."

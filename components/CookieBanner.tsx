@@ -45,7 +45,7 @@ const CookieBanner: React.FC = () => {
       role="dialog"
       aria-live="polite"
       aria-label="Notificare cookie-uri"
-      className="fixed bottom-4 left-4 right-4 md:bottom-6 md:left-6 md:right-auto md:max-w-md z-[9500] animate-cookie-in"
+      className="fixed bottom-4 left-4 right-4 md:bottom-6 md:left-6 md:right-auto md:max-w-md z-[9500] animate-cookie-in [margin-bottom:env(safe-area-inset-bottom)]"
     >
       <style>{`
         @keyframes cookieIn {

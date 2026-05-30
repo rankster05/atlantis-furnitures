@@ -84,7 +84,7 @@ const Hero: React.FC<HeroProps> = ({ startAnimation = true }) => {
   }, [startAnimation]);
 
   return (
-    <section ref={containerRef} id="hero" className="h-screen w-full relative flex items-center justify-center overflow-hidden">
+    <section ref={containerRef} id="hero" className="h-[100dvh] w-full relative flex items-center justify-center overflow-hidden">
       {/* LCP element — preloaded in index.html via <link rel="preload"> */}
       <img
         ref={imgRef}
