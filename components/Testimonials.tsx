@@ -1,7 +1,7 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Star, ExternalLink, Map, ArrowRight, Quote, Instagram } from 'lucide-react';
+import { Star, ExternalLink, Map, ArrowRight, Quote, Instagram, Plus } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -123,6 +123,10 @@ const reviews = [
 const Testimonials: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
+  // Which VIP card is expanded (tap-to-reveal on touch devices)
+  const [activeVip, setActiveVip] = useState<string | null>(null);
+  const toggleVip = (id: string) =>
+    setActiveVip((prev) => (prev === id ? null : id));
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -211,17 +215,23 @@ const Testimonials: React.FC = () => {
         .vip-ig-ring { animation: vipIgPulse 2.4s cubic-bezier(0.22,1,0.36,1) infinite; }
         .vip-ig:hover .vip-ig-ring { animation-play-state: paused; opacity: 0; }
 
-        /* MOBILE / TOUCH (default): everything visible in color, no hover needed */
-        .vip-review      { grid-template-rows: 1fr; }
-        .vip-review-text { opacity: 1; transform: translateY(0); }
-        .vip-accent      { transform: scaleX(1); }
+        /* DEFAULT (mobile/touch): clean card — image in color, review collapsed.
+           Tapping the card adds .is-active which reveals the review elegantly. */
+        .vip-review      { grid-template-rows: 0fr; }
+        .vip-review-text { opacity: 0; transform: translateY(8px); transition-delay: 150ms; }
+        .vip-accent      { transform: scaleX(0); }
         .vip-img         { filter: grayscale(0); transform: scale(1); }
 
-        /* DESKTOP (hover-capable pointers): collapse, then reveal on hover */
+        .vip-card.is-active .vip-review      { grid-template-rows: 1fr; }
+        .vip-card.is-active .vip-review-text { opacity: 1; transform: translateY(0); }
+        .vip-card.is-active .vip-accent      { transform: scaleX(1); }
+        .vip-card.is-active .vip-name        { transform: translateY(-4px); }
+        .vip-card.is-active .vip-img         { transform: scale(1.04); }
+
+        /* DESKTOP (hover-capable pointers): grayscale photo, reveal on hover.
+           No tap "+" hint — hover handles everything. */
         @media (hover: hover) and (pointer: fine) {
-          .vip-review      { grid-template-rows: 0fr; }
-          .vip-review-text { opacity: 0; transform: translateY(8px); transition-delay: 150ms; }
-          .vip-accent      { transform: scaleX(0); }
+          .vip-tap-hint    { display: none; }
           .vip-img         { filter: grayscale(1); }
           .vip-card:hover .vip-review      { grid-template-rows: 1fr; }
           .vip-card:hover .vip-review-text { opacity: 1; transform: translateY(0); }
@@ -285,10 +295,23 @@ const Testimonials: React.FC = () => {
           </div>
 
           <div className="vip-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {vipReviews.map((vip) => (
+            {vipReviews.map((vip) => {
+              const isActive = activeVip === vip.id;
+              return (
               <article
                 key={vip.id}
-                className="vip-card group relative aspect-[3/4] overflow-hidden rounded-2xl md:rounded-3xl bg-[#161616] border border-white/10 will-change-transform"
+                onClick={() => toggleVip(vip.id)}
+                role="button"
+                tabIndex={0}
+                aria-expanded={isActive}
+                aria-label={`Recenzie de la ${vip.name} — apasa pentru a citi`}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleVip(vip.id);
+                  }
+                }}
+                className={`vip-card group relative aspect-[3/4] overflow-hidden rounded-2xl md:rounded-3xl bg-[#161616] border border-white/10 will-change-transform cursor-pointer select-none transition-transform duration-300 active:scale-[0.98] ${isActive ? 'is-active' : ''}`}
               >
                 {/* Portrait */}
                 <img
@@ -308,6 +331,7 @@ const Testimonials: React.FC = () => {
                     href={vip.instagram}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
                     aria-label={`Vezi profilul de Instagram al lui ${vip.name}`}
                     className="vip-ig group/ig absolute top-5 right-5 z-30 w-11 h-11"
                   >
@@ -320,8 +344,17 @@ const Testimonials: React.FC = () => {
                   </a>
                 )}
 
+                {/* Tap hint (touch only) — elegant "+" that rotates into "×" when open */}
+                <div className="vip-tap-hint absolute top-5 left-5 z-20 w-9 h-9 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white pointer-events-none">
+                  <Plus
+                    size={18}
+                    strokeWidth={1.8}
+                    className={`transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${isActive ? 'rotate-[135deg]' : 'rotate-0'}`}
+                  />
+                </div>
+
                 {/* Content: name + review.
-                    Mobile/touch: review always visible (no hover available).
+                    Mobile/touch: tap the card to reveal the review.
                     Desktop (hover devices): elegant reveal on hover. */}
                 <div className="absolute inset-x-0 bottom-0 z-10 p-6 md:p-8">
                   {/* Role + Name */}
@@ -349,7 +382,8 @@ const Testimonials: React.FC = () => {
                   </div>
                 </div>
               </article>
-            ))}
+              );
+            })}
           </div>
         </div>
 
