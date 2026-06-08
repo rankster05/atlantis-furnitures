@@ -52,26 +52,31 @@ const AppContent: React.FC = () => {
     }
 
     const lenis = new Lenis({
-      duration: 1.0,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      // lerp gives a frame-rate-independent, buttery "weighted" glide (the
+      // premium Awwwards feel). Lower = heavier/smoother, higher = snappier.
+      lerp: 0.085,
+      smoothWheel: true,
+      wheelMultiplier: 1,
       orientation: 'vertical',
       gestureOrientation: 'vertical',
-      smoothWheel: true,
-      touchMultiplier: 2,
+      // Mobile keeps its native momentum scroll (feels best on touch); we only
+      // tune the multiplier so flicks travel naturally.
+      touchMultiplier: 1.6,
+      syncTouch: false,
     });
 
     lenisRef.current = lenis;
 
-    // Connect Lenis to GSAP ScrollTrigger
+    // Connect Lenis to GSAP ScrollTrigger (single rAF loop drives both)
     lenis.on('scroll', ScrollTrigger.update);
 
     gsap.ticker.add((time) => {
       lenis.raf(time * 1000);
     });
 
-    // OPTIMIZATION: Use standard lag smoothing instead of 0.
-    // (1000, 16) allows for smooth recovery from CPU hiccups.
-    gsap.ticker.lagSmoothing(1000, 16);
+    // lagSmoothing(0) keeps Lenis perfectly in sync with GSAP's ticker so
+    // scrubbed animations never drift from the scroll position (smoother).
+    gsap.ticker.lagSmoothing(0);
 
     return () => {
       lenis.destroy();
