@@ -1,13 +1,20 @@
 import fs from 'node:fs/promises';
+import { existsSync } from 'node:fs';
+import http from 'node:http';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import puppeteer from 'puppeteer';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const distDir = path.join(__dirname, 'dist');
 const SITE = 'https://atlantisfurnitures.ro';
+const PORT = 4498;
 
 const encodeOgImage = (p) => `${SITE}${p.split('/').map(encodeURIComponent).join('/')}`;
 
+// title + description are used ONLY by the meta-only fallback (when no browser
+// is available). The Puppeteer path captures the real runtime <head> set by
+// the SEO component, so these stay in sync with the components.
 const routes = [
   {
     path: '/',
@@ -23,7 +30,7 @@ const routes = [
   },
   {
     path: '/contact',
-    title: 'Contact | Atlantis Furnitures',
+    title: 'Contact Mobilier la Comanda Bucuresti | Atlantis Furnitures',
     description: 'Contacteaza Atlantis Furnitures pentru mobilier la comanda in Bucuresti si Ilfov. Telefon 0732 717 666, WhatsApp, formular online. Oferta gratuita in 24h.',
     image: '/projects/AP AIR-U/design-interior-apartament-modern-unirii-atlantis-furnitures.webp',
   },
@@ -97,114 +104,182 @@ const routes = [
 ];
 
 const escapeHtml = (s) =>
-  s
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+  s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 const baseHtml = await fs.readFile(path.join(distDir, 'index.html'), 'utf-8');
 
-let count = 0;
-for (const route of routes) {
-  // Trailing slash on all routes — matches the directory-index structure
-  // (dist/servicii/index.html → /servicii/) that Netlify serves by default.
-  const canonical =
-    route.path === '/' ? `${SITE}/` : `${SITE}${route.path}/`;
+const outPathFor = (routePath) =>
+  routePath === '/'
+    ? path.join(distDir, 'index.html')
+    : path.join(distDir, routePath.replace(/^\//, ''), 'index.html');
+
+const canonicalFor = (routePath) =>
+  routePath === '/' ? `${SITE}/` : `${SITE}${routePath}/`;
+
+// ── Per-route LCP preload (mobile + desktop, matches the <picture> source) ───
+const preloadTag = (image) => {
+  const full = encodeURI(image);
+  const mobile = encodeURI(image.replace(/\.webp$/, '-m.webp'));
+  return (
+    `<link rel="preload" as="image" href="${mobile}" media="(max-width: 820px)" fetchpriority="high">\n    ` +
+    `<link rel="preload" as="image" href="${full}" media="(min-width: 821px)" fetchpriority="high">`
+  );
+};
+// Replace the two consecutive image preload tags from the base HTML.
+const fixPreload = (html, image) =>
+  html.replace(
+    /<link rel="preload" as="image"[^>]*>\s*<link rel="preload" as="image"[^>]*>/,
+    preloadTag(image)
+  );
+
+// ── FALLBACK: meta-only injection (no browser needed) ────────────────────────
+function metaInject(route) {
+  const canonical = canonicalFor(route.path);
   const ogImage = encodeOgImage(route.image);
   const titleEsc = escapeHtml(route.title);
   const descEsc = escapeHtml(route.description);
-
   let html = baseHtml
     .replace(/<title>[\s\S]*?<\/title>/, `<title>${titleEsc}</title>`)
-    .replace(
-      /<meta name="description" content="[^"]*">/,
-      `<meta name="description" content="${descEsc}">`
-    )
-    .replace(
-      /<link rel="canonical" href="[^"]*">/,
-      `<link rel="canonical" href="${canonical}">`
-    )
-    .replace(
-      /<meta property="og:url" content="[^"]*">/,
-      `<meta property="og:url" content="${canonical}">`
-    )
-    .replace(
-      /<meta property="og:title" content="[^"]*">/,
-      `<meta property="og:title" content="${titleEsc}">`
-    )
-    .replace(
-      /<meta property="og:description" content="[^"]*">/,
-      `<meta property="og:description" content="${descEsc}">`
-    )
-    .replace(
-      /<meta property="og:image" content="[^"]*">/,
-      `<meta property="og:image" content="${ogImage}">`
-    )
-    .replace(
-      /<meta property="og:image:alt" content="[^"]*">/,
-      `<meta property="og:image:alt" content="${titleEsc}">`
-    )
-    .replace(
-      /<meta name="twitter:title" content="[^"]*">/,
-      `<meta name="twitter:title" content="${titleEsc}">`
-    )
-    .replace(
-      /<meta name="twitter:description" content="[^"]*">/,
-      `<meta name="twitter:description" content="${descEsc}">`
-    )
-    .replace(
-      /<meta name="twitter:image" content="[^"]*">/,
-      `<meta name="twitter:image" content="${ogImage}">`
-    )
-    // Per-route LCP preload: each page hero/main image is the LCP
-    .replace(
-      /<link rel="preload" as="image" href="[^"]*" fetchpriority="high">/,
-      `<link rel="preload" as="image" href="${encodeURI(route.image)}" fetchpriority="high">`
-    );
-
+    .replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${descEsc}">`)
+    .replace(/<link rel="canonical" href="[^"]*">/, `<link rel="canonical" href="${canonical}">`)
+    .replace(/<meta property="og:url" content="[^"]*">/, `<meta property="og:url" content="${canonical}">`)
+    .replace(/<meta property="og:title" content="[^"]*">/, `<meta property="og:title" content="${titleEsc}">`)
+    .replace(/<meta property="og:description" content="[^"]*">/, `<meta property="og:description" content="${descEsc}">`)
+    .replace(/<meta property="og:image" content="[^"]*">/, `<meta property="og:image" content="${ogImage}">`)
+    .replace(/<meta name="twitter:title" content="[^"]*">/, `<meta name="twitter:title" content="${titleEsc}">`)
+    .replace(/<meta name="twitter:description" content="[^"]*">/, `<meta name="twitter:description" content="${descEsc}">`)
+    .replace(/<meta name="twitter:image" content="[^"]*">/, `<meta name="twitter:image" content="${ogImage}">`);
+  html = fixPreload(html, route.image);
   if (route.noindex) {
-    html = html.replace(
-      /<meta name="robots" content="[^"]*">/,
-      `<meta name="robots" content="noindex, nofollow">`
-    );
+    html = html.replace(/<meta name="robots" content="[^"]*">/, `<meta name="robots" content="noindex, nofollow">`);
   }
-
-  // Directory-index structure (dist/servicii/index.html → /servicii/).
-  // Netlify serves these naturally with a trailing slash, which we match
-  // in the canonical and sitemap URLs for full consistency.
-  const outPath =
-    route.path === '/'
-      ? path.join(distDir, 'index.html')
-      : path.join(distDir, route.path.replace(/^\//, ''), 'index.html');
-
-  await fs.mkdir(path.dirname(outPath), { recursive: true });
-  await fs.writeFile(outPath, html, 'utf-8');
-  count++;
-  console.log(`  ✓ ${route.path}`);
+  return html;
 }
 
-console.log(`\n✅ Prerendered ${count} routes to dist/`);
+async function runMetaOnly(reason) {
+  console.warn(`\n⚠️  Full prerender unavailable (${reason}). Falling back to meta-only injection.`);
+  for (const route of routes) {
+    const outPath = outPathFor(route.path);
+    await fs.mkdir(path.dirname(outPath), { recursive: true });
+    await fs.writeFile(outPath, metaInject(route), 'utf-8');
+    console.log(`  ✓ ${route.path} (meta)`);
+  }
+  const nf = baseHtml
+    .replace(/<title>[\s\S]*?<\/title>/, `<title>Pagina Nu A Fost Gasita | Atlantis Furnitures</title>`)
+    .replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="Pagina cautata nu exista sau a fost mutata.">`)
+    .replace(/<meta name="robots" content="[^"]*">/, `<meta name="robots" content="noindex, nofollow">`);
+  await fs.writeFile(path.join(distDir, '404.html'), nf, 'utf-8');
+  console.log('  ✓ /404 (meta)');
+  console.log(`\n✅ Prerendered ${routes.length} routes (meta-only) to dist/`);
+}
 
-// ─────────────────────────────────────────
-// Generate dist/404.html — Netlify auto-serves this for unknown paths,
-// so we don't need a catch-all SPA fallback in netlify.toml (which
-// otherwise risks intercepting valid routes too aggressively).
-// ─────────────────────────────────────────
-const notFoundHtml = baseHtml
-  .replace(
-    /<title>[\s\S]*?<\/title>/,
-    `<title>Pagina Nu A Fost Gasita | Atlantis Furnitures</title>`
-  )
-  .replace(
-    /<meta name="description" content="[^"]*">/,
-    `<meta name="description" content="Pagina cautata nu exista sau a fost mutata.">`
-  )
-  .replace(
-    /<meta name="robots" content="[^"]*">/,
-    `<meta name="robots" content="noindex, nofollow">`
-  );
+// ── Static server (SPA fallback to pristine base HTML) ───────────────────────
+const MIME = {
+  '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.mjs': 'text/javascript',
+  '.css': 'text/css', '.json': 'application/json', '.webp': 'image/webp', '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg', '.png': 'image/png', '.svg': 'image/svg+xml', '.ico': 'image/x-icon',
+  '.webmanifest': 'application/manifest+json', '.xml': 'application/xml', '.txt': 'text/plain',
+  '.woff': 'font/woff', '.woff2': 'font/woff2', '.ttf': 'font/ttf',
+};
 
-await fs.writeFile(path.join(distDir, '404.html'), notFoundHtml, 'utf-8');
-console.log('  ✓ /404 (Netlify default 404 page)');
+function startServer() {
+  return new Promise((resolve) => {
+    const server = http.createServer(async (req, res) => {
+      const urlPath = decodeURIComponent((req.url || '/').split('?')[0]);
+      const ext = path.extname(urlPath);
+      if (ext) {
+        const filePath = path.join(distDir, urlPath);
+        if (existsSync(filePath)) {
+          try {
+            const data = await fs.readFile(filePath);
+            res.writeHead(200, { 'Content-Type': MIME[ext] || 'application/octet-stream' });
+            res.end(data);
+            return;
+          } catch { /* fall through */ }
+        }
+        res.writeHead(404); res.end('not found'); return;
+      }
+      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+      res.end(baseHtml);
+    });
+    server.listen(PORT, () => resolve(server));
+  });
+}
 
+async function revealAll(page) {
+  await page.evaluate(async () => {
+    await new Promise((resolve) => {
+      let y = 0; const step = 500;
+      const timer = setInterval(() => {
+        window.scrollTo(0, y); y += step;
+        if (y >= document.body.scrollHeight + 1200) {
+          clearInterval(timer); window.scrollTo(0, 0); setTimeout(resolve, 250);
+        }
+      }, 80);
+    });
+  });
+}
+
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+async function renderRoute(browser, route, { is404 = false } = {}) {
+  const page = await browser.newPage();
+  await page.setViewport({ width: 1366, height: 900, deviceScaleFactor: 1 });
+  await page.evaluateOnNewDocument(() => {
+    try { window.sessionStorage.setItem('atlantis_loader_shown', '1'); } catch {}
+  });
+  await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
+
+  const url = `http://localhost:${PORT}${is404 ? '/__not_found__' : route.path}`;
+  await page.goto(url, { waitUntil: 'networkidle2', timeout: 45000 });
+  await page.waitForSelector('h1', { timeout: 20000 }).catch(() => {});
+  await sleep(is404 ? 600 : 1200);
+  if (!is404) await revealAll(page);
+  await sleep(400);
+
+  let html = await page.content();
+  await page.close();
+
+  if (!is404) {
+    html = fixPreload(html, route.image);
+    html = html.replace(
+      /<meta property="og:image:alt" content="[^"]*">/,
+      `<meta property="og:image:alt" content="Atlantis Furnitures - mobilier la comanda">`
+    );
+  }
+  if (!html.startsWith('<!DOCTYPE')) html = '<!DOCTYPE html>\n' + html;
+  return html;
+}
+
+// ── Run ──────────────────────────────────────────────────────────────────────
+let browser;
+let server;
+try {
+  server = await startServer();
+  browser = await puppeteer.launch({
+    headless: 'shell',
+    args: ['--no-sandbox', '--disable-setuid-sandbox', '--hide-scrollbars'],
+  });
+
+  let count = 0;
+  for (const route of routes) {
+    const html = await renderRoute(browser, route);
+    const outPath = outPathFor(route.path);
+    await fs.mkdir(path.dirname(outPath), { recursive: true });
+    await fs.writeFile(outPath, html, 'utf-8');
+    count++;
+    console.log(`  ✓ ${route.path}`);
+  }
+
+  const nf = await renderRoute(browser, null, { is404: true });
+  await fs.writeFile(path.join(distDir, '404.html'), nf, 'utf-8');
+  console.log('  ✓ /404 (Netlify default 404 page)');
+
+  await browser.close();
+  server.close();
+  console.log(`\n✅ Prerendered ${count} routes (full HTML) to dist/`);
+} catch (err) {
+  try { if (browser) await browser.close(); } catch {}
+  try { if (server) server.close(); } catch {}
+  await runMetaOnly(err.message?.split('\n')[0] || 'browser error');
+}

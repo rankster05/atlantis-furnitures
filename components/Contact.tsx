@@ -46,7 +46,7 @@ const Contact: React.FC = () => {
   return (
     <div ref={containerRef} className="min-h-screen bg-atl-dark text-atl-bg relative overflow-hidden">
       <SEO
-        title="Contact | Atlantis Furnitures"
+        title="Contact Mobilier la Comanda Bucuresti | Atlantis Furnitures"
         description="Contacteaza Atlantis Furnitures pentru mobilier la comanda in Bucuresti si Ilfov. Telefon 0732 717 666, WhatsApp, formular online. Oferta gratuita in 24h."
         canonicalUrl="https://atlantisfurnitures.ro/contact/"
       />

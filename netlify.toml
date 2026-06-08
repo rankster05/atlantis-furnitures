@@ -2,6 +2,13 @@
   publish = "dist"
   command = "npm run build"
 
+# Cache Puppeteer's Chromium inside node_modules (which Netlify caches between
+# builds) so the full SEO prerender works on Netlify. If Chromium can't launch,
+# prerender.mjs falls back to meta-only injection so the build never fails.
+[build.environment]
+  PUPPETEER_CACHE_DIR = "/opt/build/repo/node_modules/.cache/puppeteer"
+  NODE_VERSION = "20"
+
 # ─────────────────────────────────────────
 # Redirects
 # 1) 301 from legacy root-level project URLs (Google indexed these before

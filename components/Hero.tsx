@@ -85,16 +85,24 @@ const Hero: React.FC<HeroProps> = ({ startAnimation = true }) => {
 
   return (
     <section ref={containerRef} id="hero" className="h-[100dvh] w-full relative flex items-center justify-center overflow-hidden">
-      {/* LCP element — preloaded in index.html via <link rel="preload"> */}
-      <img
-        ref={imgRef}
-        src="/projects/AP AIR-V/amenajare-open-space-apartament-modern-victoriei-atlantis.webp"
-        className="absolute w-[120vw] max-w-none h-[130vh] object-cover object-center brightness-[0.85] contrast-[1.05]"
-        style={{ left: '-10vw', top: '-15vh' }}
-        alt="Mobilier la comanda - apartament modern Bucuresti, design interior premium"
-        fetchPriority="high"
-        decoding="async"
-      />
+      {/* LCP element. The img src is the light 1080px image (mobile default —
+          the preload scanner only ever fetches the src). Desktop swaps to the
+          full 1920px via the <source>. Result: phones load only the small one. */}
+      <picture className="contents">
+        <source
+          media="(min-width: 821px)"
+          srcSet="/projects/AP AIR-V/amenajare-open-space-apartament-modern-victoriei-atlantis.webp"
+        />
+        <img
+          ref={imgRef}
+          src="/projects/AP AIR-V/amenajare-open-space-apartament-modern-victoriei-atlantis-m.webp"
+          className="absolute w-[120vw] max-w-none h-[130vh] object-cover object-center brightness-[0.85] contrast-[1.05]"
+          style={{ left: '-10vw', top: '-15vh' }}
+          alt="Mobilier la comanda - apartament modern Bucuresti, design interior premium"
+          fetchPriority="high"
+          decoding="async"
+        />
+      </picture>
       
       <div ref={textRef} className="relative z-10 flex flex-col items-center justify-center w-full px-6 h-full pt-16 md:pt-0">
         {/* Artistic Text - H2 - Background Element */}

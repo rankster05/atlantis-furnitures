@@ -277,14 +277,17 @@ const ProjectDetail: React.FC = () => {
         </Link>
         
         <div ref={heroBgRef} className="absolute inset-0 w-full h-full origin-center">
-          <img 
-            src={project.mainImage} 
-            alt={`Main view of ${project.title}`}
-            className="w-full h-full object-cover object-center cursor-pointer transition-transform duration-700 hover:scale-105 brightness-125 contrast-105"
-            onClick={() => openLightbox(project.mainImage)}
-            fetchPriority="high"
-            decoding="async"
-          />
+          <picture className="contents">
+            <source media="(min-width: 821px)" srcSet={project.mainImage} />
+            <img
+              src={project.mainImage.replace(/\.webp$/, '-m.webp')}
+              alt={`Mobilier la comanda - ${project.title}`}
+              className="w-full h-full object-cover object-center cursor-pointer transition-transform duration-700 hover:scale-105 brightness-125 contrast-105"
+              onClick={() => openLightbox(project.mainImage)}
+              fetchPriority="high"
+              decoding="async"
+            />
+          </picture>
         </div>
         <div className="absolute inset-0 bg-black/40 pointer-events-none" />
         
