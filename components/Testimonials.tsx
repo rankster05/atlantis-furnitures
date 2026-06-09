@@ -143,31 +143,45 @@ const Testimonials: React.FC = () => {
         }
       });
 
-      // VIP Cards — start rotated/offset, snap into a clean grid on scroll.
-      // Respect prefers-reduced-motion: skip the entrance, show cards as-is.
+      // VIP Cards — start rotated + offset, then SNAP into a clean grid as each
+      // card scrolls into view. Triggered per-card so it feels identical on
+      // mobile (stacked, one-by-one) and desktop (row, near-simultaneous).
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (!reduceMotion) {
-        const vipCards = gsap.utils.toArray<HTMLElement>('.vip-card');
-        vipCards.forEach((card, i) => {
-          const rotateFrom = i % 2 === 0 ? -10 : 10; // alternanta stanga/dreapta
+      const vipCards = gsap.utils.toArray<HTMLElement>('.vip-card-anim');
+
+      vipCards.forEach((card, i) => {
+        if (reduceMotion) {
+          // Accessibility: no rotation — a gentle fade keeps content visible.
           gsap.fromTo(
             card,
-            { rotation: rotateFrom, y: 60, opacity: 0 },
+            { opacity: 0 },
             {
-              rotation: 0,
-              y: 0,
               opacity: 1,
-              duration: 1.5,
-              ease: 'power4.out',
-              scrollTrigger: {
-                trigger: '.vip-grid',
-                start: 'top 80%',
-              },
-              delay: i * 0.12, // stagger usor
+              duration: 0.6,
+              ease: 'power2.out',
+              scrollTrigger: { trigger: card, start: 'top 88%' },
             }
           );
-        });
-      }
+          return;
+        }
+
+        const rotateFrom = i % 2 === 0 ? -10 : 10; // alternate left / right tilt
+        gsap.fromTo(
+          card,
+          { rotation: rotateFrom, y: 60, opacity: 0, transformOrigin: '50% 100%' },
+          {
+            rotation: 0,
+            y: 0,
+            opacity: 1,
+            duration: 1.5,
+            ease: 'power4.out',
+            scrollTrigger: {
+              trigger: card,
+              start: 'top 85%',
+            },
+          }
+        );
+      });
 
       // Map Animation
       gsap.from('.map-card', {
@@ -298,8 +312,11 @@ const Testimonials: React.FC = () => {
             {vipReviews.map((vip) => {
               const isActive = activeVip === vip.id;
               return (
+              // Wrapper carries the GSAP entrance transform (rotate → snap),
+              // kept separate from the card's own hover/tap transforms so the
+              // two never fight. will-change hints the compositor.
+              <div key={vip.id} className="vip-card-anim will-change-[transform,opacity]">
               <article
-                key={vip.id}
                 onClick={() => toggleVip(vip.id)}
                 role="button"
                 tabIndex={0}
@@ -311,7 +328,7 @@ const Testimonials: React.FC = () => {
                     toggleVip(vip.id);
                   }
                 }}
-                className={`vip-card group relative aspect-[3/4] overflow-hidden rounded-2xl md:rounded-3xl bg-[#161616] border border-white/10 will-change-transform cursor-pointer select-none transition-transform duration-300 active:scale-[0.98] ${isActive ? 'is-active' : ''}`}
+                className={`vip-card group relative aspect-[3/4] w-full overflow-hidden rounded-2xl md:rounded-3xl bg-[#161616] border border-white/10 cursor-pointer select-none transition-transform duration-300 active:scale-[0.98] ${isActive ? 'is-active' : ''}`}
               >
                 {/* Portrait */}
                 <img
@@ -382,6 +399,7 @@ const Testimonials: React.FC = () => {
                   </div>
                 </div>
               </article>
+              </div>
               );
             })}
           </div>
