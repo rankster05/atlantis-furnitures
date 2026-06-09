@@ -20,7 +20,7 @@ const routes = [
     path: '/',
     title: 'Mobilier la Comanda Bucuresti | Atlantis Furnitures',
     description: 'Producem mobilier la comanda din MDF si PAL pentru Bucuresti si Ilfov. Bucatarii, livinguri, dormitoare, dressing-uri, office. Cere oferta gratuita azi!',
-    image: '/projects/AP AIR-V/amenajare-open-space-apartament-modern-victoriei-atlantis.webp',
+    image: '/projects/AP AIR-V/hero-living-victoriei-hd.webp',
   },
   {
     path: '/servicii',
