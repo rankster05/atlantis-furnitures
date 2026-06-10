@@ -136,20 +136,6 @@ const ProjectDetail: React.FC = () => {
           });
         });
 
-        mm.add("(max-width: 767px)", () => {
-          // Simplified for mobile
-          gsap.to(heroBgRef.current, {
-            yPercent: 15,
-            ease: "none",
-            force3D: true,
-            scrollTrigger: {
-              trigger: heroRef.current,
-              start: "top top",
-              end: "bottom top",
-              scrub: true,
-            }
-          });
-        });
       }
 
       // 3. Text Fades Out on Scroll
@@ -204,23 +190,6 @@ const ProjectDetail: React.FC = () => {
           );
         });
 
-        mmGrid.add("(max-width: 767px)", () => {
-          // Very subtle or no translation on mobile for grid images to keep it smooth
-          gsap.fromTo(inner, 
-            { yPercent: -2 }, 
-            { 
-              yPercent: 2, 
-              ease: "none",
-              force3D: true,
-              scrollTrigger: {
-                trigger: inner.parentElement,
-                start: "top bottom",
-                end: "bottom top",
-                scrub: true 
-              }
-            }
-          );
-        });
       });
 
       // Refresh ScrollTrigger after a short delay to ensure DOM is fully painted

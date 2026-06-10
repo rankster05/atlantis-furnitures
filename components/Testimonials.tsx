@@ -283,7 +283,7 @@ const Testimonials: React.FC = () => {
   }, []);
 
   return (
-    <section ref={containerRef} className="py-20 md:py-32 bg-[#0a0a0a] text-white relative overflow-hidden border-t border-white/5">
+    <section ref={containerRef} className="content-visibility-auto py-20 md:py-32 bg-[#0a0a0a] text-white relative overflow-hidden border-t border-white/5">
 
       {/* VIP carousel + Instagram CTA pulse */}
       <style>{`

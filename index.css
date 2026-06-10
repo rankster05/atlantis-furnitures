@@ -54,3 +54,9 @@ html.lenis {
   display: inline-block;
   transform: translateY(110%);
 }
+
+/* Performance Utilities for ultra fast initial load */
+.content-visibility-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 1000px;
+}

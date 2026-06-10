@@ -9,10 +9,11 @@ interface HeroProps {
 }
 
 const HERO_VIDEO = '/atlantis-hero-video.mp4';
+const HERO_VIDEO_MOBILE = '/atlantis-hero-video-mobil.mp4';
 // Poster shows instantly (it's preloaded in index.html) so there's no black
 // flash while the video loads — protects the LCP.
 const HERO_POSTER = '/projects/AP AIR-V/hero-living-victoriei-hd-m.webp';
-const PLAYBACK_RATE = 0.7; // slow-motion, premium feel
+const PLAYBACK_RATE = 0.85;
 
 const Hero: React.FC<HeroProps> = ({ startAnimation = true }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -20,7 +21,7 @@ const Hero: React.FC<HeroProps> = ({ startAnimation = true }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
 
-  // Slow-motion playback + robust autoplay (some browsers ignore the attribute).
+  // Robust autoplay + slow-motion playback
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
@@ -84,21 +85,6 @@ const Hero: React.FC<HeroProps> = ({ startAnimation = true }) => {
             }
           });
         });
-
-        // Mobile Parallax - Simplified to prevent stuttering
-        mm.add("(max-width: 767px)", () => {
-          gsap.to(mediaRef.current, {
-            scale: 1.05,
-            ease: 'none',
-            force3D: true,
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: 'top top',
-              end: 'bottom top',
-              scrub: true
-            }
-          });
-        });
       }
     }, containerRef);
 
@@ -117,7 +103,6 @@ const Hero: React.FC<HeroProps> = ({ startAnimation = true }) => {
         <video
           ref={videoRef}
           className="absolute inset-0 w-full h-full object-cover object-center brightness-[0.85] contrast-[1.05]"
-          src={HERO_VIDEO}
           poster={HERO_POSTER}
           autoPlay
           muted
@@ -125,7 +110,10 @@ const Hero: React.FC<HeroProps> = ({ startAnimation = true }) => {
           playsInline
           preload="auto"
           aria-label="Mobilier la comanda - proiecte Atlantis Furnitures in miscare"
-        />
+        >
+          <source src={HERO_VIDEO_MOBILE} type="video/mp4" media="(max-width: 767px)" />
+          <source src={HERO_VIDEO} type="video/mp4" media="(min-width: 768px)" />
+        </video>
       </div>
 
       <div ref={textRef} className="relative z-10 flex flex-col items-center justify-center w-full px-6 h-full pt-16 md:pt-0">

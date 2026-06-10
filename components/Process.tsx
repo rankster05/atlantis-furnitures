@@ -70,7 +70,7 @@ const Process: React.FC = () => {
   }, []);
 
   return (
-    <section ref={containerRef} className="py-24 md:py-32 bg-atl-bg text-atl-dark relative px-6 md:px-20 overflow-hidden">
+    <section ref={containerRef} className="content-visibility-auto py-24 md:py-32 bg-atl-bg text-atl-dark relative px-6 md:px-20 overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
         <div className="text-center mb-20 md:mb-28">
            <span className="text-sm uppercase tracking-[0.3em] text-atl-accent mb-4 block opacity-90">Metodologia Noastra</span>

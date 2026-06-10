@@ -124,7 +124,7 @@ const ProjectStack: React.FC = () => {
   }, []);
 
   return (
-    <section ref={containerRef} id="work" className="py-20 bg-atl-dark text-atl-bg relative">
+    <section ref={containerRef} id="work" className="content-visibility-auto py-20 bg-atl-dark text-atl-bg relative">
       <div className="text-center mb-32 md:mb-48 px-6">
         <span className="block text-sm uppercase tracking-widest mb-4 opacity-70">Expertiza Noastra</span>
         <h2 className="font-display text-3xl md:text-6xl flex items-center justify-center gap-3 md:gap-5">
