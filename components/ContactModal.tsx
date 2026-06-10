@@ -279,7 +279,7 @@ ${formData.message || '-'}`;
                 {status === 'idle' && <WhatsAppLogo className="w-5 h-5 relative z-10 group-hover:scale-110 group-hover:rotate-12 transition-transform duration-300" />}
               </button>
 
-              <p className="text-[10px] text-gray-500 text-center leading-tight mt-1 opacity-60">
+              <p className="text-[11px] text-gray-500 text-center leading-tight mt-1 opacity-70">
                 Vei fi redirectionat catre aplicatia WhatsApp.
               </p>
 

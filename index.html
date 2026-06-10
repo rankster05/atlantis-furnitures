@@ -32,11 +32,10 @@
     <meta name="twitter:description" content="Producem mobilier la comanda din MDF si PAL pentru Bucuresti si Ilfov. Bucatarii, livinguri, dormitoare, dressing-uri, office. Cere oferta gratuita azi!">
     <meta name="twitter:image" content="https://atlantisfurnitures.ro/projects/AP%20AIR-U/design-interior-apartament-modern-unirii-atlantis-furnitures.webp">
 
-    <!-- Performance: preload the LCP hero image. Mobile (≤820px) preloads the
-         light 1080px image (matches the <picture> source → single fetch);
-         desktop fetches the full image via the preload scanner. -->
-    <link rel="preload" as="image" href="/projects/AP%20AIR-V/hero-living-victoriei-hd-m.webp" media="(max-width: 820px)" fetchpriority="high">
-    <link rel="preload" as="image" href="/projects/AP%20AIR-V/hero-living-victoriei-hd.webp" media="(min-width: 821px)" fetchpriority="high">
+    <!-- Performance: the homepage hero is a <video>; preload its poster image
+         (single, lightweight) so the first paint / LCP is instant while the
+         video loads in the background. -->
+    <link rel="preload" as="image" href="/projects/AP%20AIR-V/hero-living-victoriei-hd-m.webp" fetchpriority="high">
 
     <!-- Fonts (Google Fonts) — preconnect + display=swap to avoid FOIT -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

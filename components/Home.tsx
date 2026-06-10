@@ -23,15 +23,17 @@ const Home: React.FC<HomeProps> = ({ isLoaded = true }) => {
       <Hero startAnimation={isLoaded} />
       <Intro />
       <ProjectStack />
-      
-      {/* New Methodology Section */}
+
+      {/* Social Proof Section (Recenzii) — follows the dark project stack */}
+      <Testimonials />
+
+      {/* Methodology Section (Cum lucram) — now below the reviews */}
       <Process />
 
-      {/* New Social Proof Section */}
-      <Testimonials />
-      
-      {/* Philosophy / CTA Section before footer */}
-      <section className="py-32 md:py-40 bg-atl-bg text-center flex flex-col items-center justify-center relative z-10 px-6">
+      {/* Philosophy / CTA Section before footer.
+          Follows the cream Process section, so it carries a subtle divider and
+          a trimmed top padding to avoid a doubled cream gap. */}
+      <section className="pt-16 md:pt-20 pb-28 md:pb-36 bg-atl-bg text-center flex flex-col items-center justify-center relative z-10 px-6 border-t border-atl-dark/5">
         <h2 className="sr-only">Solicita o Oferta Gratuita</h2>
         <p className="font-display text-3xl md:text-5xl mb-8 m-0">De la Idee la Realitate</p>
         <div className="max-w-3xl text-gray-800 font-light mb-12 leading-relaxed text-lg md:text-xl">

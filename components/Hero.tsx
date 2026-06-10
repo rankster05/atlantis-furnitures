@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useEffect, useState } from 'react';
+import React, { useLayoutEffect, useRef, useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -8,56 +8,32 @@ interface HeroProps {
   startAnimation?: boolean;
 }
 
-// Hero slideshow — first image is the LCP (matches the preload in index.html).
-// Each item has a full HD image (desktop) and a lighter 1600px variant (mobile).
-const heroImages = [
-  {
-    hd: '/projects/AP AIR-V/hero-living-victoriei-hd.webp',
-    m: '/projects/AP AIR-V/hero-living-victoriei-hd-m.webp',
-    alt: 'Mobilier la comanda - apartament modern Bucuresti, design interior premium',
-  },
-  {
-    hd: '/projects/AP AIR-V/hero-camera-copil.webp',
-    m: '/projects/AP AIR-V/hero-camera-copil-m.webp',
-    alt: 'Mobilier camera copil la comanda - pat personalizat',
-  },
-  {
-    hd: '/projects/AP AIR-V/hero-living-pipera.webp',
-    m: '/projects/AP AIR-V/hero-living-pipera-m.webp',
-    alt: 'Living si bucatarie open space la comanda - MDF furnir',
-  },
-  {
-    hd: '/projects/AP AIR-V/hero-dormitor-riflat.webp',
-    m: '/projects/AP AIR-V/hero-dormitor-riflat-m.webp',
-    alt: 'Mobilier dormitor modern la comanda - perete riflat din lemn',
-  },
-  {
-    hd: '/projects/AP AIR-V/hero-baie-oglinda.webp',
-    m: '/projects/AP AIR-V/hero-baie-oglinda-m.webp',
-    alt: 'Mobilier baie la comanda - oglinda rotunda iluminata',
-  },
-];
-
-const SLIDE_INTERVAL = 3000; // ms between slides
-
-const prefersReducedMotion = (): boolean =>
-  typeof window !== 'undefined' &&
-  window.matchMedia &&
-  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const HERO_VIDEO = '/atlantis-hero-video.mp4';
+// Poster shows instantly (it's preloaded in index.html) so there's no black
+// flash while the video loads — protects the LCP.
+const HERO_POSTER = '/projects/AP AIR-V/hero-living-victoriei-hd-m.webp';
+const PLAYBACK_RATE = 0.7; // slow-motion, premium feel
 
 const Hero: React.FC<HeroProps> = ({ startAnimation = true }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const slidesRef = useRef<HTMLDivElement>(null);
+  const mediaRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
-  const [active, setActive] = useState(0);
 
-  // Auto-advance the slideshow (paused for reduced-motion users).
+  // Slow-motion playback + robust autoplay (some browsers ignore the attribute).
   useEffect(() => {
-    if (prefersReducedMotion()) return;
-    const id = window.setInterval(() => {
-      setActive((a) => (a + 1) % heroImages.length);
-    }, SLIDE_INTERVAL);
-    return () => window.clearInterval(id);
+    const v = videoRef.current;
+    if (!v) return;
+    v.playbackRate = PLAYBACK_RATE;
+    const tryPlay = () => {
+      v.playbackRate = PLAYBACK_RATE;
+      v.play().catch(() => {
+        /* autoplay blocked — poster stays visible, harmless */
+      });
+    };
+    if (v.readyState >= 2) tryPlay();
+    else v.addEventListener('loadeddata', tryPlay, { once: true });
+    return () => v.removeEventListener('loadeddata', tryPlay);
   }, []);
 
   useLayoutEffect(() => {
@@ -89,13 +65,13 @@ const Hero: React.FC<HeroProps> = ({ startAnimation = true }) => {
         ease: 'power2.out'
       });
 
-      // Parallax Effect — applied to the whole slideshow container
-      if (slidesRef.current) {
+      // Parallax Effect — applied to the video container
+      if (mediaRef.current) {
         const mm = gsap.matchMedia();
 
         // Desktop Parallax
         mm.add("(min-width: 768px)", () => {
-          gsap.to(slidesRef.current, {
+          gsap.to(mediaRef.current, {
             yPercent: 10,
             scale: 1.05,
             ease: 'none',
@@ -111,7 +87,7 @@ const Hero: React.FC<HeroProps> = ({ startAnimation = true }) => {
 
         // Mobile Parallax - Simplified to prevent stuttering
         mm.add("(max-width: 767px)", () => {
-          gsap.to(slidesRef.current, {
+          gsap.to(mediaRef.current, {
             scale: 1.05,
             ease: 'none',
             force3D: true,
@@ -131,28 +107,25 @@ const Hero: React.FC<HeroProps> = ({ startAnimation = true }) => {
 
   return (
     <section ref={containerRef} id="hero" className="h-[100dvh] w-full relative flex items-center justify-center overflow-hidden">
-      {/* Slideshow container (parallax target). Images crossfade every 3s. */}
+      {/* Hero video — muted autoplay loop, slow-motion, with a preloaded poster
+          so the first paint (LCP) is instant. */}
       <div
-        ref={slidesRef}
+        ref={mediaRef}
         className="absolute w-[120vw] max-w-none h-[130vh] will-change-transform"
         style={{ left: '-10vw', top: '-15vh' }}
       >
-        {heroImages.map((img, i) => (
-          <picture key={img.hd} className="contents">
-            <source media="(max-width: 820px)" srcSet={img.m} />
-            <img
-              src={img.hd}
-              className={`absolute inset-0 w-full h-full object-cover object-center brightness-[0.85] contrast-[1.05] transition-opacity ease-in-out motion-reduce:transition-none ${
-                i === active ? 'opacity-100' : 'opacity-0'
-              }`}
-              style={{ transitionDuration: '1500ms' }}
-              alt={img.alt}
-              fetchPriority={i === 0 ? 'high' : 'low'}
-              decoding="async"
-              aria-hidden={i === active ? undefined : true}
-            />
-          </picture>
-        ))}
+        <video
+          ref={videoRef}
+          className="absolute inset-0 w-full h-full object-cover object-center brightness-[0.85] contrast-[1.05]"
+          src={HERO_VIDEO}
+          poster={HERO_POSTER}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          aria-label="Mobilier la comanda - proiecte Atlantis Furnitures in miscare"
+        />
       </div>
 
       <div ref={textRef} className="relative z-10 flex flex-col items-center justify-center w-full px-6 h-full pt-16 md:pt-0">
@@ -180,20 +153,6 @@ const Hero: React.FC<HeroProps> = ({ startAnimation = true }) => {
             </h1>
           </div>
         </div>
-      </div>
-
-      {/* Slide indicators (subtle, premium) */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2.5">
-        {heroImages.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setActive(i)}
-            aria-label={`Vezi imaginea ${i + 1} din ${heroImages.length}`}
-            className={`h-1.5 rounded-full transition-all duration-500 ease-out ${
-              i === active ? 'w-7 bg-white' : 'w-1.5 bg-white/40 hover:bg-white/70'
-            }`}
-          />
-        ))}
       </div>
     </section>
   );

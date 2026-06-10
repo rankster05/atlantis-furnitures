@@ -20,7 +20,10 @@ const routes = [
     path: '/',
     title: 'Mobilier la Comanda Bucuresti | Atlantis Furnitures',
     description: 'Producem mobilier la comanda din MDF si PAL pentru Bucuresti si Ilfov. Bucatarii, livinguri, dormitoare, dressing-uri, office. Cere oferta gratuita azi!',
+    // Homepage hero is a video; the OG image stays the HD still, but the LCP
+    // preload is the lightweight video poster (single image, matches <video poster>).
     image: '/projects/AP AIR-V/hero-living-victoriei-hd.webp',
+    posterPreload: '/projects/AP AIR-V/hero-living-victoriei-hd-m.webp',
   },
   {
     path: '/servicii',
@@ -116,20 +119,26 @@ const outPathFor = (routePath) =>
 const canonicalFor = (routePath) =>
   routePath === '/' ? `${SITE}/` : `${SITE}${routePath}/`;
 
-// ── Per-route LCP preload (mobile + desktop, matches the <picture> source) ───
-const preloadTag = (image) => {
-  const full = encodeURI(image);
-  const mobile = encodeURI(image.replace(/\.webp$/, '-m.webp'));
+// ── Per-route LCP preload ────────────────────────────────────────────────────
+// Project pages preload a responsive pair (mobile + desktop) that matches their
+// <picture> source. The homepage hero is a <video> with a single poster, so it
+// preloads one image (route.posterPreload) — matching the poster, no double-load.
+const preloadTag = (route) => {
+  if (route.posterPreload) {
+    return `<link rel="preload" as="image" href="${encodeURI(route.posterPreload)}" fetchpriority="high">`;
+  }
+  const full = encodeURI(route.image);
+  const mobile = encodeURI(route.image.replace(/\.webp$/, '-m.webp'));
   return (
     `<link rel="preload" as="image" href="${mobile}" media="(max-width: 820px)" fetchpriority="high">\n    ` +
     `<link rel="preload" as="image" href="${full}" media="(min-width: 821px)" fetchpriority="high">`
   );
 };
-// Replace the two consecutive image preload tags from the base HTML.
-const fixPreload = (html, image) =>
+// Replace the one-or-two consecutive image preload tags from the base HTML.
+const fixPreload = (html, route) =>
   html.replace(
-    /<link rel="preload" as="image"[^>]*>\s*<link rel="preload" as="image"[^>]*>/,
-    preloadTag(image)
+    /<link rel="preload" as="image"[^>]*>(\s*<link rel="preload" as="image"[^>]*>)?/,
+    preloadTag(route)
   );
 
 // ── FALLBACK: meta-only injection (no browser needed) ────────────────────────
@@ -149,7 +158,7 @@ function metaInject(route) {
     .replace(/<meta name="twitter:title" content="[^"]*">/, `<meta name="twitter:title" content="${titleEsc}">`)
     .replace(/<meta name="twitter:description" content="[^"]*">/, `<meta name="twitter:description" content="${descEsc}">`)
     .replace(/<meta name="twitter:image" content="[^"]*">/, `<meta name="twitter:image" content="${ogImage}">`);
-  html = fixPreload(html, route.image);
+  html = fixPreload(html, route);
   if (route.noindex) {
     html = html.replace(/<meta name="robots" content="[^"]*">/, `<meta name="robots" content="noindex, nofollow">`);
   }
@@ -241,11 +250,14 @@ async function renderRoute(browser, route, { is404 = false } = {}) {
   await page.close();
 
   if (!is404) {
-    html = fixPreload(html, route.image);
+    html = fixPreload(html, route);
     html = html.replace(
       /<meta property="og:image:alt" content="[^"]*">/,
       `<meta property="og:image:alt" content="Atlantis Furnitures - mobilier la comanda">`
     );
+    // React sets `muted` as a property, not an HTML attribute, so it's absent
+    // from the captured markup. Re-add it so native autoplay works pre-hydration.
+    html = html.replace(/<video (?![^>]*\bmuted\b)/g, '<video muted ');
   }
   if (!html.startsWith('<!DOCTYPE')) html = '<!DOCTYPE html>\n' + html;
   return html;

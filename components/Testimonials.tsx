@@ -1,14 +1,22 @@
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Star, ExternalLink, Map, ArrowRight, Quote, Instagram, Plus } from 'lucide-react';
+import { Star, ExternalLink, Map, ArrowRight, Quote, Instagram, Facebook, Plus } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
+type VipReview = {
+  id: string;
+  name: string;
+  role?: string;
+  image: string;
+  instagram?: string;
+  facebook?: string;
+  text: string;
+};
+
 // VIP / featured testimonials — personalitati cunoscute.
-// Inlocuieste `image` cu calea reala (pune fisierele in /public/testimonials-vip/)
-// si `name` + `text` cu datele primite. Pastreaza aspectul portret (3:4).
-const vipReviews = [
+const vipReviews: VipReview[] = [
   {
     id: 'vip-alexia',
     name: 'Alexia Talavutis',
@@ -32,6 +40,22 @@ const vipReviews = [
     image: '/testimonials-vip/dr-mihail-pautov.jpg',
     instagram: 'https://www.instagram.com/doctor.mihail',
     text: 'Sunt genul de om care observa detaliile. Iar spatiul in care filmez trebuia sa fie exact cum imi imaginam: simplu, curat si fara nimic in plus. Echipa Atlantis Furnitures a avut rabdarea sa faca totul pana la ultimul detaliu. Si cred ca asta face diferenta intre ceva facut „ok” si ceva facut foarte bine. Un spatiu bine gandit iti da liniste si claritate fara sa-ti dai seama.',
+  },
+  {
+    id: 'vip-cristina',
+    name: 'Cristina Stroe',
+    role: 'Arhitect & Designer Interior',
+    image: '/testimonials-vip/cristina-stroe.jpg',
+    instagram: 'https://www.instagram.com/cri_stroe/',
+    text: 'Am colaborat cu Atlantis Furniture de-a lungul anilor atat din perspectiva de arhitect si designer de interior, cat si din cea de client, iar unul dintre lucrurile pe care le-am apreciat cel mai mult a fost disponibilitatea lor de a gasi solutii chiar si atunci cand termenele erau foarte stranse. M-au ajutat in numeroase proiecte cu deadline-uri dificile, printr-o comunicare eficienta si solutii adaptate atat cerintelor proiectului, cat si bugetului disponibil. Le multumesc pentru colaborarea de pana acum si pentru sprijinul oferit de-a lungul anilor.',
+  },
+  {
+    id: 'vip-virgil',
+    name: 'Virgil Iantu',
+    role: 'Prezentator TV',
+    image: '/testimonials-vip/virgil-iantu.jpg',
+    facebook: 'https://www.facebook.com/iantu.virgil',
+    text: 'Mai o schita, mai o explicatie, mai o gluma si mobila e gata. Asa am crezut, pana cand Jasmina a realizat ca nuanta mobilei din camera ei nu e cea dorita. Nicu a ras si s-a executat. Altfel eram eu cel executat. Multumesc pentru gasirea de solutii, pentru efort si pentru rezultat. Spor!',
   },
 ];
 
@@ -123,6 +147,7 @@ const reviews = [
 const Testimonials: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
+  const vipTrackRef = useRef<HTMLDivElement>(null);
   // Which VIP card is expanded (tap-to-reveal on touch devices)
   const [activeVip, setActiveVip] = useState<string | null>(null);
   const toggleVip = (id: string) =>
@@ -143,44 +168,13 @@ const Testimonials: React.FC = () => {
         }
       });
 
-      // VIP Cards — start rotated + offset, then SNAP into a clean grid as each
-      // card scrolls into view. Triggered per-card so it feels identical on
-      // mobile (stacked, one-by-one) and desktop (row, near-simultaneous).
-      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const vipCards = gsap.utils.toArray<HTMLElement>('.vip-card-anim');
-
-      vipCards.forEach((card, i) => {
-        if (reduceMotion) {
-          // Accessibility: no rotation — a gentle fade keeps content visible.
-          gsap.fromTo(
-            card,
-            { opacity: 0 },
-            {
-              opacity: 1,
-              duration: 0.6,
-              ease: 'power2.out',
-              scrollTrigger: { trigger: card, start: 'top 88%' },
-            }
-          );
-          return;
-        }
-
-        const rotateFrom = i % 2 === 0 ? -10 : 10; // alternate left / right tilt
-        gsap.fromTo(
-          card,
-          { rotation: rotateFrom, y: 60, opacity: 0, transformOrigin: '50% 100%' },
-          {
-            rotation: 0,
-            y: 0,
-            opacity: 1,
-            duration: 1.5,
-            ease: 'power4.out',
-            scrollTrigger: {
-              trigger: card,
-              start: 'top 85%',
-            },
-          }
-        );
+      // VIP carousel — fade the whole strip in once on scroll into view.
+      gsap.from('.vip-carousel-anim', {
+        opacity: 0,
+        y: 30,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: '.vip-carousel-anim', start: 'top 85%' },
       });
 
       // Map Animation
@@ -215,10 +209,83 @@ const Testimonials: React.FC = () => {
     return () => ctx.revert();
   }, []);
 
+  // VIP carousel — native horizontal scroll (real touch-swipe) + slow auto-scroll.
+  // Cards are duplicated so the rightward auto-scroll loops seamlessly. Auto-scroll
+  // pauses on hover (desktop) and on touch/drag (mobile), resuming after inactivity.
+  useEffect(() => {
+    const el = vipTrackRef.current;
+    if (!el) return;
+
+    // The carousel always auto-scrolls (it's a core brand element). It still
+    // pauses on hover / touch so users can read a card.
+    let paused = false;
+    let resumeTimer = 0;
+    let raf = 0;
+    let pos = el.scrollLeft; // float accumulator (scrollLeft rounds sub-pixel)
+    const SPEED = 0.5; // px/frame — slow, premium
+
+    const tick = () => {
+      if (!paused && el.scrollWidth > el.clientWidth) {
+        const half = el.scrollWidth / 2;
+        pos += SPEED;
+        if (pos >= half) pos -= half; // seamless loop
+        el.scrollLeft = pos;
+      } else {
+        pos = el.scrollLeft; // stay in sync during manual scroll / pause
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+
+    // Keep manual scrolling within the first copy so swiping right is infinite too.
+    const onScroll = () => {
+      const half = el.scrollWidth / 2;
+      if (el.scrollLeft >= half) {
+        el.scrollLeft -= half;
+        pos = el.scrollLeft;
+      }
+    };
+
+    const pause = () => {
+      paused = true;
+      window.clearTimeout(resumeTimer);
+    };
+    const resume = () => {
+      paused = false;
+    };
+    const resumeLater = () => {
+      window.clearTimeout(resumeTimer);
+      resumeTimer = window.setTimeout(() => {
+        paused = false;
+      }, 1500);
+    };
+
+    el.addEventListener('scroll', onScroll, { passive: true });
+    el.addEventListener('mouseenter', pause);
+    el.addEventListener('mouseleave', resume);
+    el.addEventListener('pointerdown', pause);
+    el.addEventListener('pointerup', resumeLater);
+    el.addEventListener('touchstart', pause, { passive: true });
+    el.addEventListener('touchend', resumeLater, { passive: true });
+    el.addEventListener('wheel', () => { pause(); resumeLater(); }, { passive: true });
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.clearTimeout(resumeTimer);
+      el.removeEventListener('scroll', onScroll);
+      el.removeEventListener('mouseenter', pause);
+      el.removeEventListener('mouseleave', resume);
+      el.removeEventListener('pointerdown', pause);
+      el.removeEventListener('pointerup', resumeLater);
+      el.removeEventListener('touchstart', pause);
+      el.removeEventListener('touchend', resumeLater);
+    };
+  }, []);
+
   return (
     <section ref={containerRef} className="py-20 md:py-32 bg-[#0a0a0a] text-white relative overflow-hidden border-t border-white/5">
 
-      {/* VIP card interactions — Instagram pulse + hover-only review reveal */}
+      {/* VIP carousel + Instagram CTA pulse */}
       <style>{`
         /* Instagram CTA attention pulse */
         @keyframes vipIgPulse {
@@ -229,7 +296,15 @@ const Testimonials: React.FC = () => {
         .vip-ig-ring { animation: vipIgPulse 2.4s cubic-bezier(0.22,1,0.36,1) infinite; }
         .vip-ig:hover .vip-ig-ring { animation-play-state: paused; opacity: 0; }
 
-        /* DEFAULT (mobile/touch): clean card — image in color, review collapsed.
+        /* Hidden scrollbar but native touch-swipe stays fully functional */
+        .vip-track {
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+          -webkit-overflow-scrolling: touch;
+        }
+        .vip-track::-webkit-scrollbar { display: none; }
+
+        /* DEFAULT (mobile/touch): clean card — image in colour, review collapsed.
            Tapping the card adds .is-active which reveals the review elegantly. */
         .vip-review      { grid-template-rows: 0fr; }
         .vip-review-text { opacity: 0; transform: translateY(8px); transition-delay: 150ms; }
@@ -242,11 +317,10 @@ const Testimonials: React.FC = () => {
         .vip-card.is-active .vip-name        { transform: translateY(-4px); }
         .vip-card.is-active .vip-img         { transform: scale(1.04); }
 
-        /* DESKTOP (hover-capable pointers): grayscale photo, reveal on hover.
-           No tap "+" hint — hover handles everything. */
+        /* DESKTOP (hover-capable pointers): grayscale photo, reveal on hover. */
         @media (hover: hover) and (pointer: fine) {
           .vip-tap-hint    { display: none; }
-          .vip-img         { filter: grayscale(1); }
+          .vip-img         { filter: grayscale(0.8); }
           .vip-card:hover .vip-review      { grid-template-rows: 1fr; }
           .vip-card:hover .vip-review-text { opacity: 1; transform: translateY(0); }
           .vip-card:hover .vip-accent      { transform: scaleX(1); }
@@ -299,109 +373,121 @@ const Testimonials: React.FC = () => {
           </div>
         </div>
 
-        {/* VIP / Featured Testimonials — editorial portrait cards */}
-        <div className="px-6 md:px-20 mb-24 md:mb-32">
-          <div className="header-anim flex items-center gap-3 mb-10 md:mb-14">
-            <span className="uppercase tracking-[0.3em] text-[10px] md:text-xs text-atl-accent font-medium">
-              Au ales Atlantis
-            </span>
-            <span className="w-12 h-px bg-white/20" />
+        {/* VIP / Featured Testimonials — infinite auto-scroll carousel */}
+        <div className="vip-carousel-anim mb-24 md:mb-32">
+          <div className="px-6 md:px-20">
+            <div className="flex items-center gap-3 mb-8 md:mb-12">
+              <span className="uppercase tracking-[0.3em] text-[11px] md:text-xs text-atl-accent font-medium">
+                Au ales Atlantis
+              </span>
+              <span className="w-12 h-px bg-white/20" />
+            </div>
           </div>
 
-          <div className="vip-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {vipReviews.map((vip) => {
-              const isActive = activeVip === vip.id;
-              return (
-              // Wrapper carries the GSAP entrance transform (rotate → snap),
-              // kept separate from the card's own hover/tap transforms so the
-              // two never fight. will-change hints the compositor.
-              <div key={vip.id} className="vip-card-anim will-change-[transform,opacity]">
-              <article
-                onClick={() => toggleVip(vip.id)}
-                role="button"
-                tabIndex={0}
-                aria-expanded={isActive}
-                aria-label={`Recenzie de la ${vip.name} — apasa pentru a citi`}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    toggleVip(vip.id);
-                  }
-                }}
-                className={`vip-card group relative aspect-[3/4] w-full overflow-hidden rounded-2xl md:rounded-3xl bg-[#161616] border border-white/10 cursor-pointer select-none transition-transform duration-300 active:scale-[0.98] ${isActive ? 'is-active' : ''}`}
-              >
-                {/* Portrait */}
-                <img
-                  src={vip.image}
-                  alt={`${vip.name} — recenzie Atlantis Furnitures`}
-                  loading="lazy"
-                  decoding="async"
-                  className="vip-img absolute inset-0 w-full h-full object-cover object-center transition-all duration-700 ease-out"
-                />
+          <div className="relative">
+            {/* Edge fade masks */}
+            <div className="absolute left-0 top-0 bottom-0 w-10 md:w-24 bg-gradient-to-r from-[#0a0a0a] to-transparent z-20 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-10 md:w-24 bg-gradient-to-l from-[#0a0a0a] to-transparent z-20 pointer-events-none" />
 
-                {/* Gradient scrim for text legibility */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
-
-                {/* Instagram CTA (top-right) — always visible, gently pulsing to invite a click */}
-                {vip.instagram && (
-                  <a
-                    href={vip.instagram}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    aria-label={`Vezi profilul de Instagram al lui ${vip.name}`}
-                    className="vip-ig group/ig absolute top-5 right-5 z-30 w-11 h-11"
-                  >
-                    {/* Expanding glow ring — draws the eye */}
-                    <span className="vip-ig-ring absolute inset-0 rounded-full border border-white/40 pointer-events-none" />
-                    {/* Button face */}
-                    <span className="relative flex items-center justify-center w-11 h-11 rounded-full bg-white/10 backdrop-blur-md border border-white/30 text-white transition-all duration-300 group-hover/ig:scale-110 group-hover/ig:border-transparent group-hover/ig:bg-[linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5)] group-hover/ig:shadow-[0_0_28px_rgba(214,41,118,0.6)]">
-                      <Instagram size={20} strokeWidth={1.8} />
-                    </span>
-                  </a>
-                )}
-
-                {/* Tap hint (touch only) — elegant "+" that rotates into "×" when open */}
-                <div className="vip-tap-hint absolute top-5 left-5 z-20 w-9 h-9 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white pointer-events-none">
-                  <Plus
-                    size={18}
-                    strokeWidth={1.8}
-                    className={`transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${isActive ? 'rotate-[135deg]' : 'rotate-0'}`}
+            {/* Native horizontal scroll = real touch-swipe; JS adds slow auto-scroll */}
+            <div
+              ref={vipTrackRef}
+              className="vip-track flex gap-5 md:gap-7 overflow-x-auto px-6 md:px-20 py-2"
+              role="list"
+              aria-label="Recenzii de la personalitati care au ales Atlantis"
+            >
+              {[...vipReviews, ...vipReviews].map((vip, idx) => {
+                const isActive = activeVip === `${vip.id}-${idx}`;
+                return (
+                <article
+                  key={`${vip.id}-${idx}`}
+                  role="listitem"
+                  tabIndex={0}
+                  aria-expanded={isActive}
+                  aria-label={`Recenzie de la ${vip.name} — apasa pentru a citi`}
+                  onClick={() => toggleVip(`${vip.id}-${idx}`)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      toggleVip(`${vip.id}-${idx}`);
+                    }
+                  }}
+                  className={`vip-card group relative shrink-0 w-[300px] sm:w-[340px] md:w-[380px] aspect-[3/4] overflow-hidden rounded-2xl md:rounded-3xl bg-[#161616] border border-white/10 cursor-pointer select-none ${isActive ? 'is-active' : ''}`}
+                >
+                  {/* Portrait */}
+                  <img
+                    src={vip.image}
+                    alt={`${vip.name} — recenzie Atlantis Furnitures`}
+                    loading="lazy"
+                    decoding="async"
+                    draggable={false}
+                    className="vip-img absolute inset-0 w-full h-full object-cover object-center transition-all duration-700 ease-out"
                   />
-                </div>
 
-                {/* Content: name + review.
-                    Mobile/touch: tap the card to reveal the review.
-                    Desktop (hover devices): elegant reveal on hover. */}
-                <div className="absolute inset-x-0 bottom-0 z-10 p-6 md:p-8">
-                  {/* Role + Name */}
-                  <div className="vip-name transform-gpu transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]">
-                    {vip.role && (
-                      <p className="text-[11px] md:text-xs uppercase tracking-[0.2em] text-white/60 mb-2 font-medium">
-                        {vip.role}
-                      </p>
-                    )}
-                    <h3 className="font-display text-2xl md:text-3xl text-white leading-tight">
-                      {vip.name}
-                    </h3>
+                  {/* Gradient scrim for text legibility */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+
+                  {/* Social CTA (top-right) — Instagram or Facebook */}
+                  {(vip.instagram || vip.facebook) && (
+                    <a
+                      href={vip.instagram || vip.facebook}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      aria-label={`Vezi profilul ${vip.instagram ? 'de Instagram' : 'de Facebook'} al lui ${vip.name}`}
+                      className="vip-ig group/ig absolute top-5 right-5 z-30 w-11 h-11"
+                    >
+                      <span className="vip-ig-ring absolute inset-0 rounded-full border border-white/40 pointer-events-none" />
+                      {vip.instagram ? (
+                        <span className="relative flex items-center justify-center w-11 h-11 rounded-full bg-white/10 backdrop-blur-md border border-white/30 text-white transition-all duration-300 group-hover/ig:scale-110 group-hover/ig:border-transparent group-hover/ig:bg-[linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5)] group-hover/ig:shadow-[0_0_28px_rgba(214,41,118,0.6)]">
+                          <Instagram size={20} strokeWidth={1.8} />
+                        </span>
+                      ) : (
+                        <span className="relative flex items-center justify-center w-11 h-11 rounded-full bg-white/10 backdrop-blur-md border border-white/30 text-white transition-all duration-300 group-hover/ig:scale-110 group-hover/ig:border-transparent group-hover/ig:bg-[#1877F2] group-hover/ig:shadow-[0_0_28px_rgba(24,119,242,0.6)]">
+                          <Facebook size={20} strokeWidth={1.8} />
+                        </span>
+                      )}
+                    </a>
+                  )}
+
+                  {/* Tap hint (touch only) — elegant "+" that rotates when open */}
+                  <div className="vip-tap-hint absolute top-5 left-5 z-20 w-9 h-9 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white pointer-events-none">
+                    <Plus
+                      size={18}
+                      strokeWidth={1.8}
+                      className={`transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${isActive ? 'rotate-[135deg]' : 'rotate-0'}`}
+                    />
                   </div>
 
-                  {/* Accent line */}
-                  <div className="vip-accent mt-4 h-px w-10 bg-atl-accent origin-left transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]" />
+                  {/* Content: name + review (reveals on hover / tap) */}
+                  <div className="absolute inset-x-0 bottom-0 z-10 p-6 md:p-8">
+                    <div className="vip-name transform-gpu transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]">
+                      {vip.role && (
+                        <p className="text-[11px] md:text-xs uppercase tracking-[0.2em] text-white/60 mb-2 font-medium">
+                          {vip.role}
+                        </p>
+                      )}
+                      <h3 className="font-display text-2xl md:text-3xl text-white leading-tight">
+                        {vip.name}
+                      </h3>
+                    </div>
 
-                  {/* Review — smooth height reveal via grid-rows, no layout jump */}
-                  <div className="vip-review grid transition-[grid-template-rows] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]">
-                    <div className="overflow-hidden">
-                      <p className="vip-review-text pt-4 text-sm md:text-[15px] text-gray-200 font-light leading-relaxed transition-all duration-500 ease-out">
-                        {vip.text}
-                      </p>
+                    {/* Accent line */}
+                    <div className="vip-accent mt-4 h-px w-10 bg-atl-accent origin-left transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]" />
+
+                    {/* Review — smooth height reveal via grid-rows, no layout jump */}
+                    <div className="vip-review grid transition-[grid-template-rows] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]">
+                      <div className="overflow-hidden">
+                        <p className="vip-review-text pt-4 text-sm md:text-[15px] text-gray-200 font-light leading-relaxed transition-all duration-500 ease-out">
+                          {vip.text}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </article>
-              </div>
-              );
-            })}
+                </article>
+                );
+              })}
+            </div>
           </div>
         </div>
 
@@ -490,7 +576,7 @@ const Testimonials: React.FC = () => {
                           <div className="p-2.5 bg-white/5 backdrop-blur-md rounded-full border border-white/10 group-hover:border-atl-accent/50 transition-colors duration-500">
                              <Map className="w-4 h-4 text-atl-accent" />
                           </div>
-                          <span className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.25em] text-white/80">Zona de Acoperire</span>
+                          <span className="text-[11px] sm:text-xs font-bold uppercase tracking-[0.25em] text-white/80">Zona de Acoperire</span>
                        </div>
                        
                        <p className="font-display text-3xl sm:text-4xl md:text-5xl text-white mb-3 md:mb-4 leading-tight tracking-tight m-0">
