@@ -326,7 +326,6 @@ const Testimonials: React.FC = () => {
 
         /* DESKTOP (hover-capable pointers): grayscale photo, reveal on hover. */
         @media (hover: hover) and (pointer: fine) {
-          .vip-tap-hint    { display: none; }
           .vip-img         { filter: grayscale(0.8); }
           .vip-card:hover .vip-review      { grid-template-rows: 1fr; }
           .vip-card:hover .vip-review-text { opacity: 1; transform: translateY(0); }
@@ -419,7 +418,7 @@ const Testimonials: React.FC = () => {
                       toggleVip(`${vip.id}-${idx}`);
                     }
                   }}
-                  className={`vip-card group relative shrink-0 w-[300px] sm:w-[340px] md:w-[380px] aspect-[3/4] overflow-hidden rounded-2xl md:rounded-3xl bg-[#161616] border border-white/10 cursor-pointer select-none ${isActive ? 'is-active' : ''}`}
+                  className={`vip-card group relative shrink-0 w-[320px] sm:w-[360px] md:w-[380px] aspect-[2/3] md:aspect-[3/4] overflow-hidden rounded-2xl md:rounded-3xl bg-[#161616] border border-white/10 cursor-pointer select-none ${isActive ? 'is-active' : ''}`}
                 >
                   {/* Portrait */}
                   <img
@@ -457,14 +456,7 @@ const Testimonials: React.FC = () => {
                     </a>
                   )}
 
-                  {/* Tap hint (touch only) — elegant "+" that rotates when open */}
-                  <div className="vip-tap-hint absolute top-5 left-5 z-20 w-9 h-9 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white pointer-events-none">
-                    <Plus
-                      size={18}
-                      strokeWidth={1.8}
-                      className={`transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${isActive ? 'rotate-[135deg]' : 'rotate-0'}`}
-                    />
-                  </div>
+
 
                   {/* Content: name + review (reveals on hover / tap) */}
                   <div className="absolute inset-x-0 bottom-0 z-10 p-6 md:p-8">
