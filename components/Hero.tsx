@@ -108,7 +108,7 @@ const Hero: React.FC<HeroProps> = ({ startAnimation = true }) => {
       >
         <video
           ref={videoRef}
-          className="absolute inset-0 w-full h-full object-cover object-center brightness-[0.85] contrast-[1.05]"
+          className="absolute inset-0 w-full h-full object-cover object-center"
           src={videoSrc}
           poster={HERO_POSTER}
           autoPlay

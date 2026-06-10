@@ -150,8 +150,15 @@ const Testimonials: React.FC = () => {
   const vipTrackRef = useRef<HTMLDivElement>(null);
   // Which VIP card is expanded (tap-to-reveal on touch devices)
   const [activeVip, setActiveVip] = useState<string | null>(null);
-  const toggleVip = (id: string) =>
-    setActiveVip((prev) => (prev === id ? null : id));
+  const activeVipRef = useRef<string | null>(null);
+
+  const toggleVip = (id: string) => {
+    setActiveVip((prev) => {
+      const next = prev === id ? null : id;
+      activeVipRef.current = next;
+      return next;
+    });
+  };
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -225,7 +232,7 @@ const Testimonials: React.FC = () => {
     const SPEED = 0.5; // px/frame — slow, premium
 
     const tick = () => {
-      if (!paused && el.scrollWidth > el.clientWidth) {
+      if (!paused && !activeVipRef.current && el.scrollWidth > el.clientWidth) {
         const half = el.scrollWidth / 2;
         pos += SPEED;
         if (pos >= half) pos -= half; // seamless loop
