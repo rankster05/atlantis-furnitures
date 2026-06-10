@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useEffect } from 'react';
+import React, { useLayoutEffect, useRef, useEffect, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -20,6 +20,12 @@ const Hero: React.FC<HeroProps> = ({ startAnimation = true }) => {
   const mediaRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
+  
+  const [videoSrc, setVideoSrc] = useState(HERO_VIDEO);
+
+  useLayoutEffect(() => {
+    setVideoSrc(window.innerWidth < 768 ? HERO_VIDEO_MOBILE : HERO_VIDEO);
+  }, []);
 
   // Robust autoplay + slow-motion playback
   useEffect(() => {
@@ -103,6 +109,7 @@ const Hero: React.FC<HeroProps> = ({ startAnimation = true }) => {
         <video
           ref={videoRef}
           className="absolute inset-0 w-full h-full object-cover object-center brightness-[0.85] contrast-[1.05]"
+          src={videoSrc}
           poster={HERO_POSTER}
           autoPlay
           muted
@@ -110,10 +117,7 @@ const Hero: React.FC<HeroProps> = ({ startAnimation = true }) => {
           playsInline
           preload="auto"
           aria-label="Mobilier la comanda - proiecte Atlantis Furnitures in miscare"
-        >
-          <source src={HERO_VIDEO_MOBILE} type="video/mp4" media="(max-width: 767px)" />
-          <source src={HERO_VIDEO} type="video/mp4" media="(min-width: 768px)" />
-        </video>
+        />
       </div>
 
       <div ref={textRef} className="relative z-10 flex flex-col items-center justify-center w-full px-6 h-full pt-16 md:pt-0">
