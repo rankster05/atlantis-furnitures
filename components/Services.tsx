@@ -141,8 +141,8 @@ const Services: React.FC = () => {
   return (
     <div ref={containerRef} className="min-h-screen bg-atl-dark text-atl-bg relative overflow-hidden">
       <SEO
-        title="Servicii Mobilier la Comanda | Atlantis Furnitures"
-        description="Bucatarii, livinguri, dormitoare si mobilier office la comanda in Bucuresti si Ilfov. Materiale premium, montaj inclus. Solicita oferta gratuita!"
+        title="Servicii si Parteneri Mobilier la Comanda | Atlantis"
+        description="Reteaua cu care executam fiecare proiect de mobilier la comanda: studiouri de arhitectura, furnizori de finisaje si feronerie premium Blum si Hettich."
         canonicalUrl="https://atlantisfurnitures.ro/servicii/"
       />
 
@@ -163,9 +163,10 @@ const Services: React.FC = () => {
               Parteneri
             </span>
           </h1>
-          <h2 className="hero-elem text-gray-400 text-lg md:text-2xl font-light max-w-2xl leading-relaxed">
+          {/* Intro copy, not a section heading (was an <h2>). */}
+          <p className="hero-elem text-gray-400 text-lg md:text-2xl font-light max-w-2xl leading-relaxed">
             Calitatea exceptionala a mobilierului nostru este rezultatul unei munci de echipa si al parteneriatelor solide pe care le-am construit de-a lungul timpului.
-          </h2>
+          </p>
         </div>
       </section>
 
@@ -208,7 +209,12 @@ const Services: React.FC = () => {
                     className="partner-card group flex flex-col justify-between p-8 rounded-2xl bg-[#0a0a0a] border border-white/5 transition-all duration-500 hover:-translate-y-2 hover:border-white/20 hover:shadow-2xl hover:bg-white/[0.02]"
                   >
                     <div>
-                      <h3 className="font-display text-2xl md:text-3xl text-white mb-6 group-hover:text-gray-200 transition-colors">
+                      {/* Syncopate is a very wide face and these are long proper
+                          nouns ("Laboratorul de Arhitectura"), so a single word
+                          was overflowing the card once the grid tightened to 3+
+                          columns. `break-words` guarantees it can never spill,
+                          and the smaller step at lg means it almost never has to. */}
+                      <h3 className="font-display text-2xl md:text-3xl lg:text-[1.35rem] xl:text-[1.6rem] 2xl:text-2xl text-white mb-6 leading-tight break-words hyphens-auto group-hover:text-gray-200 transition-colors">
                         {partner.name}
                       </h3>
                       <p className="text-gray-400 font-normal leading-relaxed text-sm tracking-wide mb-8">

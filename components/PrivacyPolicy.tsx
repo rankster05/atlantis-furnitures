@@ -49,7 +49,11 @@ const PrivacyPolicy: React.FC = () => {
           <span className="uppercase tracking-[0.3em] text-xs text-atl-dark/50 font-medium">Document Legal</span>
         </div>
 
-        <h1 className="pp-anim font-display text-4xl sm:text-5xl md:text-6xl leading-[1.1] mb-6">
+        {/* "Confidentialitate" is a single 17-character word set in a very wide
+            display face, so at the previous sizes it ran outside the column at
+            every breakpoint — including desktop. Sized to fit, with hyphenation
+            and word-breaking as guarantees. */}
+        <h1 className="pp-anim font-display text-[7vw] sm:text-3xl md:text-4xl lg:text-5xl leading-[1.15] mb-6 break-words hyphens-auto">
           Politica de Confidentialitate
         </h1>
 
@@ -65,7 +69,7 @@ const PrivacyPolicy: React.FC = () => {
               Prezenta politica de confidentialitate reglementeaza modul in care
               <strong> Atlantis Furnitures</strong> colecteaza, prelucreaza si protejeaza datele cu
               caracter personal ale utilizatorilor website-ului{' '}
-              <a href="https://atlantisfurnitures.ro/" className="underline hover:no-underline">atlantisfurnitures.ro</a>,
+              <a href="https://atlantisfurnitures.ro/" className="inline-block min-h-[24px] py-0.5 underline hover:no-underline">atlantisfurnitures.ro</a>,
               in conformitate cu Regulamentul (UE) 2016/679 (GDPR) si legislatia romana aplicabila.
             </p>
             <p className="mt-4">
@@ -75,7 +79,7 @@ const PrivacyPolicy: React.FC = () => {
               <li>Denumire: <strong>Atlantis Furnitures</strong></li>
               <li>Adresa: Aleea Argesului nr. 70, Budeasa Mare, judetul Arges, Romania</li>
               <li>Telefon: 0732 717 666</li>
-              <li>Website: <a href="https://atlantisfurnitures.ro/" className="underline">atlantisfurnitures.ro</a></li>
+              <li>Website: <a href="https://atlantisfurnitures.ro/" className="inline-block min-h-[24px] py-0.5 underline">atlantisfurnitures.ro</a></li>
             </ul>
           </section>
 
@@ -165,7 +169,7 @@ const PrivacyPolicy: React.FC = () => {
               <li><strong>Dreptul la portabilitatea datelor</strong></li>
               <li><strong>Dreptul de opozitie</strong> la prelucrare</li>
               <li><strong>Dreptul de a-ti retrage consimtamantul</strong> in orice moment</li>
-              <li><strong>Dreptul de a depune plangere</strong> la Autoritatea Nationala de Supraveghere a Prelucrarii Datelor cu Caracter Personal (<a href="https://www.dataprotection.ro" target="_blank" rel="noopener noreferrer" className="underline">www.dataprotection.ro</a>)</li>
+              <li><strong>Dreptul de a depune plangere</strong> la Autoritatea Nationala de Supraveghere a Prelucrarii Datelor cu Caracter Personal (<a href="https://www.dataprotection.ro" target="_blank" rel="noopener noreferrer" className="inline-block min-h-[24px] py-0.5 underline">www.dataprotection.ro</a>)</li>
             </ul>
             <p className="mt-4">
               Pentru a-ti exercita oricare dintre aceste drepturi, ne poti contacta la numarul
@@ -199,7 +203,7 @@ const PrivacyPolicy: React.FC = () => {
               exercitarea drepturilor tale, ne poti contacta:
             </p>
             <ul className="list-disc pl-6 space-y-2 mt-3">
-              <li>Telefon / WhatsApp: <a href="tel:0732717666" className="underline">0732 717 666</a></li>
+              <li>Telefon / WhatsApp: <a href="tel:0732717666" className="inline-block min-h-[24px] py-0.5 underline">0732 717 666</a></li>
               <li>Adresa: Aleea Argesului nr. 70, Budeasa Mare, judetul Arges</li>
               <li>Formular contact pe website</li>
             </ul>

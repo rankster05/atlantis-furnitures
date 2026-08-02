@@ -94,17 +94,27 @@ const Portfolio: React.FC = () => {
   return (
     <>
       <SEO
-        title="Portofoliu Mobilier la Comanda | Atlantis Furnitures"
-        description="Vezi proiectele noastre finalizate de mobilier la comanda in Bucuresti si Ilfov. Bucatarii, livinguri, dormitoare si spatii comerciale. Inspira-te acum!"
+        title="Portofoliu Mobilier la Comanda Bucuresti | Atlantis"
+        description="Noua proiecte de mobilier la comanda finalizate in Bucuresti, Ilfov si Arges: bucatarii, livinguri, dressinguri, un cabinet medical si un birou. Vezi executia."
         canonicalUrl="https://atlantisfurnitures.ro/proiecte/"
       />
       
       <section ref={containerRef} className="pt-28 md:pt-48 pb-16 md:pb-20 min-h-screen bg-atl-dark text-atl-bg px-4 md:px-12 relative overflow-hidden">
         {/* Subtle Background Image for Navbar Transparency Effect */}
         <div className="absolute top-0 left-0 w-full h-[60vh] opacity-20 pointer-events-none z-0">
-          <img 
-            src="/projects/ap-cosmo/amenajare-open-space-living-bucatarie-apartament-modern.webp" 
-            alt="Fundal portofoliu mobila la comanda" 
+          {/* Purely decorative, sits at 20% opacity under a gradient mask — but
+              it is the biggest thing on screen, so the browser was electing it
+              as this page's Largest Contentful Paint. It now ships as a light,
+              dedicated crop (107 KB → 58 KB) that the <head> preloads, instead
+              of the full-resolution project photo. */}
+          <img
+            src="/projects/ap-cosmo/portfolio-header-texture.webp"
+            alt=""
+            aria-hidden="true"
+            width={1280}
+            height={853}
+            fetchPriority="high"
+            decoding="async"
             className="w-full h-full object-cover object-top mask-gradient-to-b"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-atl-dark/80 to-atl-dark" />
@@ -122,7 +132,7 @@ const Portfolio: React.FC = () => {
               <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-300">
                 <ArrowLeft size={18} className="transform group-hover:-translate-x-1 transition-transform duration-300" />
               </div>
-              <span className="text-[10px] md:text-xs uppercase tracking-[0.2em] font-medium hidden sm:block">Inapoi Acasa</span>
+              <span className="text-[11px] md:text-xs uppercase tracking-[0.2em] font-medium hidden sm:block">Inapoi Acasa</span>
             </Link>
           </div>
 
@@ -138,9 +148,11 @@ const Portfolio: React.FC = () => {
                 Proiecte
               </span>
             </h1>
-            <h2 className="pf-header-anim text-gray-400 text-lg md:text-2xl font-light max-w-2xl leading-relaxed">
+            {/* Intro copy, not a section heading — it was marked up as <h2>,
+                which put a sentence of prose into the page's heading outline. */}
+            <p className="pf-header-anim text-gray-400 text-lg md:text-2xl font-light max-w-2xl leading-relaxed">
               Transformam viziunea ta intr-o realitate tangibila si functionala. Fiecare linie, fiecare material este ales cu grija pentru tine.
-            </h2>
+            </p>
             
             {/* Horizontal Line Divider */}
             <div className="pf-line w-full h-px bg-white/10 mt-16 md:mt-24"></div>
@@ -181,7 +193,7 @@ const Portfolio: React.FC = () => {
                 {/* Text Content - Minimalist & Typography focused */}
                 {/* Removed left border for cleaner 'editorial' look matching the screenshot */}
                 <div className="pf-text flex flex-col items-start pl-1 mt-4 md:mt-0">
-                  <div className="flex items-center gap-3 md:gap-4 text-[10px] md:text-xs text-gray-300 uppercase tracking-[0.2em] mb-2 md:mb-3 font-medium">
+                  <div className="flex items-center gap-3 md:gap-4 text-[11px] md:text-xs text-gray-300 uppercase tracking-[0.2em] mb-2 md:mb-3 font-medium">
                      <span className="text-white">0{index + 1}</span>
                      <span className="w-6 md:w-8 h-px bg-white/20"></span>
                      <span className="group-hover:text-white transition-colors">{item.category}</span>

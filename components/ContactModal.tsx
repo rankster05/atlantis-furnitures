@@ -121,7 +121,11 @@ ${formData.message || '-'}`;
   return (
     <div 
       ref={overlayRef} 
-      className="fixed inset-0 z-[9999] opacity-0 pointer-events-none"
+      /* overflow-hidden clips the slide-over panel while it is parked off-screen
+         at x:100%. Without it the closed modal stuck ~500px past the right edge
+         of every page, inflating documentElement.scrollWidth — invisible only
+         because body carries overflow-x:hidden. */
+      className="fixed inset-0 z-[9999] opacity-0 pointer-events-none overflow-hidden"
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"

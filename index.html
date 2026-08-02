@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="manifest" href="/site.webmanifest">
-    <meta name="theme-color" content="#d4af37">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="theme-color" content="#121212">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- SEO Meta Tags - Default (overwritten per route via prerender) -->
@@ -32,15 +33,16 @@
     <meta name="twitter:description" content="Producem mobilier la comanda din MDF si PAL pentru Bucuresti si Ilfov. Bucatarii, livinguri, dormitoare, dressing-uri, office. Cere oferta gratuita azi!">
     <meta name="twitter:image" content="https://atlantisfurnitures.ro/projects/AP%20AIR-U/design-interior-apartament-modern-unirii-atlantis-furnitures.webp">
 
-    <!-- Performance: the homepage hero is a <video>; preload its poster image
-         (single, lightweight) so the first paint / LCP is instant while the
-         video loads in the background. -->
-    <link rel="preload" as="image" href="/projects/AP%20AIR-V/hero-living-victoriei-hd-m.webp" fetchpriority="high">
+    <!-- Performance: the homepage LCP is the hero poster image. Preload the
+         same responsive pair the markup declares, so the fetch starts before
+         the parser even reaches the element. The video is loaded later, on
+         idle, and never competes with this. -->
+    <link rel="preload" as="image" href="/projects/AP%20AIR-V/hero-poster.webp" fetchpriority="high">
 
-    <!-- Fonts (Google Fonts) — preconnect + display=swap to avoid FOIT -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Fonts are self-hosted (see index.css @font-face). Preload only the two
+         faces used above the fold — the rest stream in as needed. -->
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/syncopate-400-latin.woff2" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/manrope-var-latin.woff2" crossorigin>
 </head>
   <body>
     <div id="root"></div>

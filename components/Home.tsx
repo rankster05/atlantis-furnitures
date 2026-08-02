@@ -17,7 +17,7 @@ const Home: React.FC<HomeProps> = ({ isLoaded = true }) => {
     <>
       <SEO
         title="Mobilier la Comanda Bucuresti | Atlantis Furnitures"
-        description="Producem mobilier la comanda din MDF si PAL pentru Bucuresti si Ilfov. Bucatarii, livinguri, dormitoare, dressing-uri, office. Cere oferta gratuita azi!"
+        description="Mobilier la comanda din MDF si PAL pentru Bucuresti si Ilfov: bucatarii, dressinguri, livinguri, office. Atelier propriu, montaj inclus, oferta in 24h."
         canonicalUrl="https://atlantisfurnitures.ro/"
       />
       <Hero startAnimation={isLoaded} />
@@ -34,8 +34,10 @@ const Home: React.FC<HomeProps> = ({ isLoaded = true }) => {
           Follows the cream Process section, so it carries a subtle divider and
           a trimmed top padding to avoid a doubled cream gap. */}
       <section className="pt-16 md:pt-20 pb-28 md:pb-36 bg-atl-bg text-center flex flex-col items-center justify-center relative z-10 px-6 border-t border-atl-dark/5">
-        <h2 className="sr-only">Solicita o Oferta Gratuita</h2>
-        <p className="font-display text-3xl md:text-5xl mb-8 m-0">De la Idee la Realitate</p>
+        {/* The visible headline is the heading. There used to be a screen-reader
+            -only <h2> with different wording above a plain <p> — two competing
+            titles for one section, and the one crawlers read was invisible. */}
+        <h2 className="font-display text-3xl md:text-5xl mb-8 m-0">De la Idee la Realitate</h2>
         <div className="max-w-3xl text-gray-800 font-light mb-12 leading-relaxed text-lg md:text-xl">
           Fie ca ai nevoie de o bucatarie moderna optimizata pentru spatii mici sau de un dressing complex,
           echipa noastra se ocupa de tot procesul: <strong>masuratori, proiectare 3D, executie si montaj</strong> in

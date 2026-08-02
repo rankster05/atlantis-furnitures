@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -26,53 +26,152 @@ const WhatsAppIcon = ({ size = 24, className = "" }: { size?: number, className?
   </svg>
 );
 
+// Pre-desaturated and downscaled: it renders at 10% opacity behind an opaque
+// panel, so colour data and full resolution were pure weight (113 KB → 22 KB).
+const FOOTER_BG = '/projects/S House/footer-texture.webp';
+
 const Footer: React.FC = () => {
   const footerRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLImageElement>(null);
 
+  // The footer is position:fixed and full-height, so it sits inside the
+  // viewport from the very first frame of every route — completely covered by
+  // #main-wrapper, but painted all the same. Chrome's Largest Contentful Paint
+  // does not test for occlusion, so the giant CONTACT headline down here was
+  // being recorded as the LCP of the *homepage*, at ~4s.
+  //
+  // Nothing in the footer is reachable without scrolling, so we keep it out of
+  // the render until the reader scrolls. `visibility: hidden` (rather than
+  // unmounting) keeps the whole footer in the DOM for crawlers, and the flip
+  // happens on the very first scroll event — thousands of pixels before any of
+  // it is actually uncovered, so there is no visible change whatsoever.
+  const [hasScrolled, setHasScrolled] = useState(false);
+
+  useEffect(() => {
+    if (hasScrolled) return;
+    // The prerenderer scrolls the page to materialise lazy content; opting out
+    // keeps the pre-reveal state in the shipped HTML, which is the whole point.
+    if ((window as Window & { __PRERENDER__?: boolean }).__PRERENDER__) return;
+    const reveal = () => setHasScrolled(true);
+    // Any of these means LCP has been finalised — safe to paint the footer.
+    window.addEventListener('scroll', reveal, { once: true, passive: true });
+    window.addEventListener('pointerdown', reveal, { once: true, passive: true });
+    window.addEventListener('keydown', reveal, { once: true });
+    return () => {
+      window.removeEventListener('scroll', reveal);
+      window.removeEventListener('pointerdown', reveal);
+      window.removeEventListener('keydown', reveal);
+    };
+  }, [hasScrolled]);
+
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       // 1. Content Reveal Animation
-      gsap.from('.footer-anim', {
-        y: 50,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.1,
-        scrollTrigger: {
-          trigger: footerRef.current,
-          start: 'top 80%', // Triggers slightly before full reveal
-          toggleActions: "play none none reverse"
-        }
-      });
-
-      // 2. Background Parallax Logic
-      // Since footer is fixed and revealed by margin-bottom of #main-wrapper
-      // We trigger based on the main-wrapper position
+      //
+      // The trigger is #main-wrapper's bottom edge, NOT the footer itself. The
+      // footer is position:fixed and fills the viewport from the first frame,
+      // so "footer top hits 80% of viewport" was already true at load — the
+      // reveal fired immediately, which meant GSAP hid the footer's huge
+      // CONTACT headline at hydration and repainted it ~1s later. That late
+      // repaint was being recorded as the page's Largest Contentful Paint on
+      // every single route. Tying it to the wrapper's bottom means it fires
+      // when the footer is genuinely being revealed — after the reader has
+      // scrolled, by which point LCP is already settled.
       const mainWrapper = document.getElementById('main-wrapper');
-      
-      if (mainWrapper && bgRef.current) {
-        gsap.fromTo(bgRef.current, 
-          { 
-            yPercent: -15, 
-            scale: 1.1 
-          },
-          {
-            yPercent: 0,
-            scale: 1,
-            ease: "none",
-            scrollTrigger: {
-              trigger: mainWrapper,
-              start: "bottom bottom", // When content bottom hits viewport bottom (start of reveal)
-              end: "bottom top",    // When content bottom hits viewport top (fully revealed + scrolled past if possible, but limited by doc height)
-              scrub: true
-            }
+      if (!mainWrapper) return;
+
+      // The footer is uncovered as #main-wrapper slides up past it — one full
+      // viewport of scroll. Everything below is scrubbed against exactly that
+      // range, so the motion is driven by the reader's scroll rather than a
+      // timer that happens to fire nearby.
+      // `end` is expressed as a distance from `start` rather than as a second
+      // edge position. The homepage's content-visibility sections change the
+      // document height as they render, so anything anchored to the very bottom
+      // of the page drifts; a relative range only depends on where the reveal
+      // begins, which is stable.
+      const revealTrigger = {
+        trigger: mainWrapper,
+        start: 'bottom bottom',
+        end: () => '+=' + window.innerHeight,
+        scrub: 0.6,
+        invalidateOnRefresh: true,
+      };
+
+      const mm = gsap.matchMedia();
+
+      mm.add(
+        {
+          motion: '(prefers-reduced-motion: no-preference)',
+          still: '(prefers-reduced-motion: reduce)',
+          isPhone: '(max-width: 767px)',
+        },
+        (context) => {
+          const { motion, isPhone } = context.conditions as {
+            motion: boolean;
+            isPhone: boolean;
+          };
+
+          // Reduced motion: land every layer in its final state, no travel.
+          if (!motion) {
+            gsap.set('.footer-anim', { y: 0, opacity: 1 });
+            if (bgRef.current) gsap.set(bgRef.current, { yPercent: 0, scale: 1 });
+            return;
           }
-        );
-      }
+
+          // Three planes, each moving a different distance across the same
+          // scroll. The texture is deepest and barely shifts; the CONTACT
+          // wordmark sits behind the surface; the details ride on top and
+          // settle last. That separation is what reads as depth — a single
+          // drifting layer just reads as a moving photo.
+          const depth = isPhone
+            ? { texture: 10, headline: 46, detail: 26, meta: 16 }
+            : { texture: 16, headline: 88, detail: 48, meta: 30 };
+
+          if (bgRef.current) {
+            gsap.fromTo(
+              bgRef.current,
+              { yPercent: -depth.texture, scale: 1.12 },
+              { yPercent: 0, scale: 1, ease: 'none', scrollTrigger: revealTrigger }
+            );
+          }
+
+          // Each layer finishes well before the scroll does. Two reasons: the
+          // reader should never have to reach the very last pixel to see the
+          // footer complete, and the homepage's `content-visibility: auto`
+          // sections change the document height as they render, so the end of
+          // the range is not a position we can rely on landing on exactly.
+          const layers: Array<[string, number, number]> = [
+            // selector, travel, fraction of the reveal it takes to settle
+            ['[data-depth="headline"]', depth.headline, 0.55],
+            ['[data-depth="detail"]', depth.detail, 0.7],
+            ['[data-depth="meta"]', depth.meta, 0.8],
+          ];
+
+          layers.forEach(([selector, travel, settleAt]) => {
+            const el = footerRef.current?.querySelector(selector);
+            if (!el) return;
+            gsap.fromTo(
+              el,
+              { y: travel, autoAlpha: 0 },
+              {
+                y: 0,
+                autoAlpha: 1,
+                ease: 'none',
+                scrollTrigger: {
+                  ...revealTrigger,
+                  end: () => '+=' + Math.round(window.innerHeight * settleAt),
+                },
+              }
+            );
+          });
+        }
+      );
     }, footerRef);
 
     return () => ctx.revert();
-  }, []);
+    // Re-runs once the decorative background mounts, so the parallax gets wired
+    // to a real element instead of a null ref.
+  }, [hasScrolled]);
 
   const scrollToTop = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -80,7 +179,12 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <footer ref={footerRef} id="contact" className="fixed bottom-0 left-0 w-full h-[100dvh] z-[1] bg-atl-dark text-white flex flex-col justify-center items-center overflow-hidden">
+    <footer
+      ref={footerRef}
+      id="contact"
+      style={{ visibility: hasScrolled ? 'visible' : 'hidden' }}
+      className="fixed bottom-0 left-0 w-full h-[100dvh] z-[1] bg-atl-dark text-white flex flex-col justify-center items-center overflow-hidden"
+    >
       
       {/* CSS for hiding scrollbar but keeping functionality */}
       <style>{`
@@ -93,27 +197,34 @@ const Footer: React.FC = () => {
         }
       `}</style>
 
-      {/* Background with low opacity & Parallax Ref */}
-      <img 
-        ref={bgRef}
-        src="/projects/S House/mobilier-dormitor-modern-perete-riflat-lemn-s-house.webp" 
-        loading="lazy"
-        fetchPriority="low"
-        className="absolute inset-0 w-full h-full object-cover opacity-10 pointer-events-none grayscale"
-        alt="Fundal Footer Atlantis Furnitures"
-      />
+      {/* Decorative background + parallax ref. Mounted only after first scroll
+          (see hasScrolled above) so its bytes stay off the critical path. */}
+      {hasScrolled && (
+        <img
+          ref={bgRef}
+          src={FOOTER_BG}
+          loading="lazy"
+          decoding="async"
+          fetchPriority="low"
+          width={1280}
+          height={855}
+          className="absolute inset-0 w-full h-full object-cover opacity-10 pointer-events-none"
+          alt=""
+          aria-hidden="true"
+        />
+      )}
 
       <div className="relative z-10 w-full h-full flex flex-col justify-between items-center px-6 pt-12 pb-12 md:pb-6 md:p-12 text-center overflow-y-auto no-scrollbar">
         
         <div className="flex-grow flex flex-col justify-center items-center w-full max-w-[1920px] mx-auto">
-          <div className="mb-8 md:mb-16 footer-anim w-full shrink-0">
+          <div data-depth="headline" className="mb-8 md:mb-16 footer-anim w-full shrink-0">
             <div className="text-sm md:text-base uppercase tracking-[0.3em] mb-4 md:mb-6 text-gray-400">Ai un proiect in minte?</div>
             <a href="tel:0732717666" className="font-display text-[12vw] md:text-[10vw] lg:text-9xl leading-none hover:text-gray-400 transition-colors block mix-blend-difference" aria-label="Suna acum la 0732 717 666">
               CONTACT
             </a>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-24 text-center md:text-left footer-anim w-full max-w-6xl justify-items-center md:justify-items-start shrink-0">
+          <div data-depth="detail" className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-24 text-center md:text-left footer-anim w-full max-w-6xl justify-items-center md:justify-items-start shrink-0">
             
             <div className="flex flex-col items-center md:items-start">
               <p className="uppercase tracking-widest text-sm text-gray-400 font-medium mb-3">Atelier</p>
@@ -179,18 +290,23 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="w-full flex flex-col md:flex-row justify-between items-center gap-12 md:gap-6 text-xs text-gray-500 uppercase tracking-widest footer-anim mt-16 md:mt-0 shrink-0 relative">
+        <div data-depth="meta" className="w-full flex flex-col md:flex-row justify-between items-center gap-12 md:gap-6 text-xs text-gray-500 uppercase tracking-widest footer-anim mt-16 md:mt-0 shrink-0 relative">
           
           {/* Left side (empty on desktop to balance the right side) */}
           <div className="hidden md:block md:w-32"></div>
 
           {/* Center content */}
-          <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 md:absolute md:left-1/2 md:-translate-x-1/2">
-            <span className="leading-none">© {new Date().getFullYear()} ATLANTIS FURNITURES</span>
+          {/* Centred with inset-x-0 + w-max + mx-auto rather than
+              left-1/2 + -translate-x-1/2. The translate only shifts the box
+              visually — for layout the element still starts at the 50% mark, so
+              it could only ever be half the bar wide, and the copyright and
+              "Designed by" lines were wrapping onto two rows on desktop. */}
+          <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 md:absolute md:inset-x-0 md:mx-auto md:w-max">
+            <span className="leading-none whitespace-nowrap">© {new Date().getFullYear()} ATLANTIS FURNITURES</span>
             <span className="hidden md:block leading-none opacity-20 text-gray-500">|</span>
             <Link
               to="/politica-confidentialitate/"
-              className="leading-none opacity-60 hover:opacity-100 hover:text-white transition-all duration-300"
+              className="inline-flex items-center min-h-[24px] py-1.5 leading-none whitespace-nowrap opacity-60 hover:opacity-100 hover:text-white transition-all duration-300"
               aria-label="Politica de Confidentialitate GDPR"
             >
               Confidentialitate
@@ -200,7 +316,7 @@ const Footer: React.FC = () => {
               href="https://www.rankster.ro"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-1.5 opacity-60 hover:opacity-100 hover:text-white transition-all duration-300 leading-none"
+              className="group inline-flex items-center gap-1.5 min-h-[24px] py-1.5 whitespace-nowrap opacity-60 hover:opacity-100 hover:text-white transition-all duration-300 leading-none"
               aria-label="Website creat de Rankster"
             >
               <span>Designed by</span>

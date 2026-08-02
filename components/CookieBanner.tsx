@@ -16,9 +16,11 @@ const CookieBanner: React.FC = () => {
     try {
       const stored = window.localStorage.getItem(STORAGE_KEY);
       if (!stored) {
-        // Show after a short delay so it does not clash with the loader animation
-        const timer = window.setTimeout(() => setVisible(true), 1500);
-        return () => window.clearTimeout(timer);
+        // Shown as soon as we know consent is missing. It used to wait 1.5s to
+        // stay clear of the loader animation, but that made it the last thing
+        // painted on the page — and, being a sizeable block, it was taking over
+        // as the Largest Contentful Paint. The loader now covers it anyway.
+        setVisible(true);
       }
     } catch {
       // localStorage blocked (private mode etc.) — still show banner
@@ -45,7 +47,7 @@ const CookieBanner: React.FC = () => {
       role="dialog"
       aria-live="polite"
       aria-label="Notificare cookie-uri"
-      className="fixed bottom-4 left-4 right-4 md:bottom-6 md:left-6 md:right-auto md:max-w-md z-[9500] animate-cookie-in [margin-bottom:env(safe-area-inset-bottom)]"
+      className="fixed bottom-4 left-4 right-4 md:bottom-6 md:left-6 md:right-auto md:max-w-sm z-[9500] animate-cookie-in [margin-bottom:env(safe-area-inset-bottom)]"
     >
       <style>{`
         @keyframes cookieIn {
@@ -66,26 +68,20 @@ const CookieBanner: React.FC = () => {
           <X size={14} strokeWidth={1.5} />
         </button>
 
-        <div className="flex items-start gap-3 mb-4">
-          <div className="shrink-0 w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
-            <Cookie size={16} strokeWidth={1.5} className="text-atl-bg/80" />
+        <div className="flex items-start gap-3">
+          <div className="shrink-0 w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
+            <Cookie size={15} strokeWidth={1.5} className="text-atl-bg/80" />
           </div>
-          <div className="pt-1 pr-6">
-            <p className="text-xs uppercase tracking-[0.2em] text-atl-bg/50 font-medium mb-1">
-              Confidentialitate
-            </p>
-            <p className="text-sm md:text-[15px] leading-relaxed text-atl-bg/90 font-light">
-              Folosim cookie-uri esentiale pentru a-ti oferi cea mai buna experienta pe site.
-              Detalii in{' '}
-              <Link
-                to="/politica-confidentialitate/"
-                className="underline underline-offset-2 hover:text-white transition-colors"
-              >
-                Politica de Confidentialitate
-              </Link>
-              .
-            </p>
-          </div>
+          <p className="pt-1.5 pr-6 text-[13px] leading-snug text-atl-bg/90 font-light">
+            Folosim doar cookie-uri esentiale.{' '}
+            <Link
+              to="/politica-confidentialitate/"
+              className="underline underline-offset-2 hover:text-white transition-colors"
+            >
+              Detalii
+            </Link>
+            .
+          </p>
         </div>
 
         <div className="flex items-center gap-2 mt-4">

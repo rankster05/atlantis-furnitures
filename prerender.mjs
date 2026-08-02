@@ -19,16 +19,16 @@ const routes = [
   {
     path: '/',
     title: 'Mobilier la Comanda Bucuresti | Atlantis Furnitures',
-    description: 'Producem mobilier la comanda din MDF si PAL pentru Bucuresti si Ilfov. Bucatarii, livinguri, dormitoare, dressing-uri, office. Cere oferta gratuita azi!',
-    // Homepage hero is a video; the OG image stays the HD still, but the LCP
-    // preload is the lightweight video poster (single image, matches <video poster>).
+    description: 'Mobilier la comanda din MDF si PAL pentru Bucuresti si Ilfov: bucatarii, dressinguri, livinguri, office. Atelier propriu, montaj inclus, oferta in 24h.',
+    // The OG image stays the full-resolution still (social crawlers want the
+    // big one), while the LCP is a separate, much lighter hero poster crop.
     image: '/projects/AP AIR-V/hero-living-victoriei-hd.webp',
-    posterPreload: '/projects/AP AIR-V/hero-living-victoriei-hd-m.webp',
+    poster: '/projects/AP AIR-V/hero-poster.webp',
   },
   {
     path: '/servicii',
-    title: 'Servicii Mobilier la Comanda | Atlantis Furnitures',
-    description: 'Bucatarii, livinguri, dormitoare si mobilier office la comanda in Bucuresti si Ilfov. Materiale premium, montaj inclus. Solicita oferta gratuita!',
+    title: 'Servicii si Parteneri Mobilier la Comanda | Atlantis',
+    description: 'Reteaua cu care executam fiecare proiect de mobilier la comanda: studiouri de arhitectura, furnizori de finisaje si feronerie premium Blum si Hettich.',
     image: '/projects/S House/s-house-living-bucatarie-open-space-mdf-furnir-pipera.webp',
   },
   {
@@ -39,62 +39,64 @@ const routes = [
   },
   {
     path: '/proiecte',
-    title: 'Portofoliu Mobilier la Comanda | Atlantis Furnitures',
-    description: 'Vezi proiectele noastre finalizate de mobilier la comanda in Bucuresti si Ilfov. Bucatarii, livinguri, dormitoare si spatii comerciale. Inspira-te acum!',
+    title: 'Portofoliu Mobilier la Comanda Bucuresti | Atlantis',
+    description: 'Noua proiecte de mobilier la comanda finalizate in Bucuresti, Ilfov si Arges: bucatarii, livinguri, dressinguri, un cabinet medical si un birou. Vezi executia.',
     image: '/projects/ap-cosmo/amenajare-open-space-living-bucatarie-apartament-modern.webp',
+    // The page's LCP is the decorative header crop, not the OG image.
+    lcpImage: '/projects/ap-cosmo/portfolio-header-texture.webp',
   },
   {
     path: '/proiecte/ap-so',
-    title: 'Penthouse Vasile Lascar – Mobilier Premium | Atlantis',
-    description: 'Proiect mobilier la comanda pentru penthouse in zona Vasile Lascar, Bucuresti. MDF furniruit, design minimalist. Vrei un rezultat similar? Contacteaza-ne!',
+    title: 'Mobilier Penthouse Vasile Lascar Bucuresti | Atlantis',
+    description: 'Mobilier la comanda pentru un penthouse in Vasile Lascar: MDF vopsit, insertii de ceramica si accente de lemn. Vezi executia si cere o oferta.',
     image: '/projects/ap-so/penthouse-vasile-lascar-mobilier-living-mdf-vopsit.webp',
   },
   {
     path: '/proiecte/ap-cosmo',
     title: 'Mobilier Apartament Cosmopolis Ilfov | Atlantis Furnitures',
-    description: 'Mobilier dormitor si living la comanda pentru apartament in Cosmopolis, Ilfov. PAL si MDF premium, executie si montaj 2024. Cere oferta pentru proiectul tau!',
+    description: 'Dormitor si living la comanda intr-un apartament din Cosmopolis, Ilfov. MDF vopsit, PAL si depozitare pe masura, executat si montat in 2024. Cere o oferta.',
     image: '/projects/ap-cosmo/mobilier-dormitor-mat-mdf-vopsit-lemn-cosmopolis.webp',
   },
   {
     path: '/proiecte/csm',
     title: 'Mobilier Cabinet Medical Pitesti | Atlantis Furnitures',
-    description: 'Mobilier la comanda pentru cabinet medical in Pitesti. Executie precisa, materiale durabile, montaj profesional. Ai un spatiu similar? Hai sa discutam!',
+    description: 'Mobilier la comanda pentru un cabinet de pediatrie din Pitesti: receptie din corian, chicineta si vestiare cu inchidere electronica. Ai un spatiu similar?',
     image: '/projects/CSM/receptie-pediatrie-corian-mdf-vopsit-csm-pitesti.webp',
   },
   {
     path: '/proiecte/s-house',
-    title: 'Living si Dormitor la Comanda Pipera | Atlantis',
-    description: 'Proiect S House Pipera – mobilier living si dormitor din MDF furniruit. Design minimalist, texturi calde. Transforma-ti spatiul – cere oferta gratuita!',
+    title: 'Mobilier Living si Dormitor Pipera | Atlantis Furnitures',
+    description: 'Living si dormitor la comanda in Pipera, cu pereti riflati din lemn si MDF furniruit. Texturi calde si linii curate. Vezi proiectul si cere o oferta gratuita.',
     image: '/projects/S House/s-house-living-bucatarie-open-space-mdf-furnir-pipera.webp',
   },
   {
     path: '/proiecte/ap-air-u',
-    title: 'Mobilier Apartament Modern Bucuresti | Atlantis Furnitures',
-    description: 'Mobilier complet la comanda pentru apartament in Bucuresti. MDF si PAL premium, design personalizat, montaj inclus. Hai sa construim impreuna spatiul ideal!',
+    title: 'Mobilier Apartament Unirii Bucuresti | Atlantis Furnitures',
+    description: 'Amenajare completa cu mobilier la comanda intr-un apartament din Unirii: bucatarie albastra din MDF vopsit, living si un pat din ratan. Cere oferta gratuita.',
     image: '/projects/AP AIR-U/design-interior-apartament-modern-unirii-atlantis-furnitures.webp',
   },
   {
     path: '/proiecte/ap-air-v',
-    title: 'Mobilier Apartament Modern la Comanda | Atlantis Furnitures',
-    description: 'Proiect mobilier la comanda pentru apartament modern in Bucuresti. MDF si PAL premium, design personalizat, montaj inclus. Vrei acelasi rezultat? Contacteaza-ne!',
+    title: 'Mobilier Apartament Victoriei Bucuresti | Atlantis',
+    description: 'Apartament in zona Victoriei mobilat integral la comanda: bucatarie din MDF vopsit mat, comoda TV suspendata si dressing. Vezi finisajele si cere o oferta.',
     image: '/projects/AP AIR-V/mobilier-living-modern-mdf-vopsit-albastru-victoriei-bucuresti.webp',
   },
   {
     path: '/proiecte/studio-air-v',
-    title: 'Mobilier Studio la Comanda Bucuresti | Atlantis Furnitures',
-    description: 'Amenajare mobilier la comanda pentru studio in Bucuresti. Solutii inteligente de depozitare, materiale premium. Maximeaza spatiul – cere oferta acum!',
+    title: 'Mobilier Studio la Comanda Victoriei | Atlantis',
+    description: 'Studio in zona Victoriei optimizat cu mobilier la comanda: consola TV suspendata, baghete decorative si depozitare ascunsa. Vezi cum castigi metri patrati.',
     image: '/projects/STUDIO AIR-V/consola-tv-suspendata-lemn-si-baghete-decorative-perete.webp',
   },
   {
     path: '/proiecte/tei-house',
-    title: 'Mobilier Casa Zona Tei Bucuresti | Atlantis Furnitures',
-    description: 'Mobilier la comanda pentru casa in zona Tei, Bucuresti. Living, dormitor si spatii functionale din MDF si PAL. Vrei acelasi rezultat? Contacteaza-ne!',
+    title: 'Mobilier Casa Lacul Tei Bucuresti | Atlantis Furnitures',
+    description: 'Casa in zona Lacul Tei mobilata la comanda: open space dining si living, biblioteca din MDF vopsit si camere de copii personalizate. Vezi tot proiectul.',
     image: '/projects/TEI HOUSE/amenajare-open-space-dining-living-casa-tei-house.webp',
   },
   {
     path: '/proiecte/office',
-    title: 'Mobilier Office la Comanda Bucuresti | Atlantis Furnitures',
-    description: 'Mobilier de birou la comanda in Bucuresti. Birouri, dulapuri si spatii de lucru personalizate din MDF si PAL premium. Solicita oferta pentru biroul tau!',
+    title: 'Mobilier Birou la Comanda Bucuresti | Atlantis Furnitures',
+    description: 'Birou mobilat la comanda in Bucuresti: masa de sedinte din lemn, biblioteca cu rafturi deschise din MDF furniruit si depozitare. Cere oferta pentru sediu.',
     image: '/projects/OFFICE/masa-sedinte-lemn-lustra-led-design-atlantis-furnitures.webp',
   },
   {
@@ -109,6 +111,31 @@ const routes = [
 const escapeHtml = (s) =>
   s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
+/**
+ * Generate sitemap.xml from the same `routes` array the prerender walks, rather
+ * than maintaining it by hand in public/. The hand-written copy had every URL
+ * stamped with an identical, months-old <lastmod>, which Google learns to
+ * ignore — and nothing stopped a new route from never reaching it at all.
+ */
+async function writeSitemap() {
+  const today = new Date().toISOString().slice(0, 10);
+  const urls = routes
+    .filter((r) => !r.noindex)
+    .map(
+      (r) =>
+        `  <url>\n    <loc>${canonicalFor(r.path)}</loc>\n` +
+        `    <lastmod>${today}</lastmod>\n` +
+        `    <priority>${r.path === '/' ? '1.0' : r.path.split('/').length > 2 ? '0.6' : '0.8'}</priority>\n` +
+        `  </url>`
+    )
+    .join('\n');
+  const xml =
+    `<?xml version="1.0" encoding="UTF-8"?>\n` +
+    `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
+  await fs.writeFile(path.join(distDir, 'sitemap.xml'), xml, 'utf-8');
+  console.log(`  ✓ sitemap.xml (${routes.filter((r) => !r.noindex).length} indexable URLs, lastmod ${today})`);
+}
+
 const baseHtml = await fs.readFile(path.join(distDir, 'index.html'), 'utf-8');
 
 const outPathFor = (routePath) =>
@@ -120,15 +147,35 @@ const canonicalFor = (routePath) =>
   routePath === '/' ? `${SITE}/` : `${SITE}${routePath}/`;
 
 // ── Per-route LCP preload ────────────────────────────────────────────────────
-// Project pages preload a responsive pair (mobile + desktop) that matches their
-// <picture> source. The homepage hero is a <video> with a single poster, so it
-// preloads one image (route.posterPreload) — matching the poster, no double-load.
+// The preload must mirror how the page's LCP element actually picks its source,
+// or the browser downloads one file and renders another. Three shapes are in
+// play: `route.poster` (an <img srcset> → imagesrcset), `route.lcpImage` (a
+// single fixed <img> → one plain tag), and the default project-page <picture>
+// with a media-switched <source> → a matching media-split pair.
 const preloadTag = (route) => {
-  if (route.posterPreload) {
-    return `<link rel="preload" as="image" href="${encodeURI(route.posterPreload)}" fetchpriority="high">`;
+  const base = route.poster || route.image;
+  const full = encodeURI(base);
+  const mobile = encodeURI(base.replace(/\.webp$/, '-m.webp'));
+
+  // The homepage hero is an <img srcset>/sizes, so its preload must use
+  // imagesrcset/imagesizes — the browser then runs the *same* candidate
+  // selection for both and fetches exactly one file. A media-query preload
+  // here disagreed with the element's own choice and downloaded both.
+  // The homepage hero poster is a single, non-responsive image on purpose
+  // (see Hero.tsx) — one preload, one request, guaranteed to be the file the
+  // element actually renders.
+  if (route.poster) {
+    return `<link rel="preload" as="image" href="${full}" fetchpriority="high">`;
   }
-  const full = encodeURI(route.image);
-  const mobile = encodeURI(route.image.replace(/\.webp$/, '-m.webp'));
+
+  // A single, non-responsive LCP image (the portfolio header crop) preloads
+  // as one plain tag — a media-split pair would fetch a file that never renders.
+  if (route.lcpImage) {
+    return `<link rel="preload" as="image" href="${encodeURI(route.lcpImage)}" fetchpriority="high">`;
+  }
+
+  // Project pages use <picture> with a media-switched <source>, which the
+  // media-query preload mirrors exactly.
   return (
     `<link rel="preload" as="image" href="${mobile}" media="(max-width: 820px)" fetchpriority="high">\n    ` +
     `<link rel="preload" as="image" href="${full}" media="(min-width: 821px)" fetchpriority="high">`
@@ -179,6 +226,7 @@ async function runMetaOnly(reason) {
     .replace(/<meta name="robots" content="[^"]*">/, `<meta name="robots" content="noindex, nofollow">`);
   await fs.writeFile(path.join(distDir, '404.html'), nf, 'utf-8');
   console.log('  ✓ /404 (meta)');
+  await writeSitemap();
   console.log(`\n✅ Prerendered ${routes.length} routes (meta-only) to dist/`);
 }
 
@@ -236,6 +284,11 @@ async function renderRoute(browser, route, { is404 = false } = {}) {
   await page.setViewport({ width: 1366, height: 900, deviceScaleFactor: 1 });
   await page.evaluateOnNewDocument(() => {
     try { window.sessionStorage.setItem('atlantis_loader_shown', '1'); } catch {}
+    // revealAll() scrolls the whole page to force lazy content to materialise.
+    // Anything that is deliberately deferred *because* it would otherwise
+    // become a false LCP candidate must stay deferred in the captured HTML —
+    // this flag lets those components opt out of the synthetic scroll.
+    window.__PRERENDER__ = true;
   });
   await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
 
@@ -289,6 +342,7 @@ try {
 
   await browser.close();
   server.close();
+  await writeSitemap();
   console.log(`\n✅ Prerendered ${count} routes (full HTML) to dist/`);
 } catch (err) {
   try { if (browser) await browser.close(); } catch {}

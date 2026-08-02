@@ -4,11 +4,12 @@
 # ─────────────────────────────────────────
 # Crawleri standard (search engines)
 # ─────────────────────────────────────────
+# Note: /politica-confidentialitate is intentionally NOT disallowed. It carries
+# a `noindex` meta tag, and a page blocked in robots.txt can never be crawled —
+# so Google would never read that tag, and the URL could still surface in
+# results without a snippet. Allowing the crawl is what actually keeps it out.
 User-agent: *
 Allow: /
-Disallow: /politica-confidentialitate
-Disallow: /admin/
-Disallow: /private/
 
 # ─────────────────────────────────────────
 # Crawleri AI — permisi explicit pentru GEO
@@ -20,11 +21,9 @@ Disallow: /private/
 # OpenAI (ChatGPT, ChatGPT Search)
 User-agent: GPTBot
 Allow: /
-Disallow: /politica-confidentialitate
 
 User-agent: OAI-SearchBot
 Allow: /
-Disallow: /politica-confidentialitate
 
 User-agent: ChatGPT-User
 Allow: /
@@ -32,7 +31,6 @@ Allow: /
 # Anthropic (Claude, claude.ai)
 User-agent: ClaudeBot
 Allow: /
-Disallow: /politica-confidentialitate
 
 User-agent: Claude-Web
 Allow: /
@@ -43,12 +41,10 @@ Allow: /
 # Google AI (Gemini, AI Overviews, Bard)
 User-agent: Google-Extended
 Allow: /
-Disallow: /politica-confidentialitate
 
 # Perplexity AI
 User-agent: PerplexityBot
 Allow: /
-Disallow: /politica-confidentialitate
 
 User-agent: Perplexity-User
 Allow: /
@@ -56,7 +52,6 @@ Allow: /
 # Microsoft (Bing AI, Copilot)
 User-agent: bingbot
 Allow: /
-Disallow: /politica-confidentialitate
 
 # Apple Intelligence
 User-agent: Applebot
@@ -64,7 +59,6 @@ Allow: /
 
 User-agent: Applebot-Extended
 Allow: /
-Disallow: /politica-confidentialitate
 
 # Meta AI (Llama, Meta AI Search)
 User-agent: Meta-ExternalAgent
@@ -83,7 +77,6 @@ Allow: /
 # Common Crawl (folosit ca date training de multe AI-uri)
 User-agent: CCBot
 Allow: /
-Disallow: /politica-confidentialitate
 
 # DuckDuckGo
 User-agent: DuckDuckBot

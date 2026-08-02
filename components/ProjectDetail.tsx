@@ -7,6 +7,7 @@ import { portfolioItems } from '../data';
 import { PortfolioItem } from '../types';
 import SEO from './SEO';
 import Lightbox from './Lightbox';
+import { altFromImagePath } from '../utils';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -26,58 +27,15 @@ const ProjectDetail: React.FC = () => {
 
   const allImages = project ? [project.mainImage, ...project.gallery.flat()] : [];
 
-  const projectSEO: Record<string, { title: string; description: string; canonicalUrl: string }> = {
-    "ap-so": {
-      title: "Penthouse Vasile Lascar – Mobilier Premium | Atlantis",
-      description: "Proiect mobilier la comanda pentru penthouse in zona Vasile Lascar, Bucuresti. MDF furniruit, design minimalist. Vrei un rezultat similar? Contacteaza-ne!",
-      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/ap-so/"
-    },
-    "ap-cosmo": {
-      title: "Mobilier Apartament Cosmopolis Ilfov | Atlantis Furnitures",
-      description: "Mobilier dormitor si living la comanda pentru apartament in Cosmopolis, Ilfov. PAL si MDF premium, executie si montaj 2024. Cere oferta pentru proiectul tau!",
-      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/ap-cosmo/"
-    },
-    "csm": {
-      title: "Mobilier Cabinet Medical Pitesti | Atlantis Furnitures",
-      description: "Mobilier la comanda pentru cabinet medical in Pitesti. Executie precisa, materiale durabile, montaj profesional. Ai un spatiu similar? Hai sa discutam!",
-      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/csm/"
-    },
-    "s-house": {
-      title: "Living si Dormitor la Comanda Pipera | Atlantis",
-      description: "Proiect S House Pipera – mobilier living si dormitor din MDF furniruit. Design minimalist, texturi calde. Transforma-ti spatiul – cere oferta gratuita!",
-      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/s-house/"
-    },
-    "ap-air-u": {
-      title: "Mobilier Apartament Modern Bucuresti | Atlantis Furnitures",
-      description: "Mobilier complet la comanda pentru apartament in Bucuresti. MDF si PAL premium, design personalizat, montaj inclus. Hai sa construim impreuna spatiul ideal!",
-      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/ap-air-u/"
-    },
-    "ap-air-v": {
-      title: "Mobilier Apartament Modern la Comanda | Atlantis Furnitures",
-      description: "Proiect mobilier la comanda pentru apartament modern in Bucuresti. MDF si PAL premium, design personalizat, montaj inclus. Vrei acelasi rezultat? Contacteaza-ne!",
-      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/ap-air-v/"
-    },
-    "studio-air-v": {
-      title: "Mobilier Studio la Comanda Bucuresti | Atlantis Furnitures",
-      description: "Amenajare mobilier la comanda pentru studio in Bucuresti. Solutii inteligente de depozitare, materiale premium. Maximeaza spatiul – cere oferta acum!",
-      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/studio-air-v/"
-    },
-    "tei-house": {
-      title: "Mobilier Casa Zona Tei Bucuresti | Atlantis Furnitures",
-      description: "Mobilier la comanda pentru casa in zona Tei, Bucuresti. Living, dormitor si spatii functionale din MDF si PAL. Vrei acelasi rezultat? Contacteaza-ne!",
-      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/tei-house/"
-    },
-    "office": {
-      title: "Mobilier Office la Comanda Bucuresti | Atlantis Furnitures",
-      description: "Mobilier de birou la comanda in Bucuresti. Birouri, dulapuri si spatii de lucru personalizate din MDF si PAL premium. Solicita oferta pentru biroul tau!",
-      canonicalUrl: "https://atlantisfurnitures.ro/proiecte/office/"
-    }
-  };
-
-  const seo = (slug && projectSEO[slug]) || {
-    title: "Proiect Mobilier la Comanda | Atlantis Furnitures",
-    description: "Proiect de mobilier la comanda executat de Atlantis Furnitures in Bucuresti si Ilfov. Cere oferta!",
-    canonicalUrl: "https://atlantisfurnitures.ro/proiecte/"
+  // Per-project SEO lives in data.ts alongside the project itself — it used to
+  // be duplicated in a map here as well, which is exactly the kind of thing that
+  // drifts out of sync the moment one copy is edited.
+  const seo = {
+    title: project?.seoTitle || `Mobilier la comanda - ${project?.title ?? 'proiect'} | Atlantis Furnitures`,
+    description:
+      project?.seoDescription ||
+      'Proiect de mobilier la comanda executat de Atlantis Furnitures in Bucuresti si Ilfov. Cere oferta!',
+    canonicalUrl: `https://atlantisfurnitures.ro/proiecte/${slug ?? ''}/`,
   };
 
   const openLightbox = (imgSrc: string) => {
@@ -242,7 +200,7 @@ const ProjectDetail: React.FC = () => {
           <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-300">
             <ArrowLeft size={18} className="transform group-hover:-translate-x-1 transition-transform duration-300" />
           </div>
-          <span className="text-[10px] md:text-xs uppercase tracking-[0.2em] font-medium hidden sm:block">Inapoi la proiecte</span>
+          <span className="text-[11px] md:text-xs uppercase tracking-[0.2em] font-medium hidden sm:block">Inapoi la proiecte</span>
         </Link>
         
         <div ref={heroBgRef} className="absolute inset-0 w-full h-full origin-center">
@@ -250,7 +208,7 @@ const ProjectDetail: React.FC = () => {
             <source media="(min-width: 821px)" srcSet={project.mainImage} />
             <img
               src={project.mainImage.replace(/\.webp$/, '-m.webp')}
-              alt={`Mobilier la comanda - ${project.title}`}
+              alt={altFromImagePath(project.mainImage, project.title)}
               className="w-full h-full object-cover object-center cursor-pointer transition-transform duration-700 hover:scale-105 brightness-125 contrast-105"
               onClick={() => openLightbox(project.mainImage)}
               fetchPriority="high"
@@ -262,17 +220,16 @@ const ProjectDetail: React.FC = () => {
         
         {/* Hero Text Content */}
         <div ref={heroTextRef} className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 md:px-6 z-10 mt-16 md:mt-20">
-          {/* Hidden but semantic H1 — crawlers + screen readers see the
-              descriptive heading; sighted users see the visual title below. */}
-          <h1 className="sr-only">
-            {project.seoH1 || `Mobilier la comanda - ${project.title}`}
-          </h1>
-          {/* Visual title — large display, original design preserved */}
-          <p
-            aria-hidden="true"
-            className="dt-reveal font-display text-4xl sm:text-6xl md:text-8xl lg:text-9xl leading-[0.9] text-white max-w-6xl drop-shadow-2xl uppercase m-0"
-          >
+          {/* The page's H1 is now the title people actually see. It used to be
+              a screen-reader-only heading sitting above an aria-hidden display
+              title — the descriptive phrase existed for crawlers alone, which
+              is both a heading-outline smell and a wasted line for readers. The
+              descriptive text now runs underneath, visible to everyone. */}
+          <h1 className="dt-reveal font-display text-4xl sm:text-6xl md:text-8xl lg:text-9xl leading-[0.9] text-white max-w-6xl drop-shadow-2xl uppercase m-0">
             {project.title}
+          </h1>
+          <p className="dt-reveal mt-5 md:mt-7 max-w-2xl text-sm md:text-base text-white/75 font-light tracking-wide drop-shadow-lg">
+            {project.seoH1 || `Mobilier la comanda - ${project.title}`}
           </p>
         </div>
       </div>
@@ -294,7 +251,7 @@ const ProjectDetail: React.FC = () => {
                       <div className="w-full h-full dt-parallax-inner">
                         <img 
                           src={item[0]} 
-                          alt={`${project.title} detail ${idx}-1`} 
+                          alt={altFromImagePath(item[0], project.title)} 
                           className="w-full h-full object-cover cursor-pointer transition-transform duration-700 hover:scale-105 brightness-110 contrast-105" 
                           onClick={() => openLightbox(item[0])}
                           loading="lazy" 
@@ -307,7 +264,7 @@ const ProjectDetail: React.FC = () => {
                       <div className="w-full h-full dt-parallax-inner">
                         <img 
                           src={item[1]} 
-                          alt={`${project.title} detail ${idx}-2`} 
+                          alt={altFromImagePath(item[1], project.title)} 
                           className="w-full h-full object-cover cursor-pointer transition-transform duration-700 hover:scale-105 brightness-110 contrast-105" 
                           onClick={() => openLightbox(item[1])}
                           loading="lazy" 
@@ -333,7 +290,7 @@ const ProjectDetail: React.FC = () => {
                     <div className="w-full h-full dt-parallax-inner">
                       <img 
                         src={item[0]} 
-                        alt={`${project.title} detail ${idx}-1`} 
+                        alt={altFromImagePath(item[0], project.title)} 
                         className="w-full h-full object-cover cursor-pointer transition-transform duration-700 hover:scale-105 brightness-110 contrast-105" 
                         onClick={() => openLightbox(item[0])}
                         loading="lazy" 
@@ -351,7 +308,7 @@ const ProjectDetail: React.FC = () => {
                          <div className="w-full h-full dt-parallax-inner">
                            <img 
                              src={subImg} 
-                             alt={`${project.title} detail ${idx}-${subIdx+2}`} 
+                             alt={altFromImagePath(subImg, project.title)} 
                              className="w-full h-full object-cover cursor-pointer transition-transform duration-700 hover:scale-105 brightness-110 contrast-105" 
                              onClick={() => openLightbox(subImg)}
                              loading="lazy" 
@@ -371,7 +328,7 @@ const ProjectDetail: React.FC = () => {
                <div key={idx} className="sticky top-0 h-[100dvh] w-full overflow-hidden">
                   <img 
                     src={item} 
-                    alt={`${project.title} detail ${idx + 1}`}
+                    alt={altFromImagePath(item, project.title)}
                     className="w-full h-full object-cover cursor-pointer transition-transform duration-700 hover:scale-105 brightness-110 contrast-105"
                     onClick={() => openLightbox(item)}
                     loading="lazy"
@@ -390,7 +347,7 @@ const ProjectDetail: React.FC = () => {
         
         {/* Description Section */}
         <div className="max-w-5xl">
-            <h2 className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-gray-500 font-bold mb-6 md:mb-8 dt-info-item">Descriere Proiect</h2>
+            <h2 className="text-[11px] md:text-xs uppercase tracking-[0.3em] text-gray-500 font-bold mb-6 md:mb-8 dt-info-item">Descriere Proiect</h2>
             <p className="text-xl md:text-3xl lg:text-4xl font-light text-gray-200 leading-relaxed dt-info-item">
               {project.description}
             </p>
@@ -402,20 +359,20 @@ const ProjectDetail: React.FC = () => {
         {/* Details Section */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 w-full">
             <div className="dt-info-item">
-              <h3 className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-gray-500 font-bold mb-3 md:mb-4">Locatie</h3>
+              <h3 className="text-[11px] md:text-xs uppercase tracking-[0.3em] text-gray-500 font-bold mb-3 md:mb-4">Locatie</h3>
               <p className="font-medium text-base md:text-lg text-white">{project.location || "Romania"}</p>
             </div>
             <div className="dt-info-item">
-                <h3 className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-gray-500 font-bold mb-3 md:mb-4">Servicii</h3>
+                <h3 className="text-[11px] md:text-xs uppercase tracking-[0.3em] text-gray-500 font-bold mb-3 md:mb-4">Servicii</h3>
                 <p className="font-medium text-base md:text-lg text-white">{project.services || "Design & Build"}</p>
             </div>
             
             {project.tags && (
               <div className="dt-info-item">
-                  <h3 className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-gray-500 font-bold mb-4 md:mb-5">Materiale & Taguri</h3>
+                  <h3 className="text-[11px] md:text-xs uppercase tracking-[0.3em] text-gray-500 font-bold mb-4 md:mb-5">Materiale & Taguri</h3>
                   <div className="flex flex-wrap gap-2">
                   {project.tags.map((tag, i) => (
-                    <span key={i} className="text-[10px] md:text-xs uppercase tracking-widest font-medium text-gray-300 bg-white/5 px-3 md:px-4 py-1.5 md:py-2 rounded-full border border-white/10">
+                    <span key={i} className="text-[11px] md:text-xs uppercase tracking-widest font-medium text-gray-300 bg-white/5 px-3 md:px-4 py-1.5 md:py-2 rounded-full border border-white/10">
                       {tag}
                     </span>
                   ))}
@@ -434,11 +391,11 @@ const ProjectDetail: React.FC = () => {
         >
            <img 
              src={nextProject.mainImage} 
-             alt={`Urmatorul proiect: ${nextProject.title}`} 
+             alt={`Urmatorul proiect: ${altFromImagePath(nextProject.mainImage, nextProject.title)}`} 
              className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-105 brightness-[0.9] group-hover:brightness-[1.1]"
            />
            <div className="absolute inset-0 flex flex-col items-center justify-center z-10 px-4 text-center">
-              <span className="text-[10px] md:text-sm uppercase tracking-[0.3em] mb-3 md:mb-4 opacity-80 text-white font-medium">Urmatorul Proiect</span>
+              <span className="text-[11px] md:text-sm uppercase tracking-[0.3em] mb-3 md:mb-4 opacity-80 text-white font-medium">Urmatorul Proiect</span>
               <h2 className="font-display text-3xl sm:text-5xl md:text-7xl text-white uppercase">{nextProject.title}</h2>
               <ArrowRight className="mt-4 md:mt-6 w-6 h-6 md:w-8 md:h-8 text-white transform group-hover:translate-x-4 transition-transform duration-500" aria-hidden="true" />
            </div>

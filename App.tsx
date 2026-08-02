@@ -103,6 +103,32 @@ const AppContent: React.FC = () => {
     return () => {};
   }, [pathname, navType]);
 
+  // Several sections use `content-visibility: auto`, so the page keeps growing
+  // as they render for the first time — the homepage gains ~700px on the way
+  // down. ScrollTrigger caches its start/end in pixels, so without this every
+  // scroll-driven effect anchored below those sections (the footer reveal, most
+  // visibly) ends up measuring against a page height that no longer exists.
+  useEffect(() => {
+    const wrapper = document.getElementById('main-wrapper');
+    if (!wrapper || typeof ResizeObserver === 'undefined') return;
+
+    let frame = 0;
+    let lastHeight = wrapper.offsetHeight;
+
+    const observer = new ResizeObserver(() => {
+      if (Math.abs(wrapper.offsetHeight - lastHeight) < 2) return;
+      lastHeight = wrapper.offsetHeight;
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => ScrollTrigger.refresh());
+    });
+
+    observer.observe(wrapper);
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(frame);
+    };
+  }, [pathname]);
+
   const handleLoadComplete = () => {
     setIsLoading(false);
     try {

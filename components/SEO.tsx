@@ -33,6 +33,23 @@ const setMeta = (attr: 'name' | 'property', key: string, content: string) => {
   tag.setAttribute('content', content);
 };
 
+const SCHEMA_ATTR = 'data-seo-schema';
+
+/**
+ * Inject the page-level JSON-LD graph. Tagged with `data-seo-schema` so the
+ * copy left behind by the prerender (or by a previous route) is removed first
+ * — the page must never ship two competing graphs for the same URL.
+ */
+const setSchema = (json: string) => {
+  document.head.querySelectorAll(`script[${SCHEMA_ATTR}]`).forEach((el) => el.remove());
+  if (!json) return;
+  const tag = document.createElement('script');
+  tag.type = 'application/ld+json';
+  tag.setAttribute(SCHEMA_ATTR, '');
+  tag.textContent = json;
+  document.head.appendChild(tag);
+};
+
 /** Same as setMeta, but for <link rel="..."> tags (e.g. canonical). */
 const setLink = (rel: string, href: string) => {
   const selector = `link[rel="${rel}"]`;
@@ -54,13 +71,21 @@ const SEO: React.FC<SEOProps> = ({
   description,
   image = DEFAULT_IMAGE,
   canonicalUrl,
+  schema,
   noindex = false,
 }) => {
   const siteTitle = 'Atlantis Furnitures';
   const fullTitle = title.includes('|') ? title : `${title} | ${siteTitle}`;
+  // Project folders contain spaces ("/projects/AP AIR-U/..."), so the path has
+  // to be percent-encoded segment by segment. Without this the og:image and
+  // twitter:image URLs shipped with raw spaces in them, which social crawlers
+  // and card validators reject.
   const absoluteImage = image.startsWith('http')
     ? image
-    : `${SITE_URL}${image}`;
+    : `${SITE_URL}${image.split('/').map(encodeURIComponent).join('/')}`;
+  // Serialize once so the effect keys off a stable string instead of a new
+  // object identity on every render.
+  const schemaJson = schema ? JSON.stringify(schema) : '';
 
   useEffect(() => {
     if (typeof document === 'undefined') return;
@@ -95,11 +120,15 @@ const SEO: React.FC<SEOProps> = ({
 
     // Canonical
     setLink('canonical', canonicalUrl);
+
+    // Page-level structured data (optional, per route)
+    setSchema(schemaJson);
   }, [
     fullTitle,
     description,
     canonicalUrl,
     absoluteImage,
+    schemaJson,
     noindex,
   ]);
 
