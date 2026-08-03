@@ -404,21 +404,17 @@ const Testimonials: React.FC = () => {
             >
               {[...vipReviews, ...vipReviews].map((vip, idx) => {
                 const isActive = activeVip === `${vip.id}-${idx}`;
+                // The card is a list item AND a disclosure control, but those are
+                // two different things: role="listitem" is structural and does
+                // not permit aria-expanded, and the card already contains a link,
+                // so it cannot itself become a button. The article stays pure
+                // structure; the toggle lives on a real <button> laid over the
+                // card, below the social link.
                 return (
                 <article
                   key={`${vip.id}-${idx}`}
                   role="listitem"
-                  tabIndex={0}
-                  aria-expanded={isActive}
-                  aria-label={`Recenzie de la ${vip.name} — apasa pentru a citi`}
-                  onClick={() => toggleVip(`${vip.id}-${idx}`)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      e.preventDefault();
-                      toggleVip(`${vip.id}-${idx}`);
-                    }
-                  }}
-                  className={`vip-card group relative shrink-0 w-[320px] sm:w-[360px] md:w-[380px] aspect-[2/3] md:aspect-[3/4] overflow-hidden rounded-2xl md:rounded-3xl bg-[#161616] border border-white/10 cursor-pointer select-none ${isActive ? 'is-active' : ''}`}
+                  className={`vip-card group relative shrink-0 w-[320px] sm:w-[360px] md:w-[380px] aspect-[2/3] md:aspect-[3/4] overflow-hidden rounded-2xl md:rounded-3xl bg-[#161616] border border-white/10 select-none ${isActive ? 'is-active' : ''}`}
                 >
                   {/* Portrait */}
                   <img
@@ -432,6 +428,18 @@ const Testimonials: React.FC = () => {
 
                   {/* Gradient scrim for text legibility */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+
+                  {/* The disclosure control. Sits above the card content (z-10)
+                      but below the social link (z-30), so a tap anywhere except
+                      the social icon opens the review. Being a real <button> it
+                      gets Enter/Space and focus for free. */}
+                  <button
+                    type="button"
+                    aria-expanded={isActive}
+                    aria-label={`Recenzie de la ${vip.name} — apasa pentru a citi`}
+                    onClick={() => toggleVip(`${vip.id}-${idx}`)}
+                    className="absolute inset-0 z-20 w-full h-full cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-white/70"
+                  />
 
                   {/* Social CTA (top-right) — Instagram or Facebook */}
                   {(vip.instagram || vip.facebook) && (

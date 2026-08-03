@@ -4,6 +4,13 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Single source of truth: the same string is both animated word-by-word and
+// exposed to assistive tech, so it must not be written out twice.
+const INTRO_PARAGRAPHS = [
+  'Intelegem provocarile apartamentelor noi, de aceea suntem specializati in amenajari interioare inteligente si mobilier incastrat.',
+  'In atelierul nostru, transformam materie prima de top – de la MDF vopsit si frezat pana la lemn masiv – in piese de mobilier unicat. Oferim solutii complete de bucatarii la comanda, dressinguri walk-in si mobilier comercial, folosind exclusiv feronerie de durata si finisaje premium.',
+];
+
 const Intro: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   
@@ -57,16 +64,18 @@ const Intro: React.FC = () => {
         </h2>
       </div>
       <div className="text-lg md:text-xl font-normal leading-relaxed text-gray-900 text-center md:text-left">
-        <p className="mb-8 split-animate" aria-label="Intelegem provocarile apartamentelor noi, de aceea suntem specializati in amenajari interioare inteligente si mobilier incastrat.">
-          <span aria-hidden="true">
-            {splitText("Intelegem provocarile apartamentelor noi, de aceea suntem specializati in amenajari interioare inteligente si mobilier incastrat.")}
-          </span>
-        </p>
-        <p className="mb-8 split-animate" aria-label="In atelierul nostru, transformam materie prima de top – de la MDF vopsit si frezat pana la lemn masiv – in piese de mobilier unicat. Oferim solutii complete de bucatarii la comanda, dressinguri walk-in si mobilier comercial, folosind exclusiv feronerie de durata si finisaje premium.">
-          <span aria-hidden="true">
-            {splitText("In atelierul nostru, transformam materie prima de top – de la MDF vopsit si frezat pana la lemn masiv – in piese de mobilier unicat. Oferim solutii complete de bucatarii la comanda, dressinguri walk-in si mobilier comercial, folosind exclusiv feronerie de durata si finisaje premium.")}
-          </span>
-        </p>
+        {/* The visible text is split into one span per word so it can animate.
+            Those spans are hidden from assistive tech, and the readable copy
+            used to live in an aria-label on the <p> — but a paragraph cannot
+            be named, so that label was simply dropped and these two paragraphs
+            reached screen readers and AI agents as empty. The real text now
+            sits in a visually-hidden span, which is readable by both. */}
+        {INTRO_PARAGRAPHS.map((text) => (
+          <p key={text.slice(0, 24)} className="mb-8 split-animate">
+            <span className="sr-only">{text}</span>
+            <span aria-hidden="true">{splitText(text)}</span>
+          </p>
+        ))}
         
         <div className="h-px w-full bg-black/10 my-8"></div>
         

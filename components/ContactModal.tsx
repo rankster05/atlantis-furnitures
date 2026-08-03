@@ -130,11 +130,14 @@ ${formData.message || '-'}`;
       aria-modal="true"
       aria-labelledby="modal-title"
     >
-      {/* Backdrop */}
-      <div 
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm" 
+      {/* Backdrop. A plain <div> has no role, so it cannot carry an aria-label —
+          naming it only produced an unlabelable node in the accessibility tree.
+          Click-to-dismiss stays for mouse users; the labelled close button
+          inside the panel is the accessible way out. */}
+      <div
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
         onClick={onClose}
-        aria-label="Close modal background"
+        aria-hidden="true"
       />
 
       {/* Slide-over Panel */}
