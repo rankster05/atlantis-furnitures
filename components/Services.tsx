@@ -3,8 +3,22 @@ import SEO from './SEO';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight, PenTool, Layers, Handshake, Component } from 'lucide-react';
+import { HOME_CRUMB, SITE_URL, pageGraph } from '../schema';
 
 gsap.registerPlugin(ScrollTrigger);
+
+const SERVICES_URL = `${SITE_URL}/servicii/`;
+const SERVICES_IMAGE = '/projects/S House/s-house-living-bucatarie-open-space-mdf-furnir-pipera.webp';
+const SERVICES_DESCRIPTION =
+  'Reteaua cu care executam fiecare proiect de mobilier la comanda: studiouri de arhitectura, furnizori de finisaje si feronerie premium Blum si Hettich.';
+
+const servicesSchema = pageGraph({
+  url: SERVICES_URL,
+  name: 'Servicii si Parteneri Mobilier la Comanda | Atlantis',
+  description: SERVICES_DESCRIPTION,
+  image: SERVICES_IMAGE,
+  crumbs: [HOME_CRUMB, { name: 'Servicii', url: SERVICES_URL }],
+});
 
 const partnerCategories = [
   {
@@ -142,8 +156,10 @@ const Services: React.FC = () => {
     <div ref={containerRef} className="min-h-screen bg-atl-dark text-atl-bg relative overflow-hidden">
       <SEO
         title="Servicii si Parteneri Mobilier la Comanda | Atlantis"
-        description="Reteaua cu care executam fiecare proiect de mobilier la comanda: studiouri de arhitectura, furnizori de finisaje si feronerie premium Blum si Hettich."
-        canonicalUrl="https://atlantisfurnitures.ro/servicii/"
+        description={SERVICES_DESCRIPTION}
+        canonicalUrl={SERVICES_URL}
+        image={SERVICES_IMAGE}
+        schema={servicesSchema}
       />
 
       {/* Background Ambient Glows */}

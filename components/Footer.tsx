@@ -226,11 +226,33 @@ const Footer: React.FC = () => {
 
           <div data-depth="detail" className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-24 text-center md:text-left footer-anim w-full max-w-6xl justify-items-center md:justify-items-start shrink-0">
             
-            <div className="flex flex-col items-center md:items-start">
-              <p className="uppercase tracking-widest text-sm text-gray-400 font-medium mb-3">Atelier</p>
-              <p className="font-normal text-gray-200 text-base md:text-lg">Aleea Argesului nr. 70</p>
-              <p className="font-normal text-gray-200 text-base md:text-lg">Budeasa Mare, Romania</p>
-            </div>
+            {/* The footer carried no navigation at all — every internal link on
+                the site lived in the header menu alone. A crawler that reaches
+                the bottom of a page had nowhere to go, and the pages got no
+                site-wide internal link equity beyond the nav. */}
+            <nav className="flex flex-col items-center md:items-start" aria-label="Navigare footer">
+              <p className="uppercase tracking-widest text-sm text-gray-400 font-medium mb-3">Pagini</p>
+              <ul className="flex flex-col gap-2 font-normal text-gray-200 text-base md:text-lg list-none p-0 m-0">
+                <li>
+                  <Link to="/proiecte/" className="hover:text-white transition-colors w-fit block">
+                    Portofoliu de proiecte
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/servicii/" className="hover:text-white transition-colors w-fit block">
+                    Servicii si parteneri
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/contact/" className="hover:text-white transition-colors w-fit block">
+                    Contact si cere oferta
+                  </Link>
+                </li>
+              </ul>
+              <p className="uppercase tracking-widest text-sm text-gray-400 font-medium mt-6 mb-3">Atelier</p>
+              <p className="font-normal text-gray-200 text-base md:text-lg m-0">Aleea Argesului nr. 70</p>
+              <p className="font-normal text-gray-200 text-base md:text-lg m-0">Budeasa Mare, Romania</p>
+            </nav>
 
             <div className="flex flex-col items-center md:items-start w-full max-w-xs md:max-w-none">
               <p className="uppercase tracking-widest text-sm text-gray-400 font-medium mb-3">Telefon & Program</p>

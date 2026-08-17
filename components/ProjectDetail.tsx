@@ -7,7 +7,8 @@ import { portfolioItems } from '../data';
 import { PortfolioItem } from '../types';
 import SEO from './SEO';
 import Lightbox from './Lightbox';
-import { altFromImagePath } from '../utils';
+import { altFromImagePath, imageSize } from '../utils';
+import { HOME_CRUMB, PROJECTS_CRUMB, SITE_URL, pageGraph } from '../schema';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -35,8 +36,27 @@ const ProjectDetail: React.FC = () => {
     description:
       project?.seoDescription ||
       'Proiect de mobilier la comanda executat de Atlantis Furnitures in Bucuresti si Ilfov. Cere oferta!',
-    canonicalUrl: `https://atlantisfurnitures.ro/proiecte/${slug ?? ''}/`,
+    canonicalUrl: `${SITE_URL}/proiecte/${slug ?? ''}/`,
   };
+
+  // The descriptive headline — also the page's H1 (see the hero below).
+  const projectHeading = project
+    ? project.seoH1 || `Mobilier la comanda - ${project.title}`
+    : '';
+
+  const projectSchema = project
+    ? pageGraph({
+        url: seo.canonicalUrl,
+        name: projectHeading,
+        description: seo.description,
+        image: project.mainImage,
+        crumbs: [
+          HOME_CRUMB,
+          PROJECTS_CRUMB,
+          { name: project.title, url: seo.canonicalUrl },
+        ],
+      })
+    : undefined;
 
   const openLightbox = (imgSrc: string) => {
     const index = allImages.indexOf(imgSrc);
@@ -183,10 +203,12 @@ const ProjectDetail: React.FC = () => {
 
   return (
     <div ref={containerRef} className="bg-atl-dark text-atl-bg min-h-screen">
-      <SEO 
-        title={seo.title} 
+      <SEO
+        title={seo.title}
         description={seo.description}
         canonicalUrl={seo.canonicalUrl}
+        image={project.mainImage}
+        schema={projectSchema}
       />
       
       {/* Parallax Hero Section */}
@@ -209,6 +231,7 @@ const ProjectDetail: React.FC = () => {
             <img
               src={project.mainImage.replace(/\.webp$/, '-m.webp')}
               alt={altFromImagePath(project.mainImage, project.title)}
+              {...imageSize(project.mainImage.replace(/\.webp$/, '-m.webp'))}
               className="w-full h-full object-cover object-center cursor-pointer transition-transform duration-700 hover:scale-105 brightness-125 contrast-105"
               onClick={() => openLightbox(project.mainImage)}
               fetchPriority="high"
@@ -220,17 +243,23 @@ const ProjectDetail: React.FC = () => {
         
         {/* Hero Text Content */}
         <div ref={heroTextRef} className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 md:px-6 z-10 mt-16 md:mt-20">
-          {/* The page's H1 is now the title people actually see. It used to be
-              a screen-reader-only heading sitting above an aria-hidden display
-              title — the descriptive phrase existed for crawlers alone, which
-              is both a heading-outline smell and a wasted line for readers. The
-              descriptive text now runs underneath, visible to everyone. */}
-          <h1 className="dt-reveal font-display text-4xl sm:text-6xl md:text-8xl lg:text-9xl leading-[0.9] text-white max-w-6xl drop-shadow-2xl uppercase m-0">
+          {/* Two lines, both visible, both unchanged on screen — only the tags
+              swapped. The huge word is the project's internal code name ("AP
+              SO", "OFFICE"), which carries no meaning for anyone arriving from
+              search, so it is display text rather than the page's heading. The
+              descriptive line under it — already visible to every reader — is
+              the real title of the page, so it is the H1.
+
+              Deliberately NOT a screen-reader-only H1: a heading that exists
+              only for crawlers is what Google's spam policies call hidden text,
+              and this page previously carried exactly that pattern before it
+              was removed. Nothing here is hidden from anyone. */}
+          <p className="dt-reveal font-display text-4xl sm:text-6xl md:text-8xl lg:text-9xl leading-[0.9] text-white max-w-6xl drop-shadow-2xl uppercase m-0">
             {project.title}
-          </h1>
-          <p className="dt-reveal mt-5 md:mt-7 max-w-2xl text-sm md:text-base text-white/75 font-light tracking-wide drop-shadow-lg">
-            {project.seoH1 || `Mobilier la comanda - ${project.title}`}
           </p>
+          <h1 className="dt-reveal mt-5 md:mt-7 max-w-2xl text-sm md:text-base text-white/75 font-light tracking-wide drop-shadow-lg m-0">
+            {projectHeading}
+          </h1>
         </div>
       </div>
 
@@ -252,6 +281,7 @@ const ProjectDetail: React.FC = () => {
                         <img 
                           src={item[0]} 
                           alt={altFromImagePath(item[0], project.title)} 
+                          {...imageSize(item[0])}
                           className="w-full h-full object-cover cursor-pointer transition-transform duration-700 hover:scale-105 brightness-110 contrast-105" 
                           onClick={() => openLightbox(item[0])}
                           loading="lazy" 
@@ -265,6 +295,7 @@ const ProjectDetail: React.FC = () => {
                         <img 
                           src={item[1]} 
                           alt={altFromImagePath(item[1], project.title)} 
+                          {...imageSize(item[1])}
                           className="w-full h-full object-cover cursor-pointer transition-transform duration-700 hover:scale-105 brightness-110 contrast-105" 
                           onClick={() => openLightbox(item[1])}
                           loading="lazy" 
@@ -291,6 +322,7 @@ const ProjectDetail: React.FC = () => {
                       <img 
                         src={item[0]} 
                         alt={altFromImagePath(item[0], project.title)} 
+                        {...imageSize(item[0])}
                         className="w-full h-full object-cover cursor-pointer transition-transform duration-700 hover:scale-105 brightness-110 contrast-105" 
                         onClick={() => openLightbox(item[0])}
                         loading="lazy" 
@@ -309,6 +341,7 @@ const ProjectDetail: React.FC = () => {
                            <img 
                              src={subImg} 
                              alt={altFromImagePath(subImg, project.title)} 
+                             {...imageSize(subImg)}
                              className="w-full h-full object-cover cursor-pointer transition-transform duration-700 hover:scale-105 brightness-110 contrast-105" 
                              onClick={() => openLightbox(subImg)}
                              loading="lazy" 
@@ -329,6 +362,7 @@ const ProjectDetail: React.FC = () => {
                   <img 
                     src={item} 
                     alt={altFromImagePath(item, project.title)}
+                    {...imageSize(item)}
                     className="w-full h-full object-cover cursor-pointer transition-transform duration-700 hover:scale-105 brightness-110 contrast-105"
                     onClick={() => openLightbox(item)}
                     loading="lazy"
@@ -390,8 +424,11 @@ const ProjectDetail: React.FC = () => {
           aria-label={`Vezi urmatorul proiect: ${nextProject.title}`}
         >
            <img 
-             src={nextProject.mainImage} 
-             alt={`Urmatorul proiect: ${altFromImagePath(nextProject.mainImage, nextProject.title)}`} 
+             src={nextProject.mainImage}
+             alt={`Urmatorul proiect: ${altFromImagePath(nextProject.mainImage, nextProject.title)}`}
+             {...imageSize(nextProject.mainImage)}
+             loading="lazy"
+             decoding="async"
              className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-105 brightness-[0.9] group-hover:brightness-[1.1]"
            />
            <div className="absolute inset-0 flex flex-col items-center justify-center z-10 px-4 text-center">

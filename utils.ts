@@ -27,6 +27,29 @@ export const altFromImagePath = (src: string, projectTitle?: string): string => 
   return projectTitle ? `${sentence} - proiect ${projectTitle}` : sentence;
 };
 
+import imageDimensions from './image-dimensions.json';
+
+// TS infers the JSON's arrays as number[], not fixed-length tuples, so the
+// widening goes through `unknown`.
+const DIMENSIONS = imageDimensions as unknown as Record<string, [number, number]>;
+
+/**
+ * Real intrinsic size of a local image, for the `width`/`height` attributes.
+ *
+ * The numbers come from image-dimensions.json, which is measured from the files
+ * themselves (see scripts/image-dimensions.mjs) — never guessed. An unknown
+ * path returns nothing at all rather than a plausible-looking default, because
+ * a wrong aspect ratio makes the browser reserve a box the image never fills,
+ * which is the exact layout shift these attributes exist to prevent.
+ *
+ * Spread straight onto the element:
+ *   <img src={src} {...imageSize(src)} />
+ */
+export const imageSize = (src: string): { width?: number; height?: number } => {
+  const dims = DIMENSIONS[src];
+  return dims ? { width: dims[0], height: dims[1] } : {};
+};
+
 export const getOptimizedImageUrl = (url: string, width: number = 1200) => {
   if (!url || !url.includes('images.unsplash.com')) return url;
   try {

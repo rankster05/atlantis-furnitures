@@ -2,6 +2,7 @@ import React, { useLayoutEffect, useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Star, ExternalLink, Map, ArrowRight, Quote, Instagram, Facebook, Plus } from 'lucide-react';
+import { imageSize } from '../utils';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -21,7 +22,7 @@ const vipReviews: VipReview[] = [
     id: 'vip-alexia',
     name: 'Alexia Talavutis',
     role: 'Artist & Prezentator TV',
-    image: '/testimonials-vip/alexia-talavutis.jpg',
+    image: '/testimonials-vip/alexia-talavutis.webp',
     instagram: 'https://www.instagram.com/alexia.talavutis',
     text: 'Mi-am dorit ca fiecare colt din casa noastra sa aiba personalitate, asa ca am ales mobilier facut complet la comanda. Un proiect mare, pe 3 nivele, cu multe detalii si idei curajoase. Nicu si echipa de la Atlantis Furnitures au inteles exact ce ne dorim si au dus totul pana la capat cu multa rabdare si implicare. Cred ca asta face diferenta: oamenii care pun suflet in ceea ce construiesc.',
   },
@@ -29,7 +30,7 @@ const vipReviews: VipReview[] = [
     id: 'vip-sore',
     name: 'Sore',
     role: 'Artista',
-    image: '/testimonials-vip/sore-mihalache.jpg',
+    image: '/testimonials-vip/sore-mihalache.webp',
     instagram: 'https://www.instagram.com/soreonline',
     text: 'Orice idei creative pentru mobilier am avut, Atlantis Furnitures a fost alaturi de mine. La ei nu exista „nu se poate!”.',
   },
@@ -37,7 +38,7 @@ const vipReviews: VipReview[] = [
     id: 'vip-pautov',
     name: 'Dr. Mihail Pautov',
     role: 'Medic',
-    image: '/testimonials-vip/dr-mihail-pautov.jpg',
+    image: '/testimonials-vip/dr-mihail-pautov.webp',
     instagram: 'https://www.instagram.com/doctor.mihail',
     text: 'Sunt genul de om care observa detaliile. Iar spatiul in care filmez trebuia sa fie exact cum imi imaginam: simplu, curat si fara nimic in plus. Echipa Atlantis Furnitures a avut rabdarea sa faca totul pana la ultimul detaliu. Si cred ca asta face diferenta intre ceva facut „ok” si ceva facut foarte bine. Un spatiu bine gandit iti da liniste si claritate fara sa-ti dai seama.',
   },
@@ -45,7 +46,7 @@ const vipReviews: VipReview[] = [
     id: 'vip-cristina',
     name: 'Cristina Stroe',
     role: 'Arhitect & Designer Interior',
-    image: '/testimonials-vip/cristina-stroe.jpg',
+    image: '/testimonials-vip/cristina-stroe.webp',
     instagram: 'https://www.instagram.com/cri_stroe/',
     text: 'Am colaborat cu Atlantis Furniture de-a lungul anilor atat din perspectiva de arhitect si designer de interior, cat si din cea de client, iar unul dintre lucrurile pe care le-am apreciat cel mai mult a fost disponibilitatea lor de a gasi solutii chiar si atunci cand termenele erau foarte stranse. M-au ajutat in numeroase proiecte cu deadline-uri dificile, printr-o comunicare eficienta si solutii adaptate atat cerintelor proiectului, cat si bugetului disponibil. Le multumesc pentru colaborarea de pana acum si pentru sprijinul oferit de-a lungul anilor.',
   },
@@ -53,7 +54,7 @@ const vipReviews: VipReview[] = [
     id: 'vip-virgil',
     name: 'Virgil Iantu',
     role: 'Prezentator TV',
-    image: '/testimonials-vip/virgil-iantu.jpg',
+    image: '/testimonials-vip/virgil-iantu.webp',
     facebook: 'https://www.facebook.com/iantu.virgil',
     text: 'Mai o schita, mai o explicatie, mai o gluma si mobila e gata. Asa am crezut, pana cand Jasmina a realizat ca nuanta mobilei din camera ei nu e cea dorita. Nicu a ras si s-a executat. Altfel eram eu cel executat. Multumesc pentru gasirea de solutii, pentru efort si pentru rezultat. Spor!',
   },
@@ -71,20 +72,34 @@ const GoogleLogo = () => (
   </svg>
 );
 
-const reviews = [
+type GoogleReview = {
+  id: number;
+  name: string;
+  date: string;
+  text: string;
+  initial: string;
+  /** Set when the review was written in another language than the page. Without
+   *  it, a screen reader announces English text with Romanian pronunciation
+   *  rules, and translation tools treat the whole page as one language. */
+  lang?: 'en';
+};
+
+const reviews: GoogleReview[] = [
   {
     id: 1,
     name: "Magda Baciu",
     date: "acum 6 ore",
     text: "I have already worked with Nicu's team twice, and I am very happy with how the furniture looks. The Atlantis team knows how to work with technical details, and to translate exactly what appears in the renderings. I also appreciated that when there was something I wanted to change because I changed my mind, they were open and took care of it. I recommend them as a partner",
-    initial: "M"
+    initial: "M",
+    lang: "en"
   },
   {
     id: 2,
     name: "Ionut Mihai Avram",
     date: "acum 4 luni",
     text: "I recommend with confidence! Team of professionals!",
-    initial: "I"
+    initial: "I",
+    lang: "en"
   },
   {
     id: 3,
@@ -119,28 +134,32 @@ const reviews = [
     name: "alina velicu",
     date: "acum 6 luni",
     text: "I turned to Atlantis 7 years ago to furnish my entire apartment and it was one of the best decisions. The furniture they made is not only beautiful and practical, but also extremely durable – after so many years it looks and works flawlessly, as on the first day. Everything was done with attention to detail, seriousness and respect for the customer. I highly recommend them to anyone who wants quality, custom-made furniture that will last over time.",
-    initial: "A"
+    initial: "A",
+    lang: "en"
   },
   {
     id: 8,
     name: "Diana Nicolae",
     date: "acum 6 luni",
     text: "With Atlantis, dreams come true!",
-    initial: "D"
+    initial: "D",
+    lang: "en"
   },
   {
     id: 9,
     name: "Cristiana-Sorina Stroe-Mihai",
     date: "acum 6 luni",
     text: "Impeccable services! I recommend with all sincerity!",
-    initial: "C"
+    initial: "C",
+    lang: "en"
   },
   {
     id: 10,
     name: "Cristina Patru",
     date: "acum 6 luni",
     text: "Attention to detail and perfect professionalism!",
-    initial: "C"
+    initial: "C",
+    lang: "en"
   }
 ];
 
@@ -346,7 +365,10 @@ const Testimonials: React.FC = () => {
           <div className="header-anim max-w-2xl w-full">
             <div className="flex items-center gap-3 mb-6">
                <GoogleLogo />
-               <h3 className="text-sm font-bold text-white tracking-wide m-0">Recenzii Verificate Google</h3>
+               {/* A label for the badge, not a section heading — as an <h3>
+                   above this section's own <h2> it broke the heading outline,
+                   attaching itself to the section before it. */}
+               <p className="text-sm font-bold text-white tracking-wide m-0">Recenzii Verificate Google</p>
             </div>
             
             <h2 className="font-display text-3xl sm:text-4xl md:text-6xl mb-8 leading-[1.1] md:leading-none">
@@ -420,6 +442,7 @@ const Testimonials: React.FC = () => {
                   <img
                     src={vip.image}
                     alt={`${vip.name} — recenzie Atlantis Furnitures`}
+                    {...imageSize(vip.image)}
                     loading="lazy"
                     decoding="async"
                     draggable={false}
@@ -533,7 +556,10 @@ const Testimonials: React.FC = () => {
                     </div>
 
                     {/* Review Text */}
-                    <p className="font-normal text-gray-300 text-sm md:text-base leading-relaxed mb-6 line-clamp-4 group-hover:line-clamp-none transition-all duration-300">
+                    <p
+                      lang={review.lang}
+                      className="font-normal text-gray-300 text-sm md:text-base leading-relaxed mb-6 line-clamp-4 group-hover:line-clamp-none transition-all duration-300"
+                    >
                       "{review.text}"
                     </p>
 

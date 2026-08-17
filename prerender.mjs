@@ -111,6 +111,125 @@ const routes = [
 const escapeHtml = (s) =>
   s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
+// ── og:image dimensions ──────────────────────────────────────────────────────
+/**
+ * Read a WebP file's intrinsic size straight from its header.
+ *
+ * og:image:width/height used to be hard-coded to 1200x630 while every image the
+ * site actually ships is 1920x1280 or taller — so Facebook and LinkedIn cropped
+ * against a box the file does not have. The numbers have to come from the file.
+ *
+ * Deliberately dependency-free: this runs inside the build, and pulling in an
+ * image library to read six bytes would be one more thing that can fail a
+ * deploy. Returns null for anything it cannot parse, and the caller then simply
+ * omits the tags — no tag at all beats a wrong one.
+ */
+async function webpSize(absPath) {
+  let fh;
+  try {
+    fh = await fs.open(absPath, 'r');
+    const { buffer } = await fh.read(Buffer.alloc(32), 0, 32, 0);
+    if (buffer.toString('ascii', 0, 4) !== 'RIFF' || buffer.toString('ascii', 8, 12) !== 'WEBP') {
+      return null;
+    }
+    const fourcc = buffer.toString('ascii', 12, 16);
+    if (fourcc === 'VP8 ') {
+      // Lossy: 14-bit width/height at offset 26, after the 3-byte start code.
+      return { width: buffer.readUInt16LE(26) & 0x3fff, height: buffer.readUInt16LE(28) & 0x3fff };
+    }
+    if (fourcc === 'VP8L') {
+      // Lossless: 14 bits each, packed little-endian from offset 21.
+      const bits = buffer.readUInt32LE(21);
+      return { width: (bits & 0x3fff) + 1, height: ((bits >> 14) & 0x3fff) + 1 };
+    }
+    if (fourcc === 'VP8X') {
+      // Extended: 24-bit width-1 / height-1 at offset 24.
+      const w = buffer[24] | (buffer[25] << 8) | (buffer[26] << 16);
+      const h = buffer[27] | (buffer[28] << 8) | (buffer[29] << 16);
+      return { width: w + 1, height: h + 1 };
+    }
+    return null;
+  } catch {
+    return null;
+  } finally {
+    await fh?.close();
+  }
+}
+
+/**
+ * Replace og:image:width/height, or insert them after og:image when the runtime
+ * SEO component has removed them (which it does on every route — see SEO.tsx).
+ */
+function setOgDimensions(html, size) {
+  if (!size) return html;
+  const stripped = html
+    .replace(/\s*<meta property="og:image:width" content="[^"]*">/g, '')
+    .replace(/\s*<meta property="og:image:height" content="[^"]*">/g, '');
+  return stripped.replace(
+    /(<meta property="og:image" content="[^"]*">)/,
+    `$1\n    <meta property="og:image:width" content="${size.width}">\n` +
+      `    <meta property="og:image:height" content="${size.height}">`
+  );
+}
+
+/**
+ * Which source files decide a route's content. Used only to date it — see
+ * lastmodFor below.
+ */
+function sourcesFor(routePath) {
+  if (routePath === '/') {
+    return [
+      'components/Home.tsx',
+      'components/Hero.tsx',
+      'components/Intro.tsx',
+      'components/ProjectStack.tsx',
+      'components/Process.tsx',
+      'components/Testimonials.tsx',
+    ];
+  }
+  if (routePath === '/proiecte') return ['components/Portfolio.tsx', 'data.ts'];
+  if (routePath.startsWith('/proiecte/')) return ['components/ProjectDetail.tsx', 'data.ts'];
+  if (routePath === '/servicii') return ['components/Services.tsx'];
+  if (routePath === '/contact') return ['components/Contact.tsx'];
+  if (routePath === '/politica-confidentialitate') return ['components/PrivacyPolicy.tsx'];
+  return [];
+}
+
+/**
+ * Last commit date of a route's sources.
+ *
+ * Every URL used to be stamped with the build date, so all thirteen changed
+ * together on every deploy whether or not anything about them had — which is
+ * exactly the signal Google learns to ignore. Commit dates are used rather than
+ * file mtimes because CI clones the repo fresh, which would make every mtime
+ * the checkout time and put us right back where we started.
+ */
+async function lastmodFor(routePath, fallback) {
+  const files = sourcesFor(routePath);
+  if (!files.length) return fallback;
+  try {
+    const { execFile } = await import('node:child_process');
+    const { promisify } = await import('node:util');
+    const run = promisify(execFile);
+    const dates = await Promise.all(
+      files.map(async (f) => {
+        try {
+          const { stdout } = await run('git', ['log', '-1', '--format=%cs', '--', f], {
+            cwd: __dirname,
+          });
+          return stdout.trim();
+        } catch {
+          return '';
+        }
+      })
+    );
+    const newest = dates.filter(Boolean).sort().pop();
+    return newest || fallback;
+  } catch {
+    return fallback;
+  }
+}
+
 /**
  * Generate sitemap.xml from the same `routes` array the prerender walks, rather
  * than maintaining it by hand in public/. The hand-written copy had every URL
@@ -119,21 +238,24 @@ const escapeHtml = (s) =>
  */
 async function writeSitemap() {
   const today = new Date().toISOString().slice(0, 10);
-  const urls = routes
-    .filter((r) => !r.noindex)
-    .map(
-      (r) =>
+  const indexable = routes.filter((r) => !r.noindex);
+  const entries = await Promise.all(
+    indexable.map(async (r) => {
+      const lastmod = await lastmodFor(r.path, today);
+      return (
         `  <url>\n    <loc>${canonicalFor(r.path)}</loc>\n` +
-        `    <lastmod>${today}</lastmod>\n` +
+        `    <lastmod>${lastmod}</lastmod>\n` +
         `    <priority>${r.path === '/' ? '1.0' : r.path.split('/').length > 2 ? '0.6' : '0.8'}</priority>\n` +
         `  </url>`
-    )
-    .join('\n');
+      );
+    })
+  );
+  const urls = entries.join('\n');
   const xml =
     `<?xml version="1.0" encoding="UTF-8"?>\n` +
     `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
   await fs.writeFile(path.join(distDir, 'sitemap.xml'), xml, 'utf-8');
-  console.log(`  ✓ sitemap.xml (${routes.filter((r) => !r.noindex).length} indexable URLs, lastmod ${today})`);
+  console.log(`  ✓ sitemap.xml (${indexable.length} indexable URLs, per-route lastmod)`);
 }
 
 const baseHtml = await fs.readFile(path.join(distDir, 'index.html'), 'utf-8');
@@ -189,7 +311,7 @@ const fixPreload = (html, route) =>
   );
 
 // ── FALLBACK: meta-only injection (no browser needed) ────────────────────────
-function metaInject(route) {
+async function metaInject(route) {
   const canonical = canonicalFor(route.path);
   const ogImage = encodeOgImage(route.image);
   const titleEsc = escapeHtml(route.title);
@@ -206,6 +328,7 @@ function metaInject(route) {
     .replace(/<meta name="twitter:description" content="[^"]*">/, `<meta name="twitter:description" content="${descEsc}">`)
     .replace(/<meta name="twitter:image" content="[^"]*">/, `<meta name="twitter:image" content="${ogImage}">`);
   html = fixPreload(html, route);
+  html = setOgDimensions(html, await webpSize(path.join(distDir, route.image)));
   if (route.noindex) {
     html = html.replace(/<meta name="robots" content="[^"]*">/, `<meta name="robots" content="noindex, nofollow">`);
   }
@@ -217,7 +340,7 @@ async function runMetaOnly(reason) {
   for (const route of routes) {
     const outPath = outPathFor(route.path);
     await fs.mkdir(path.dirname(outPath), { recursive: true });
-    await fs.writeFile(outPath, metaInject(route), 'utf-8');
+    await fs.writeFile(outPath, await metaInject(route), 'utf-8');
     console.log(`  ✓ ${route.path} (meta)`);
   }
   const nf = baseHtml
@@ -304,6 +427,14 @@ async function renderRoute(browser, route, { is404 = false } = {}) {
 
   if (!is404) {
     html = fixPreload(html, route);
+    // The runtime SEO component deliberately drops og:image:width/height (it
+    // cannot know the dimensions of the file it just pointed at). This is where
+    // they come back, measured from the file the page actually references.
+    const ogImage = html.match(/<meta property="og:image" content="([^"]*)"/)?.[1];
+    if (ogImage) {
+      const rel = decodeURIComponent(ogImage.replace(SITE, ''));
+      html = setOgDimensions(html, await webpSize(path.join(distDir, rel)));
+    }
     html = html.replace(
       /<meta property="og:image:alt" content="[^"]*">/,
       `<meta property="og:image:alt" content="Atlantis Furnitures - mobilier la comanda">`

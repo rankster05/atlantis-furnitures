@@ -7,18 +7,36 @@ import ProjectStack from './ProjectStack';
 import Process from './Process';
 import Testimonials from './Testimonials';
 import SEO from './SEO';
+import { pageGraph } from '../schema';
 
 interface HomeProps {
   isLoaded?: boolean;
 }
+
+const HOME_URL = 'https://atlantisfurnitures.ro/';
+const HOME_IMAGE = '/projects/AP AIR-V/hero-living-victoriei-hd.webp';
+const HOME_DESCRIPTION =
+  'Mobilier la comanda din MDF si PAL pentru Bucuresti si Ilfov: bucatarii, dressinguri, livinguri, office. Atelier propriu, montaj inclus, oferta in 24h.';
+
+// The homepage is the root of the site, so it carries no breadcrumb trail —
+// only the page node, tied back to the site-wide entities declared in
+// index.html.
+const homeSchema = pageGraph({
+  url: HOME_URL,
+  name: 'Mobilier la Comanda Bucuresti | Atlantis Furnitures',
+  description: HOME_DESCRIPTION,
+  image: HOME_IMAGE,
+});
 
 const Home: React.FC<HomeProps> = ({ isLoaded = true }) => {
   return (
     <>
       <SEO
         title="Mobilier la Comanda Bucuresti | Atlantis Furnitures"
-        description="Mobilier la comanda din MDF si PAL pentru Bucuresti si Ilfov: bucatarii, dressinguri, livinguri, office. Atelier propriu, montaj inclus, oferta in 24h."
-        canonicalUrl="https://atlantisfurnitures.ro/"
+        description={HOME_DESCRIPTION}
+        canonicalUrl={HOME_URL}
+        image={HOME_IMAGE}
+        schema={homeSchema}
       />
       <Hero startAnimation={isLoaded} />
       <Intro />

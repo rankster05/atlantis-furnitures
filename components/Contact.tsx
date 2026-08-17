@@ -17,8 +17,13 @@ import {
   Star,
 } from 'lucide-react';
 import SEO from './SEO';
+import { HOME_CRUMB, SITE_URL, pageGraph } from '../schema';
 
 gsap.registerPlugin(ScrollTrigger);
+
+const CONTACT_URL = `${SITE_URL}/contact/`;
+const CONTACT_IMAGE =
+  '/projects/AP AIR-U/design-interior-apartament-modern-unirii-atlantis-furnitures.webp';
 
 const PHONE_DISPLAY = '0732 717 666';
 const PHONE_TEL = '+40732717666';
@@ -121,33 +126,23 @@ const faqs = [
   },
 ];
 
-const contactSchema = {
-  '@context': 'https://schema.org',
-  '@graph': [
-    {
-      '@type': 'ContactPage',
-      '@id': 'https://atlantisfurnitures.ro/contact/#contactpage',
-      url: 'https://atlantisfurnitures.ro/contact/',
-      name: 'Contact Atlantis Furnitures',
-      description:
-        'Cere o oferta gratuita pentru mobilier la comanda in Bucuresti si Ilfov. Telefon, WhatsApp si formular online. Raspuns in maximum 24 de ore.',
-      inLanguage: 'ro-RO',
-      isPartOf: { '@id': 'https://atlantisfurnitures.ro/#website' },
-      about: { '@id': 'https://atlantisfurnitures.ro/#business' },
-      primaryImageOfPage:
-        'https://atlantisfurnitures.ro/projects/AP%20AIR-U/design-interior-apartament-modern-unirii-atlantis-furnitures.webp',
-    },
-    {
-      '@type': 'BreadcrumbList',
-      '@id': 'https://atlantisfurnitures.ro/contact/#breadcrumb',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Acasa', item: 'https://atlantisfurnitures.ro/' },
-        { '@type': 'ListItem', position: 2, name: 'Contact', item: 'https://atlantisfurnitures.ro/contact/' },
-      ],
-    },
+// Built with the shared helpers so the ContactPage node, its breadcrumb and its
+// links back to the site-wide entities stay identical in shape to every other
+// page. The FAQ block is this page's own addition.
+const contactSchema = pageGraph(
+  {
+    url: CONTACT_URL,
+    name: 'Contact Atlantis Furnitures',
+    description:
+      'Cere o oferta gratuita pentru mobilier la comanda in Bucuresti si Ilfov. Telefon, WhatsApp si formular online. Raspuns in maximum 24 de ore.',
+    type: 'ContactPage',
+    image: CONTACT_IMAGE,
+    crumbs: [HOME_CRUMB, { name: 'Contact', url: CONTACT_URL }],
+  },
+  [
     {
       '@type': 'FAQPage',
-      '@id': 'https://atlantisfurnitures.ro/contact/#faq',
+      '@id': `${CONTACT_URL}#faq`,
       inLanguage: 'ro-RO',
       mainEntity: faqs.map((f) => ({
         '@type': 'Question',
@@ -155,8 +150,8 @@ const contactSchema = {
         acceptedAnswer: { '@type': 'Answer', text: f.a },
       })),
     },
-  ],
-};
+  ]
+);
 
 const fieldClass =
   'w-full rounded-xl bg-white/[0.03] border border-white/10 px-4 py-3.5 text-[15px] text-white placeholder:text-white/25 outline-none transition-all duration-300 hover:border-white/20 focus:border-atl-bg/60 focus:bg-white/[0.06]';
@@ -312,7 +307,8 @@ ${formData.message || '-'}`;
       <SEO
         title="Contact Mobilier la Comanda Bucuresti | Atlantis Furnitures"
         description="Contacteaza Atlantis Furnitures pentru mobilier la comanda in Bucuresti si Ilfov. Telefon 0732 717 666, WhatsApp, formular online. Oferta gratuita in 24h."
-        canonicalUrl="https://atlantisfurnitures.ro/contact/"
+        canonicalUrl={CONTACT_URL}
+        image={CONTACT_IMAGE}
         schema={contactSchema}
       />
 

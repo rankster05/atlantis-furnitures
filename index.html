@@ -23,8 +23,11 @@
     <meta property="og:title" content="Mobilier la Comanda Bucuresti | Atlantis Furnitures">
     <meta property="og:description" content="Producem mobilier la comanda din MDF si PAL pentru Bucuresti si Ilfov. Bucatarii, livinguri, dormitoare, dressing-uri, office. Cere oferta gratuita azi!">
     <meta property="og:image" content="https://atlantisfurnitures.ro/projects/AP%20AIR-U/design-interior-apartament-modern-unirii-atlantis-furnitures.webp">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
+    <!-- Dimensions must match the file byte-for-byte, or Facebook/LinkedIn crop
+         against the wrong box. prerender.mjs reads the real WebP header per
+         route and rewrites this pair, so these are only the default. -->
+    <meta property="og:image:width" content="1920">
+    <meta property="og:image:height" content="1280">
     <meta property="og:image:alt" content="Mobilier la comanda - apartament modern Bucuresti">
 
     <!-- Twitter Card -->
@@ -48,71 +51,161 @@
     <div id="root"></div>
   <script type="module" src="/index.tsx"></script>
 
-  <!-- Structured Data: FurnitureStore (service-area business, no street address) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "FurnitureStore",
-    "@id": "https://atlantisfurnitures.ro/#business",
-    "name": "Atlantis Furnitures",
-    "description": "Producator mobilier la comanda premium din MDF si PAL pentru Bucuresti si Ilfov. Bucatarii, livinguri, dormitoare, dressing-uri si mobilier office.",
-    "image": "https://atlantisfurnitures.ro/projects/AP%20AIR-U/design-interior-apartament-modern-unirii-atlantis-furnitures.webp",
-    "logo": "https://atlantisfurnitures.ro/favicon.svg",
-    "url": "https://atlantisfurnitures.ro/",
-    "telephone": "+40732717666",
-    "priceRange": "$$$",
-    "areaServed": [
-      { "@type": "City", "name": "Bucuresti" },
-      { "@type": "AdministrativeArea", "name": "Ilfov" }
-    ],
-    "openingHoursSpecification": {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      "opens": "08:00",
-      "closes": "19:00"
-    },
-    "sameAs": [
-      "https://www.facebook.com/profile.php?id=100057578914043",
-      "https://www.instagram.com/atlantis_furnitures66/",
-      "https://www.google.com/maps?cid=5080307166075099712"
-    ]
-  }
-  </script>
+  <!-- ─────────────────────────────────────────────────────────────────────────
+       Structured Data: the site-wide graph.
 
-  <!-- Structured Data: Organization -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "@id": "https://atlantisfurnitures.ro/#organization",
-    "name": "Atlantis Furnitures",
-    "url": "https://atlantisfurnitures.ro/",
-    "logo": "https://atlantisfurnitures.ro/favicon.svg",
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "telephone": "+40732717666",
-      "contactType": "customer service",
-      "areaServed": "RO",
-      "availableLanguage": ["Romanian"]
-    },
-    "sameAs": [
-      "https://www.facebook.com/profile.php?id=100057578914043",
-      "https://www.instagram.com/atlantis_furnitures66/",
-      "https://www.google.com/maps?cid=5080307166075099712"
-    ]
-  }
-  </script>
+       These three nodes describe the *entity*, not the page, so they are
+       identical on every URL and live here rather than being rebuilt per route.
+       Page-level nodes (WebPage / CollectionPage / BreadcrumbList / FAQPage)
+       are injected at runtime by components/SEO.tsx and point back here by @id.
 
-  <!-- Structured Data: WebSite -->
+       Service-area business: there is deliberately no `address`. The workshop
+       address stays out of the markup so Google keeps using the hidden address
+       configured in the Business Profile.
+       ───────────────────────────────────────────────────────────────────────── -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebSite",
-    "@id": "https://atlantisfurnitures.ro/#website",
-    "url": "https://atlantisfurnitures.ro/",
-    "name": "Atlantis Furnitures",
-    "publisher": { "@id": "https://atlantisfurnitures.ro/#organization" },
-    "inLanguage": "ro-RO"
+    "@graph": [
+      {
+        "@type": ["HomeAndConstructionBusiness", "FurnitureStore"],
+        "@id": "https://atlantisfurnitures.ro/#business",
+        "name": "Atlantis Furnitures",
+        "description": "Producator mobilier la comanda premium din MDF si PAL pentru Bucuresti si Ilfov. Bucatarii, livinguri, dormitoare, dressing-uri si mobilier office.",
+        "image": "https://atlantisfurnitures.ro/projects/AP%20AIR-U/design-interior-apartament-modern-unirii-atlantis-furnitures.webp",
+        "logo": {
+          "@type": "ImageObject",
+          "@id": "https://atlantisfurnitures.ro/#logo",
+          "url": "https://atlantisfurnitures.ro/logo-atlantis-furnitures.png",
+          "contentUrl": "https://atlantisfurnitures.ro/logo-atlantis-furnitures.png",
+          "width": 512,
+          "height": 512,
+          "caption": "Atlantis Furnitures"
+        },
+        "url": "https://atlantisfurnitures.ro/",
+        "telephone": "+40732717666",
+        "priceRange": "$$$",
+        "currenciesAccepted": "RON",
+        "hasMap": "https://www.google.com/maps?cid=5080307166075099712",
+        "areaServed": [
+          { "@type": "City", "name": "Bucuresti" },
+          { "@type": "AdministrativeArea", "name": "Ilfov" }
+        ],
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "5.0",
+          "reviewCount": 97,
+          "bestRating": "5",
+          "worstRating": "1"
+        },
+        "openingHoursSpecification": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "08:00",
+          "closes": "19:00"
+        },
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "@id": "https://atlantisfurnitures.ro/#servicii",
+          "name": "Servicii mobilier la comanda",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "@id": "https://atlantisfurnitures.ro/#serviciu-bucatarii",
+                "name": "Bucatarii la comanda",
+                "serviceType": "Bucatarii la comanda",
+                "description": "Bucatarii personalizate din MDF vopsit sau furniruit, cu feronerie Blum si Hettich, proiectare 3D, executie in atelier propriu si montaj.",
+                "provider": { "@id": "https://atlantisfurnitures.ro/#business" },
+                "areaServed": [
+                  { "@type": "City", "name": "Bucuresti" },
+                  { "@type": "AdministrativeArea", "name": "Ilfov" }
+                ]
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "@id": "https://atlantisfurnitures.ro/#serviciu-dressinguri",
+                "name": "Dressinguri si dulapuri la comanda",
+                "serviceType": "Dressinguri la comanda",
+                "description": "Dressinguri walk-in si dulapuri cu usi glisante, compartimentare interioara pe masura si iluminat LED integrat.",
+                "provider": { "@id": "https://atlantisfurnitures.ro/#business" },
+                "areaServed": [
+                  { "@type": "City", "name": "Bucuresti" },
+                  { "@type": "AdministrativeArea", "name": "Ilfov" }
+                ]
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "@id": "https://atlantisfurnitures.ro/#serviciu-livinguri",
+                "name": "Mobilier de living la comanda",
+                "serviceType": "Mobilier living la comanda",
+                "description": "Biblioteci, comode TV suspendate si mobilier de living personalizat din MDF vopsit, furnir si lemn masiv.",
+                "provider": { "@id": "https://atlantisfurnitures.ro/#business" },
+                "areaServed": [
+                  { "@type": "City", "name": "Bucuresti" },
+                  { "@type": "AdministrativeArea", "name": "Ilfov" }
+                ]
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "@id": "https://atlantisfurnitures.ro/#serviciu-office",
+                "name": "Mobilier office si spatii comerciale",
+                "serviceType": "Mobilier office la comanda",
+                "description": "Receptii, birouri, mese de sedinte si mobilier pentru spatii comerciale si cabinete medicale, executat la comanda.",
+                "provider": { "@id": "https://atlantisfurnitures.ro/#business" },
+                "areaServed": [
+                  { "@type": "City", "name": "Bucuresti" },
+                  { "@type": "AdministrativeArea", "name": "Ilfov" }
+                ]
+              }
+            }
+          ]
+        },
+        "sameAs": [
+          "https://www.facebook.com/profile.php?id=100057578914043",
+          "https://www.instagram.com/atlantis_furnitures66/",
+          "https://www.google.com/maps?cid=5080307166075099712"
+        ]
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://atlantisfurnitures.ro/#organization",
+        "name": "Atlantis Furnitures",
+        "url": "https://atlantisfurnitures.ro/",
+        "logo": { "@id": "https://atlantisfurnitures.ro/#logo" },
+        "image": { "@id": "https://atlantisfurnitures.ro/#logo" },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+40732717666",
+          "contactType": "customer service",
+          "areaServed": "RO",
+          "availableLanguage": ["Romanian"]
+        },
+        "sameAs": [
+          "https://www.facebook.com/profile.php?id=100057578914043",
+          "https://www.instagram.com/atlantis_furnitures66/",
+          "https://www.google.com/maps?cid=5080307166075099712"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://atlantisfurnitures.ro/#website",
+        "url": "https://atlantisfurnitures.ro/",
+        "name": "Atlantis Furnitures",
+        "publisher": { "@id": "https://atlantisfurnitures.ro/#organization" },
+        "inLanguage": "ro-RO"
+      }
+    ]
   }
   </script>
 </body>

@@ -4,12 +4,20 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Link } from 'react-router-dom';
 import { Project } from '../types';
 import { ArrowRight } from 'lucide-react';
-import { getOptimizedImageUrl } from '../utils';
+import { getOptimizedImageUrl, imageSize } from '../utils';
 
 gsap.registerPlugin(ScrollTrigger);
 
 interface ProjectWithTarget extends Project {
   targetCategory: string;
+  /** Link text for this card. Three identical "Vezi Detalii" links pointing at
+   *  the same URL told crawlers nothing about what was on the other end, and
+   *  gave screen-reader users three indistinguishable entries in the links
+   *  list. Each card now names what it leads to. */
+  ctaLabel: string;
+  /** Alt text describing the photograph, rather than repeating the card title
+   *  that already sits next to it as a heading. */
+  imageAlt: string;
 }
 
 const projects: ProjectWithTarget[] = [
@@ -20,7 +28,9 @@ const projects: ProjectWithTarget[] = [
     location: "MDF VOPSIT / FREZAT / PROIECTARE 3D",
     description: "Transformam inima casei tale intr-un spatiu functional si elegant. Producem mobila de bucatarie personalizata, optimizata pentru orice tip de spatiu, de la apartamente de bloc la case spatioase. Folosim exclusiv fronturi din MDF vopsit sau infoliat si sisteme de feronerie Blum cu amortizare, garantand durabilitate si un design unitar.",
     imageUrl: "/projects/S House/s-house-living-bucatarie-open-space-mdf-furnir-pipera.webp",
-    targetCategory: "Bucatarie"
+    targetCategory: "Bucatarie",
+    ctaLabel: "Vezi bucatarii la comanda",
+    imageAlt: "Bucatarie la comanda deschisa spre living, MDF furniruit, proiect in Pipera"
   },
   {
     id: 2,
@@ -29,7 +39,9 @@ const projects: ProjectWithTarget[] = [
     location: "COMPARTIMENTARE INTELIGENTA / USI GLISANTE",
     description: "Solutii complete de amenajare pentru linistea ta. Realizam dressinguri la comanda cu usi glisante, ideale pentru holuri inguste sau dormitoare matrimoniale, unde fiecare centimetru conteaza. Completam designul casei cu mobilier de living minimalist, comode TV suspendate si biblioteci care mascheaza cablurile sau elementele tehnice.",
     imageUrl: "/projects/S House/amenajare-living-modern-panouri-lemn-atlantis-furnitures.webp",
-    targetCategory: "Living"
+    targetCategory: "Living",
+    ctaLabel: "Vezi dressinguri si livinguri",
+    imageAlt: "Living modern cu panouri riflate din lemn, mobilier la comanda Bucuresti"
   },
   {
     id: 3,
@@ -38,7 +50,9 @@ const projects: ProjectWithTarget[] = [
     location: "RECEPTII / BIROURI / SPATII HORECA",
     description: "Imaginea afacerii tale construita prin design. Proiectam si executam mobilier pentru spatii comerciale, receptii custom si birouri ergonomice care rezista la trafic intens. Oferim solutii de amenajare interioara care imbina estetica brandului tau cu functionalitatea necesara echipei, totul la un pret de producator direct.",
     imageUrl: "/projects/OFFICE/amenajare-sala-meeting-moderna-masa-organica-lemn.webp",
-    targetCategory: "Office"
+    targetCategory: "Office",
+    ctaLabel: "Vezi proiecte office si spatii comerciale",
+    imageAlt: "Sala de meeting cu masa organica din lemn, mobilier office la comanda Bucuresti"
   }
 ];
 
@@ -64,11 +78,11 @@ const ProjectCard = React.memo(({ project }: { project: ProjectWithTarget }) => 
           <div className="mt-4 pt-4 md:mt-6 md:pt-6 border-t border-white/5 w-full shrink-0">
             <Link 
               to="/proiecte/"
-              aria-label={`Vezi detalii despre ${project.title}`}
+              aria-label={`${project.ctaLabel} - ${project.title}`}
               className="group/btn relative inline-flex items-center gap-3 px-6 py-3 md:px-8 md:py-4 bg-transparent border border-white/20 overflow-hidden transition-all duration-500 hover:border-white hover:bg-white"
             >
               <span className="relative z-10 text-xs md:text-sm font-medium uppercase tracking-[0.2em] text-white transition-colors duration-500 group-hover/btn:text-black">
-                Vezi Detalii
+                {project.ctaLabel}
               </span>
               <ArrowRight className="relative z-10 w-4 h-4 text-white transition-all duration-500 group-hover/btn:text-black group-hover/btn:translate-x-1" />
             </Link>
@@ -79,12 +93,13 @@ const ProjectCard = React.memo(({ project }: { project: ProjectWithTarget }) => 
         {/* Image Panel */}
         <div className="card-img-wrap relative w-full md:w-1/2 h-[35%] md:h-full overflow-hidden order-first md:order-last border-b md:border-b-0 md:border-l border-white/5 shrink-0">
           <img 
-            src={getOptimizedImageUrl(project.imageUrl)} 
+            src={getOptimizedImageUrl(project.imageUrl)}
+            {...imageSize(project.imageUrl)}
             loading="lazy"
             decoding="async"
             fetchPriority="low"
             className="card-img w-full h-full object-cover transition-all duration-[1200ms] ease-out group-hover:scale-105 group-hover:brightness-120 brightness-110 contrast-105" 
-            alt={project.title} 
+            alt={project.imageAlt}
           />
         </div>
 

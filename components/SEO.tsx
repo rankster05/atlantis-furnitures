@@ -3,7 +3,8 @@ import React, { useEffect } from 'react';
 interface SEOProps {
   title: string;
   description: string;
-  canonicalUrl: string;
+  /** Omit only on pages that have no indexable URL of their own (the 404). */
+  canonicalUrl?: string;
   image?: string;
   schema?: object;
   noindex?: boolean;
@@ -31,6 +32,11 @@ const setMeta = (attr: 'name' | 'property', key: string, content: string) => {
     document.head.appendChild(tag);
   }
   tag.setAttribute('content', content);
+};
+
+/** Drop a meta tag entirely (all copies of it), if present. */
+const removeMeta = (attr: 'name' | 'property', key: string) => {
+  document.head.querySelectorAll(`meta[${attr}="${key}"]`).forEach((el) => el.remove());
 };
 
 const SCHEMA_ATTR = 'data-seo-schema';
@@ -109,8 +115,17 @@ const SEO: React.FC<SEOProps> = ({
     setMeta('property', 'og:title', fullTitle);
     setMeta('property', 'og:description', description);
     setMeta('property', 'og:image', absoluteImage);
-    setMeta('property', 'og:url', canonicalUrl);
+    if (canonicalUrl) setMeta('property', 'og:url', canonicalUrl);
+    else removeMeta('property', 'og:url');
     setMeta('property', 'og:type', 'website');
+
+    // og:image:width/height describe the file we just pointed at, and we do not
+    // know its dimensions in the browser. Stale numbers are worse than none —
+    // they make crawlers crop against a box the image does not have — so the
+    // pair is dropped here and re-injected per route, from the real file
+    // header, by prerender.mjs. Crawlers only ever read that prerendered HTML.
+    removeMeta('property', 'og:image:width');
+    removeMeta('property', 'og:image:height');
 
     // Twitter
     setMeta('name', 'twitter:card', 'summary_large_image');
@@ -118,8 +133,13 @@ const SEO: React.FC<SEOProps> = ({
     setMeta('name', 'twitter:description', description);
     setMeta('name', 'twitter:image', absoluteImage);
 
-    // Canonical
-    setLink('canonical', canonicalUrl);
+    // Canonical. A page without an indexable URL of its own declares none,
+    // rather than pointing at a URL that does not resolve.
+    if (canonicalUrl) {
+      setLink('canonical', canonicalUrl);
+    } else {
+      document.head.querySelectorAll('link[rel="canonical"]').forEach((el) => el.remove());
+    }
 
     // Page-level structured data (optional, per route)
     setSchema(schemaJson);

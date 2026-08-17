@@ -24,10 +24,13 @@ const NotFound: React.FC = () => {
 
   return (
     <div ref={containerRef} className="min-h-[100dvh] w-full bg-atl-dark text-atl-bg flex flex-col items-center justify-center px-6 py-24 relative overflow-hidden">
-      <SEO 
-        title="Pagina Nu A Fost Gasita | Atlantis Furnitures" 
+      {/* No canonical: the old one pointed every unknown URL at
+          /404, a page that does not exist and returns 404 itself. A canonical
+          has to name a real, indexable URL — on a noindex error page the honest
+          answer is to declare none at all. */}
+      <SEO
+        title="Pagina Nu A Fost Gasita | Atlantis Furnitures"
         description="Ne cerem scuze, dar pagina pe care o cautati nu exista sau a fost mutata."
-        canonicalUrl="https://atlantisfurnitures.ro/404"
         noindex={true}
       />
       

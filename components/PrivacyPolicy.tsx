@@ -3,8 +3,22 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import gsap from 'gsap';
 import SEO from './SEO';
+import { HOME_CRUMB, SITE_URL, pageGraph } from '../schema';
 
 const LAST_UPDATED = '13 mai 2026';
+
+const PRIVACY_URL = `${SITE_URL}/politica-confidentialitate/`;
+const PRIVACY_DESCRIPTION =
+  'Politica de confidentialitate si protectie a datelor personale conform GDPR pentru Atlantis Furnitures.';
+
+// noindex, but still crawled (robots.txt deliberately allows it), so the
+// breadcrumb keeps the page attached to the site's structure.
+const privacySchema = pageGraph({
+  url: PRIVACY_URL,
+  name: 'Politica de Confidentialitate | Atlantis Furnitures',
+  description: PRIVACY_DESCRIPTION,
+  crumbs: [HOME_CRUMB, { name: 'Politica de confidentialitate', url: PRIVACY_URL }],
+});
 
 const PrivacyPolicy: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -27,8 +41,9 @@ const PrivacyPolicy: React.FC = () => {
     <div ref={containerRef} className="min-h-screen bg-atl-bg text-atl-dark">
       <SEO
         title="Politica de Confidentialitate | Atlantis Furnitures"
-        description="Politica de confidentialitate si protectie a datelor personale conform GDPR pentru Atlantis Furnitures."
-        canonicalUrl="https://atlantisfurnitures.ro/politica-confidentialitate/"
+        description={PRIVACY_DESCRIPTION}
+        canonicalUrl={PRIVACY_URL}
+        schema={privacySchema}
         noindex={true}
       />
 

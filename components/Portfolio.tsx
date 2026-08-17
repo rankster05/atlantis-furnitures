@@ -5,12 +5,46 @@ import { useLocation, Link } from 'react-router-dom';
 import { portfolioItems } from '../data';
 import { ArrowUpRight, ArrowLeft, Instagram } from 'lucide-react';
 import SEO from './SEO';
-import { getOptimizedImageUrl } from '../utils';
+import { getOptimizedImageUrl, imageSize } from '../utils';
+import { HOME_CRUMB, SITE_URL, absoluteImage, pageGraph } from '../schema';
 
 gsap.registerPlugin(ScrollTrigger);
 
 // Categories updated - Removed "Baie" as per request
 const categories = ["Toate", "Bucatarie", "Living", "Dormitor", "Office"];
+
+const PORTFOLIO_URL = `${SITE_URL}/proiecte/`;
+const PORTFOLIO_IMAGE = '/projects/ap-cosmo/amenajare-open-space-living-bucatarie-apartament-modern.webp';
+const PORTFOLIO_DESCRIPTION =
+  'Noua proiecte de mobilier la comanda finalizate in Bucuresti, Ilfov si Arges: bucatarii, livinguri, dressinguri, un cabinet medical si un birou.';
+
+// A CollectionPage that lists nothing is a hollow claim, so the nine projects
+// are declared as the collection's actual contents.
+const portfolioSchema = pageGraph(
+  {
+    url: PORTFOLIO_URL,
+    name: 'Portofoliu Mobilier la Comanda Bucuresti | Atlantis',
+    description: PORTFOLIO_DESCRIPTION,
+    type: 'CollectionPage',
+    image: PORTFOLIO_IMAGE,
+    crumbs: [HOME_CRUMB, { name: 'Proiecte', url: PORTFOLIO_URL }],
+  },
+  [
+    {
+      '@type': 'ItemList',
+      '@id': `${PORTFOLIO_URL}#lista-proiecte`,
+      name: 'Proiecte de mobilier la comanda',
+      numberOfItems: portfolioItems.length,
+      itemListElement: portfolioItems.map((item, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: item.seoH1 || `Mobilier la comanda - ${item.title}`,
+        url: `${SITE_URL}/proiecte/${item.slug}/`,
+        image: absoluteImage(item.mainImage),
+      })),
+    },
+  ]
+);
 
 const Portfolio: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -95,8 +129,10 @@ const Portfolio: React.FC = () => {
     <>
       <SEO
         title="Portofoliu Mobilier la Comanda Bucuresti | Atlantis"
-        description="Noua proiecte de mobilier la comanda finalizate in Bucuresti, Ilfov si Arges: bucatarii, livinguri, dressinguri, un cabinet medical si un birou. Vezi executia."
-        canonicalUrl="https://atlantisfurnitures.ro/proiecte/"
+        description="Noua proiecte de mobilier la comanda finalizate in Bucuresti, Ilfov si Arges: bucatarii, livinguri, dressinguri, un cabinet medical si un birou."
+        canonicalUrl={PORTFOLIO_URL}
+        image={PORTFOLIO_IMAGE}
+        schema={portfolioSchema}
       />
       
       <section ref={containerRef} className="pt-28 md:pt-48 pb-16 md:pb-20 min-h-screen bg-atl-dark text-atl-bg px-4 md:px-12 relative overflow-hidden">
@@ -170,9 +206,10 @@ const Portfolio: React.FC = () => {
                 {/* Image Container */}
                 <div className="relative aspect-[4/5] md:aspect-[3/4] overflow-hidden bg-[#0a0a0a] mb-8">
                   {/* Image with subtle zoom on hover */}
-                  <img 
-                    src={getOptimizedImageUrl(item.mainImage)} 
-                    alt={`Proiectul ${item.title} - ${item.category}`} 
+                  <img
+                    src={getOptimizedImageUrl(item.mainImage)}
+                    alt={`Proiectul ${item.title} - ${item.category}`}
+                    {...imageSize(item.mainImage)}
                     loading="lazy"
                     decoding="async"
                     fetchPriority="low"
@@ -199,9 +236,12 @@ const Portfolio: React.FC = () => {
                      <span className="group-hover:text-white transition-colors">{item.category}</span>
                   </div>
                   
-                  <h3 className="font-display text-2xl sm:text-3xl md:text-5xl text-white mb-1 md:mb-2 leading-none uppercase group-hover:text-gray-300 transition-colors">
+                  {/* The project titles are the top level of this page's
+                      content — there is no section heading between them and the
+                      H1, so marking them h3 skipped a level in the outline. */}
+                  <h2 className="font-display text-2xl sm:text-3xl md:text-5xl text-white mb-1 md:mb-2 leading-none uppercase group-hover:text-gray-300 transition-colors">
                     {item.title}
-                  </h3>
+                  </h2>
                   
                   {/* Small Description Below - Location & Year */}
                   <div className="text-gray-400 font-normal text-xs md:text-sm tracking-widest mt-1">
