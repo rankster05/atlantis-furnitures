@@ -9,6 +9,7 @@ import Footer from './components/Footer';
 import ContactModal from './components/ContactModal';
 import NotFound from './components/NotFound';
 import CookieBanner from './components/CookieBanner';
+import { registerLenis, scrollToTop } from './scroll';
 
 // Lazy Load Pages for Performance
 const Home = React.lazy(() => import('./components/Home'));
@@ -66,6 +67,9 @@ const AppContent: React.FC = () => {
     });
 
     lenisRef.current = lenis;
+    // Publish the instance so every scroll in the app routes through Lenis
+    // instead of racing it with window.scrollTo (see scroll.ts).
+    registerLenis(lenis);
 
     // Connect Lenis to GSAP ScrollTrigger (single rAF loop drives both)
     lenis.on('scroll', ScrollTrigger.update);
@@ -79,6 +83,7 @@ const AppContent: React.FC = () => {
     gsap.ticker.lagSmoothing(0);
 
     return () => {
+      registerLenis(null);
       lenis.destroy();
       gsap.ticker.remove(lenis.raf);
     };
@@ -88,11 +93,7 @@ const AppContent: React.FC = () => {
   useEffect(() => {
     // Only scroll to top if NOT a back/forward navigation (POP)
     if (navType !== 'POP') {
-      if (lenisRef.current) {
-        lenisRef.current.scrollTo(0, { immediate: true });
-      } else {
-        window.scrollTo(0, 0);
-      }
+      scrollToTop({ immediate: true });
     }
     
     // Refresh ScrollTrigger to recalculate positions for the new page content

@@ -167,6 +167,7 @@ const Testimonials: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
   const vipTrackRef = useRef<HTMLDivElement>(null);
+  const marqueeCleanup = useRef<(() => void) | null>(null);
   // Which VIP card is expanded (tap-to-reveal on touch devices)
   const [activeVip, setActiveVip] = useState<string | null>(null);
   const activeVipRef = useRef<string | null>(null);
@@ -218,21 +219,52 @@ const Testimonials: React.FC = () => {
       // Infinite Marquee Animation
       const slider = sliderRef.current;
       if (slider) {
-        gsap.to(slider, {
-          x: "-50%", 
+        // Pause/resume acts on THIS tween only.
+        //
+        // It used to call gsap.globalTimeline.timeScale(0/1), which stops every
+        // animation on the page to hold one marquee still. That froze the whole
+        // site whenever the pointer came to rest over these cards — and it did
+        // so most reliably when the reader was not moving the mouse at all:
+        // "Inapoi Sus" scrolls the cards up under a stationary cursor, which
+        // fires mouseenter with no matching mouseleave to ever undo it.
+        const marquee = gsap.to(slider, {
+          x: '-50%',
           duration: 50, // Even smoother
-          ease: "none",
+          ease: 'none',
           repeat: -1,
         });
 
-        slider.addEventListener("mouseenter", () => gsap.globalTimeline.timeScale(0));
-        slider.addEventListener("mouseleave", () => gsap.globalTimeline.timeScale(1));
-        slider.addEventListener("touchstart", () => gsap.globalTimeline.timeScale(0));
-        slider.addEventListener("touchend", () => gsap.globalTimeline.timeScale(1));
+        const hold = () => marquee.pause();
+        const release = () => marquee.play();
+
+        slider.addEventListener('mouseenter', hold);
+        slider.addEventListener('mouseleave', release);
+        slider.addEventListener('touchstart', hold, { passive: true });
+        slider.addEventListener('touchend', release, { passive: true });
+
+        // Belt and braces: if the pointer ends up over the marquee without a
+        // mouseenter (scrolled under it, tab regained focus, window resized),
+        // nothing would ever resume it. These cover the cases where the reader
+        // has clearly moved on.
+        const releaseOnLeaveWindow = () => release();
+        window.addEventListener('blur', releaseOnLeaveWindow);
+        document.addEventListener('visibilitychange', releaseOnLeaveWindow);
+
+        marqueeCleanup.current = () => {
+          slider.removeEventListener('mouseenter', hold);
+          slider.removeEventListener('mouseleave', release);
+          slider.removeEventListener('touchstart', hold);
+          slider.removeEventListener('touchend', release);
+          window.removeEventListener('blur', releaseOnLeaveWindow);
+          document.removeEventListener('visibilitychange', releaseOnLeaveWindow);
+        };
       }
 
     }, containerRef);
-    return () => ctx.revert();
+    return () => {
+      marqueeCleanup.current?.();
+      ctx.revert();
+    };
   }, []);
 
   // VIP carousel — native horizontal scroll (real touch-swipe) + slow auto-scroll.

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Instagram, Facebook, ArrowUp } from 'lucide-react';
+import { scrollToTop } from '../scroll';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -173,9 +174,9 @@ const Footer: React.FC = () => {
     // to a real element instead of a null ref.
   }, [hasScrolled]);
 
-  const scrollToTop = (e: React.MouseEvent) => {
+  const handleScrollToTop = (e: React.MouseEvent) => {
     e.preventDefault();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollToTop();
   };
 
   return (
@@ -351,7 +352,7 @@ const Footer: React.FC = () => {
 
           {/* Right side */}
           <button 
-            onClick={scrollToTop}
+            onClick={handleScrollToTop}
             className="group flex flex-col md:flex-row items-center gap-4 hover:text-white transition-colors duration-300 md:w-auto"
             aria-label="Inapoi sus"
           >

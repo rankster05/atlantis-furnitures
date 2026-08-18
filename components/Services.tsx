@@ -4,6 +4,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight, PenTool, Layers, Handshake, Component } from 'lucide-react';
 import { HOME_CRUMB, SITE_URL, pageGraph } from '../schema';
+import { scrollToTop } from '../scroll';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -103,7 +104,7 @@ const Services: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
-    window.scrollTo(0, 0);
+    scrollToTop({ immediate: true });
     
     const ctx = gsap.context(() => {
       // Hero Animation

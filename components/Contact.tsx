@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import SEO from './SEO';
 import { HOME_CRUMB, SITE_URL, pageGraph } from '../schema';
+import { scrollTo } from '../scroll';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -227,8 +228,8 @@ ${formData.message || '-'}`;
     e.preventDefault();
     const el = document.getElementById(FORM_ID);
     if (!el) return;
-    const top = el.getBoundingClientRect().top + window.scrollY - 80;
-    window.scrollTo({ top, behavior: 'smooth' });
+    // -80 leaves the fixed header clear of the form's heading.
+    scrollTo(el, { offset: -80 });
   }, []);
 
   useLayoutEffect(() => {

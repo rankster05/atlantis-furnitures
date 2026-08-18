@@ -3,6 +3,7 @@ import { Menu, X, Instagram, Facebook } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { scrollToTop } from '../scroll';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -45,7 +46,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
   const handleHomeClick = (e: React.MouseEvent) => {
     if (location.pathname === '/') {
       e.preventDefault();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      scrollToTop();
     }
     closeMenu();
   };

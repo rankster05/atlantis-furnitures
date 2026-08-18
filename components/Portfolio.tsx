@@ -97,6 +97,37 @@ const Portfolio: React.FC = () => {
         });
       });
 
+      // Image parallax — the same treatment the project pages already use, so
+      // the portfolio grid reads as part of the same site rather than a flat
+      // list. Each image is pre-scaled so the drift never exposes an edge, and
+      // travels against the scroll across its own wrapper's passage.
+      const mm = gsap.matchMedia();
+      const inners = gsap.utils.toArray<HTMLElement>('.pf-parallax-inner');
+      inners.forEach((inner) => gsap.set(inner, { scale: 1.12 }));
+
+      // Desktop and motion-friendly only: on a phone the travel is barely
+      // perceptible but the compositing cost is real, and readers who ask for
+      // reduced motion get the static crop.
+      mm.add('(min-width: 768px) and (prefers-reduced-motion: no-preference)', () => {
+        inners.forEach((inner) => {
+          gsap.fromTo(
+            inner,
+            { yPercent: -6 },
+            {
+              yPercent: 6,
+              ease: 'none',
+              force3D: true,
+              scrollTrigger: {
+                trigger: inner.parentElement,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: true,
+              },
+            }
+          );
+        });
+      });
+
       // Refresh ScrollTrigger after a short delay to ensure DOM is fully painted
       setTimeout(() => {
         ScrollTrigger.refresh();
@@ -204,17 +235,20 @@ const Portfolio: React.FC = () => {
                 aria-label={`Vezi proiectul ${item.title}`}
               >
                 {/* Image Container */}
-                <div className="relative aspect-[4/5] md:aspect-[3/4] overflow-hidden bg-[#0a0a0a] mb-8">
-                  {/* Image with subtle zoom on hover */}
-                  <img
-                    src={getOptimizedImageUrl(item.mainImage)}
-                    alt={`Proiectul ${item.title} - ${item.category}`}
-                    {...imageSize(item.mainImage)}
-                    loading="lazy"
-                    decoding="async"
-                    fetchPriority="low"
-                    className="pf-img w-full h-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-110 opacity-90 group-hover:opacity-100 brightness-110 contrast-105"
-                  />
+                <div className="relative aspect-[4/5] md:aspect-[3/4] overflow-hidden bg-[#0a0a0a] mb-8 pf-image-wrapper">
+                  {/* The image rides inside its own layer so it can drift
+                      against the scroll. The wrapper clips, the layer moves. */}
+                  <div className="pf-parallax-inner w-full h-full">
+                    <img
+                      src={getOptimizedImageUrl(item.mainImage)}
+                      alt={`Proiectul ${item.title} - ${item.category}`}
+                      {...imageSize(item.mainImage)}
+                      loading="lazy"
+                      decoding="async"
+                      fetchPriority="low"
+                      className="pf-img w-full h-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-110 opacity-90 group-hover:opacity-100 brightness-110 contrast-105"
+                    />
+                  </div>
 
                   {/* Hover Overlay - Minimal Tint */}
                   <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-700 z-10" />
