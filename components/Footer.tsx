@@ -2,10 +2,12 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Instagram, Facebook, ArrowUp } from 'lucide-react';
+import { Instagram, Facebook, ArrowUp, ArrowUpRight } from 'lucide-react';
 import { scrollToTop } from '../scroll';
 
 gsap.registerPlugin(ScrollTrigger);
+
+const STUDIO_NAME = 'Index Studio';
 
 // Custom WhatsApp Icon to match Lucide style
 const WhatsAppIcon = ({ size = 24, className = "" }: { size?: number, className?: string }) => (
@@ -313,20 +315,23 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div data-depth="meta" className="w-full flex flex-col md:flex-row justify-between items-center gap-12 md:gap-6 text-xs text-gray-500 uppercase tracking-widest footer-anim mt-16 md:mt-0 shrink-0 relative">
+        <div data-depth="meta" className="w-full flex flex-col lg:flex-row justify-between items-center gap-12 lg:gap-6 text-xs text-gray-500 uppercase tracking-widest footer-anim mt-16 lg:mt-0 shrink-0 relative">
           
           {/* Left side (empty on desktop to balance the right side) */}
-          <div className="hidden md:block md:w-32"></div>
+          <div className="hidden xl:block xl:w-32"></div>
 
           {/* Center content */}
           {/* Centred with inset-x-0 + w-max + mx-auto rather than
               left-1/2 + -translate-x-1/2. The translate only shifts the box
               visually — for layout the element still starts at the 50% mark, so
               it could only ever be half the bar wide, and the copyright and
-              "Designed by" lines were wrapping onto two rows on desktop. */}
-          <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 md:absolute md:inset-x-0 md:mx-auto md:w-max">
+              "Designed by" lines were wrapping onto two rows on desktop.
+              The row needs ~680px plus the "Inapoi Sus" button on both sides to
+              centre without overlapping, so it stacks below lg and only switches
+              to absolute centring at xl — in between it sits in the normal flow. */}
+          <div className="flex flex-col lg:flex-row items-center justify-center gap-4 lg:gap-6 xl:absolute xl:inset-x-0 xl:mx-auto xl:w-max">
             <span className="leading-none whitespace-nowrap">© {new Date().getFullYear()} ATLANTIS FURNITURES</span>
-            <span className="hidden md:block leading-none opacity-20 text-gray-500">|</span>
+            <span className="hidden lg:block leading-none opacity-20 text-gray-500">|</span>
             <Link
               to="/politica-confidentialitate/"
               className="inline-flex items-center min-h-[24px] py-1.5 leading-none whitespace-nowrap opacity-60 hover:opacity-100 hover:text-white transition-all duration-300"
@@ -334,18 +339,30 @@ const Footer: React.FC = () => {
             >
               Confidentialitate
             </Link>
-            <span className="hidden md:block leading-none opacity-20 text-gray-500">|</span>
+            <span className="hidden lg:block leading-none opacity-20 text-gray-500">|</span>
             <a
-              href="https://www.rankster.ro"
+              href="https://www.indexstudio.ro"
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-1.5 min-h-[24px] py-1.5 whitespace-nowrap opacity-60 hover:opacity-100 hover:text-white transition-all duration-300 leading-none"
-              aria-label="Website creat de Rankster"
+              className="studio-credit inline-flex items-center gap-1.5 min-h-[24px] py-1.5 whitespace-nowrap opacity-60 hover:opacity-100 focus-visible:opacity-100 hover:text-white focus-visible:text-white transition-all duration-500 leading-none"
+              aria-label="Website creat de Index Studio"
             >
               <span>Designed by</span>
-              <span className="font-bold relative">
-                Rankster
-                <span className="absolute -bottom-1 left-0 w-full h-[1px] bg-white scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+              {/* Each letter rolls up to reveal a copy of itself (drawn with
+                  text-shadow), staggered left to right. Styles in index.css. */}
+              <span className="studio-credit__name font-bold" aria-hidden="true">
+                <span className="studio-credit__chars">
+                  {STUDIO_NAME.split('').map((char, i) => (
+                    <span key={i} className="studio-credit__char" style={{ transitionDelay: `${i * 25}ms` }}>
+                      {char === ' ' ? ' ' : char}
+                    </span>
+                  ))}
+                </span>
+                <span className="studio-credit__line"></span>
+              </span>
+              <span className="studio-credit__arrow" aria-hidden="true">
+                <ArrowUpRight size={11} strokeWidth={2} />
+                <ArrowUpRight size={11} strokeWidth={2} />
               </span>
             </a>
           </div>
@@ -353,11 +370,11 @@ const Footer: React.FC = () => {
           {/* Right side */}
           <button 
             onClick={handleScrollToTop}
-            className="group flex flex-col md:flex-row items-center gap-4 hover:text-white transition-colors duration-300 md:w-auto"
+            className="group flex flex-col lg:flex-row items-center gap-4 hover:text-white transition-colors duration-300 lg:w-auto"
             aria-label="Inapoi sus"
           >
-            <span className="text-xs tracking-[0.2em] font-medium order-2 md:order-1 leading-none">Inapoi Sus</span>
-            <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-300 order-1 md:order-2 shrink-0">
+            <span className="text-xs tracking-[0.2em] font-medium order-2 lg:order-1 leading-none">Inapoi Sus</span>
+            <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-300 order-1 lg:order-2 shrink-0">
               <ArrowUp size={16} className="transform group-hover:-translate-y-1 transition-transform duration-300" />
             </div>
           </button>
