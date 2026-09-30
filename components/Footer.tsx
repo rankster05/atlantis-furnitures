@@ -1,9 +1,10 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Instagram, Facebook, ArrowUp, ArrowUpRight } from 'lucide-react';
 import { scrollToTop } from '../scroll';
+import Logo from './Logo';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -36,6 +37,7 @@ const FOOTER_BG = '/projects/S House/footer-texture.webp';
 const Footer: React.FC = () => {
   const footerRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLImageElement>(null);
+  const { pathname } = useLocation();
 
   // The footer is position:fixed and full-height, so it sits inside the
   // viewport from the very first frame of every route — completely covered by
@@ -181,6 +183,15 @@ const Footer: React.FC = () => {
     scrollToTop();
   };
 
+  // Same as the header logo: a link to "/" while already on "/" would do
+  // nothing, so it scrolls back up instead.
+  const handleHomeClick = (e: React.MouseEvent) => {
+    if (pathname === '/') {
+      e.preventDefault();
+      scrollToTop();
+    }
+  };
+
   return (
     <footer
       ref={footerRef}
@@ -315,10 +326,16 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div data-depth="meta" className="w-full flex flex-col lg:flex-row justify-between items-center gap-12 lg:gap-6 text-xs text-gray-500 uppercase tracking-widest footer-anim mt-16 lg:mt-0 shrink-0 relative">
-          
-          {/* Left side (empty on desktop to balance the right side) */}
-          <div className="hidden xl:block xl:w-32"></div>
+        <div data-depth="meta" className="w-full flex flex-col lg:flex-row lg:flex-wrap xl:flex-nowrap justify-between items-center gap-12 lg:gap-6 text-xs text-gray-500 uppercase tracking-widest footer-anim mt-16 lg:mt-0 shrink-0 relative">
+
+          {/* Left side: the logo, balancing "Inapoi Sus" on the right. Between
+              lg and xl the centre row is still in the flow and there is no room
+              for three items, so the logo wraps onto its own line above. */}
+          <div className="flex justify-center lg:w-full xl:w-auto">
+            <Link to="/" onClick={handleHomeClick} className="block opacity-90 hover:opacity-100 transition-opacity duration-300" aria-label="Atlantis Furnitures Home">
+              <Logo className="h-11 md:h-12 w-auto text-white" />
+            </Link>
+          </div>
 
           {/* Center content */}
           {/* Centred with inset-x-0 + w-max + mx-auto rather than
@@ -330,7 +347,7 @@ const Footer: React.FC = () => {
               centre without overlapping, so it stacks below lg and only switches
               to absolute centring at xl — in between it sits in the normal flow. */}
           <div className="flex flex-col lg:flex-row items-center justify-center gap-4 lg:gap-6 xl:absolute xl:inset-x-0 xl:mx-auto xl:w-max">
-            <span className="leading-none whitespace-nowrap">© {new Date().getFullYear()} ATLANTIS FURNITURES</span>
+            <span className="leading-none whitespace-nowrap">© {new Date().getFullYear()} ATLANTIS® FURNITURES</span>
             <span className="hidden lg:block leading-none opacity-20 text-gray-500">|</span>
             <Link
               to="/politica-confidentialitate/"
