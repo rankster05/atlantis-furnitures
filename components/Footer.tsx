@@ -340,25 +340,37 @@ const Footer: React.FC = () => {
               Confidentialitate
             </Link>
             <span className="hidden lg:block leading-none opacity-20 text-gray-500">|</span>
+            {/* A plain, followed link. The href is the final URL (the www host
+                301s here) and `noreferrer` is left off so the visit still shows
+                up as a referral. The anchor text in the HTML reads exactly
+                "Designed by Index Studio": the letters are split for the hover
+                roll but stay real text, and the spaces are ordinary ones. */}
             <a
-              href="https://www.indexstudio.ro"
+              href="https://indexstudio.ro/"
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noopener"
               className="studio-credit inline-flex items-center gap-1.5 min-h-[24px] py-1.5 whitespace-nowrap opacity-60 hover:opacity-100 focus-visible:opacity-100 hover:text-white focus-visible:text-white transition-all duration-500 leading-none"
-              aria-label="Website creat de Index Studio"
+              aria-label="Designed by Index Studio"
             >
-              <span>Designed by</span>
+              {/* The {' '} is not rendered inside the flex row (the gap does
+                  the spacing), but it keeps the words apart in the HTML. */}
+              <span>Designed by</span>{' '}
               {/* Each letter rolls up to reveal a copy of itself (drawn with
                   text-shadow), staggered left to right. Styles in index.css. */}
-              <span className="studio-credit__name font-bold" aria-hidden="true">
+              <span className="studio-credit__name font-bold">
                 <span className="studio-credit__chars">
                   {STUDIO_NAME.split('').map((char, i) => (
-                    <span key={i} className="studio-credit__char" style={{ transitionDelay: `${i * 25}ms` }}>
-                      {char === ' ' ? ' ' : char}
+                    // whitespace-pre keeps the space's width inside its own box
+                    <span
+                      key={i}
+                      className={char === ' ' ? 'studio-credit__char whitespace-pre' : 'studio-credit__char'}
+                      style={{ transitionDelay: `${i * 25}ms` }}
+                    >
+                      {char}
                     </span>
                   ))}
                 </span>
-                <span className="studio-credit__line"></span>
+                <span className="studio-credit__line" aria-hidden="true"></span>
               </span>
               <span className="studio-credit__arrow" aria-hidden="true">
                 <ArrowUpRight size={11} strokeWidth={2} />
