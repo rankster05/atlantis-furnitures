@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { scrollToTop } from '../scroll';
+import Logo from './Logo';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -158,22 +159,13 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
             className="cursor-pointer flex flex-col items-start group relative z-50"
             aria-label="Atlantis Furnitures Home"
           >
-            {/* Logo Dots */}
-            <div className="flex gap-2 mb-2 md:mb-2.5 transition-transform duration-500 group-hover:translate-x-1">
-              <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-[#FF6B6B]"></div>
-              <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-[#9CA3AF]"></div>
-              <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-[#FACC15]"></div>
-            </div>
-            
-            {/* Logo Text - Always visible now to fix missing branding in menu */}
-            <div className="mix-blend-difference text-white transition-opacity duration-300">
-              <div className="font-display text-2xl md:text-3xl tracking-[0.1em] leading-none">
-                ATLANTIS
-              </div>
-              <div className="text-[10px] md:text-xs tracking-[0.3em] uppercase opacity-70 mt-1 font-body font-medium pl-0.5">
-                Furnitures
-              </div>
-            </div>
+            {/* The dots are SVG, where a plain px translate is in viewBox units
+                (~0.1px on screen). fill-box makes the % relative to the dots
+                themselves, so the hover nudge stays ~4px at every size. */}
+            <Logo
+              className="h-12 md:h-[58px] w-auto text-white"
+              dotsClassName="[transform-box:fill-box] transition-transform duration-500 group-hover:translate-x-[6%]"
+            />
           </Link>
           
           {/* Desktop Menu */}
@@ -253,21 +245,9 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                 to="/" 
                 onClick={handleHomeClick}
                 className="cursor-pointer flex flex-col items-start group relative"
+                aria-label="Atlantis Furnitures Home"
               >
-                <div className="flex gap-2 mb-2 md:mb-2.5">
-                  <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-[#FF6B6B]"></div>
-                  <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-[#9CA3AF]"></div>
-                  <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-[#FACC15]"></div>
-                </div>
-                
-                <div className="text-white">
-                  <div className="font-display text-2xl md:text-3xl tracking-[0.1em] leading-none">
-                    ATLANTIS
-                  </div>
-                  <div className="text-[10px] md:text-xs tracking-[0.3em] uppercase opacity-70 mt-1 font-body font-medium pl-0.5">
-                    Furnitures
-                  </div>
-                </div>
+                <Logo className="h-12 md:h-[58px] w-auto text-white" />
               </Link>
 
               {/* Close Button */}
