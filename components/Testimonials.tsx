@@ -1,8 +1,9 @@
 import React, { useLayoutEffect, useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Star, ExternalLink, Map, ArrowRight, Quote, Instagram, Facebook, Plus } from 'lucide-react';
+import { Star, ArrowRight, Quote, Instagram, Facebook, Plus } from 'lucide-react';
 import { imageSize } from '../utils';
+import LocationMap from './LocationMap';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -605,63 +606,9 @@ const Testimonials: React.FC = () => {
            </div>
         </div>
 
-        {/* Service Area Map Module - Optimized Visibility */}
+        {/* Google Business Profile map — same module as on /contact/ */}
         <div className="map-section px-4 sm:px-6 md:px-12 lg:px-20 max-w-[1600px] mx-auto">
-           <a 
-             href="https://www.google.com/maps?cid=5080307166075099712"
-             target="_blank"
-             rel="noopener noreferrer"
-             className="map-card group block relative w-full h-[400px] sm:h-[450px] md:h-[550px] lg:h-[600px] overflow-hidden rounded-2xl md:rounded-3xl border border-white/5 shadow-2xl"
-             aria-label="Deschide locatia noastra in Google Maps"
-           >
-              {/* Map Container - Deep Dark Premium Filter */}
-              <div className="absolute inset-0 bg-[#050505] transition-transform duration-[2s] group-hover:scale-105">
-                 <iframe
-                   src="https://maps.google.com/maps?cid=5080307166075099712&z=13&output=embed"
-                   width="100%"
-                   height="100%"
-                   style={{border:0, filter: 'grayscale(100%) invert(92%) contrast(83%) brightness(85%) hue-rotate(180deg)'}}
-                   allowFullScreen={false}
-                   loading="lazy"
-                   referrerPolicy="no-referrer-when-downgrade"
-                   className="opacity-50 group-hover:opacity-40 transition-opacity duration-700 pointer-events-none"
-                   title="Locatia Atlantis Furnitures pe Google Maps"
-                 ></iframe>
-              </div>
-              
-              {/* Overlay Gradients - Vignette and Bottom Fade */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/50 to-transparent opacity-95"></div>
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#0a0a0a_100%)] opacity-40"></div>
-
-              {/* Content Overlay - Minimalist & Mobile Optimized */}
-              <div className="absolute inset-0 p-6 sm:p-8 md:p-12 flex flex-col justify-end z-10">
-                 <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 md:gap-8 w-full">
-                    <div className="w-full md:w-auto max-w-xl">
-                       <div className="flex items-center gap-3 mb-4">
-                          <div className="p-2.5 bg-white/5 backdrop-blur-md rounded-full border border-white/10 group-hover:border-atl-accent/50 transition-colors duration-500">
-                             <Map className="w-4 h-4 text-atl-accent" />
-                          </div>
-                          <span className="text-[11px] sm:text-xs font-bold uppercase tracking-[0.25em] text-white/80">Zona de Acoperire</span>
-                       </div>
-                       
-                       <p className="font-display text-3xl sm:text-4xl md:text-5xl text-white mb-3 md:mb-4 leading-tight tracking-tight m-0">
-                         Acoperire Nationala
-                       </p>
-                       
-                       <p className="text-gray-400 font-light text-sm sm:text-base max-w-md leading-relaxed">
-                         Oferim servicii complete de masuratori, proiectare si montaj la nivel national pentru proiecte premium.
-                       </p>
-                    </div>
-
-                    <div className="w-full md:w-auto flex justify-start md:justify-end shrink-0">
-                       <div className="inline-flex items-center justify-center gap-3 px-6 py-3.5 sm:px-8 sm:py-4 w-full md:w-auto bg-white text-black rounded-full font-medium text-xs sm:text-sm uppercase tracking-widest group-hover:bg-atl-accent group-hover:text-white transition-all duration-500 shadow-[0_0_30px_rgba(255,255,255,0.1)] group-hover:shadow-[0_0_30px_rgba(212,175,55,0.2)]">
-                          <span>Deschide Harta</span>
-                          <ExternalLink className="w-4 h-4" />
-                       </div>
-                    </div>
-                 </div>
-              </div>
-           </a>
+          <LocationMap headingLevel="h3" className="map-card" />
         </div>
 
       </div>

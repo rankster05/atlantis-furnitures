@@ -8,8 +8,11 @@ interface HeroProps {
   startAnimation?: boolean;
 }
 
-const HERO_VIDEO = '/atlantis-hero-video.mp4';
-const HERO_VIDEO_MOBILE = '/atlantis-hero-video-mobil.mp4';
+// Video-only files: the audio track was stripped (stream copy, frames
+// untouched). It never played — the element is muted — but it was still ~180 KB
+// per file. New names because /*.mp4 is served `immutable` for a year.
+const HERO_VIDEO = '/atlantis-hero-video-v2.mp4';
+const HERO_VIDEO_MOBILE = '/atlantis-hero-video-mobil-v2.mp4';
 // The poster is the LCP element: it is preloaded in index.html and is the only
 // hero media that touches the critical path. The video is deliberately NOT
 // requested until the page has finished loading (see below).

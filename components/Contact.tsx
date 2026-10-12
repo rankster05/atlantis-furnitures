@@ -5,10 +5,11 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   Phone,
   MapPin,
-  Clock,
+  Truck,
   Instagram,
   Facebook,
   ArrowRight,
+  ArrowUpRight,
   ArrowDown,
   ChevronDown,
   Check,
@@ -17,6 +18,7 @@ import {
   Star,
 } from 'lucide-react';
 import SEO from './SEO';
+import { MapFrame, MAP_PROFILE_URL } from './LocationMap';
 import { HOME_CRUMB, SITE_URL, pageGraph } from '../schema';
 import { scrollTo } from '../scroll';
 
@@ -707,7 +709,10 @@ ${formData.message || '-'}`;
         </div>
       </section>
 
-      {/* ── COORDONATE ───────────────────────────────────────────────────── */}
+      {/* ── UNDE NE GASESTI ──────────────────────────────────────────────── */}
+      {/* Contact details and the Google Business Profile map in one block: the
+          details read top to bottom on the left, the map fills the same height
+          beside them. */}
       <section
         className="relative z-10 px-6 md:px-12 lg:px-20 max-w-[1240px] mx-auto pt-14 md:pt-20 pb-4 md:pb-6"
         aria-labelledby="titlu-coordonate"
@@ -721,60 +726,90 @@ ${formData.message || '-'}`;
           Unde ne gasesti
         </h2>
 
-        <div className="reveal-stagger grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12">
-          <div>
-            <div className="flex items-center gap-3 mb-5">
-              <Phone size={17} strokeWidth={1.5} className="text-[#FF6B6B]" aria-hidden="true" />
-              <h3 className="text-[11px] uppercase tracking-[0.26em] text-white/50 font-medium">
-                Telefon si program
-              </h3>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+          <div className="reveal-stagger lg:col-span-5 border-b border-white/10">
+            <div className="relative pt-8 pb-9 border-t border-white/10">
+              <span className="absolute left-0 top-0 h-2.5 w-px bg-[#FF6B6B]/70" aria-hidden="true" />
+              <div className="flex items-center gap-3 mb-5">
+                <Phone size={16} strokeWidth={1.5} className="text-[#FF6B6B]" aria-hidden="true" />
+                <h3 className="text-[11px] uppercase tracking-[0.26em] text-white/50 font-medium">
+                  Telefon si program
+                </h3>
+              </div>
+              <a
+                href={`tel:${PHONE_TEL}`}
+                className={`block w-fit font-display text-xl md:text-2xl text-white hover:text-white/70 transition-colors duration-300 mb-4 ${focusRing}`}
+              >
+                {PHONE_DISPLAY}
+              </a>
+              <p className="text-white/45 font-light leading-relaxed text-[15px]">
+                Luni – Vineri, 08:00 – 19:00.
+                <br />
+                Sambata venim la masuratori, doar cu programare.
+              </p>
             </div>
-            <a
-              href={`tel:${PHONE_TEL}`}
-              className={`block font-display text-xl md:text-2xl text-white hover:text-white/70 transition-colors duration-300 mb-5 ${focusRing}`}
-            >
-              {PHONE_DISPLAY}
-            </a>
-            <p className="text-white/45 font-light leading-relaxed text-[15px]">
-              Luni – Vineri, 08:00 – 19:00.
-              <br />
-              Sambata mergem la masuratori pe baza de programare.
-            </p>
+
+            <div className="relative pt-8 pb-9 border-t border-white/10">
+              <span className="absolute left-0 top-0 h-2.5 w-px bg-[#FF6B6B]/70" aria-hidden="true" />
+              <div className="flex items-center gap-3 mb-5">
+                <MapPin size={16} strokeWidth={1.5} className="text-[#FF6B6B]" aria-hidden="true" />
+                <h3 className="text-[11px] uppercase tracking-[0.26em] text-white/50 font-medium">
+                  Atelier de productie
+                </h3>
+              </div>
+              <address className="not-italic text-white text-[17px] leading-relaxed mb-4">
+                Aleea Argesului nr. 70
+                <br />
+                Budeasa Mare, judetul Arges
+              </address>
+              <p className="text-white/45 font-light leading-relaxed text-[15px]">
+                Taiem, vopsim si asamblam fiecare corp aici, cu echipa noastra. Nu dam lucrarile
+                mai departe altor ateliere.
+              </p>
+            </div>
+
+            <div className="relative pt-8 pb-9 border-t border-white/10">
+              <span className="absolute left-0 top-0 h-2.5 w-px bg-[#FF6B6B]/70" aria-hidden="true" />
+              <div className="flex items-center gap-3 mb-5">
+                <Truck size={16} strokeWidth={1.5} className="text-[#FF6B6B]" aria-hidden="true" />
+                <h3 className="text-[11px] uppercase tracking-[0.26em] text-white/50 font-medium">
+                  Zone de livrare si montaj
+                </h3>
+              </div>
+              <p className="text-white text-[17px] leading-relaxed mb-4">
+                Bucuresti (toate sectoarele) si judetul Ilfov
+              </p>
+              <p className="text-white/45 font-light leading-relaxed text-[15px]">
+                Montam si in Pitesti si in tot judetul Arges. Daca esti in alt oras, suna-ne si
+                vedem impreuna cum facem transportul si montajul.
+              </p>
+            </div>
           </div>
 
-          <div>
-            <div className="flex items-center gap-3 mb-5">
-              <MapPin size={17} strokeWidth={1.5} className="text-[#FF6B6B]" aria-hidden="true" />
-              <h3 className="text-[11px] uppercase tracking-[0.26em] text-white/50 font-medium">
-                Atelier de productie
-              </h3>
-            </div>
-            <address className="not-italic text-white text-[17px] leading-relaxed mb-5">
-              Aleea Argesului nr. 70
-              <br />
-              Budeasa Mare, judetul Arges
-            </address>
-            <p className="text-white/45 font-light leading-relaxed text-[15px]">
-              Aici se taie, se vopseste si se asambleaza tot. Fara subcontractori si fara comenzi
-              trimise mai departe.
-            </p>
-          </div>
-
-          <div>
-            <div className="flex items-center gap-3 mb-5">
-              <Clock size={17} strokeWidth={1.5} className="text-[#FF6B6B]" aria-hidden="true" />
-              <h3 className="text-[11px] uppercase tracking-[0.26em] text-white/50 font-medium">
-                Zone de livrare si montaj
-              </h3>
-            </div>
-            <p className="text-white text-[17px] leading-relaxed mb-5">
-              Bucuresti (toate sectoarele) si judetul Ilfov
-            </p>
-            <p className="text-white/45 font-light leading-relaxed text-[15px]">
-              Livram si in Pitesti si judetul Arges. Pentru proiecte din restul tarii evaluam
-              individual transportul si montajul.
-            </p>
-          </div>
+          {/* On large screens the map stretches to the height of the details
+              column; on phones it gets a fixed height of its own. */}
+          <figure className="reveal-block lg:col-span-7 m-0 flex flex-col">
+            <MapFrame className="h-[420px] sm:h-[480px] lg:h-auto lg:min-h-[560px] lg:flex-1" />
+            <figcaption className="flex items-center justify-between gap-4 pt-5">
+              {/* Hidden on phones, where it and the link would both wrap. */}
+              <span className="hidden sm:block text-[11px] uppercase tracking-[0.24em] text-white/40">
+                Atlantis pe Google Maps
+              </span>
+              <a
+                href={MAP_PROFILE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`group inline-flex items-center gap-2 min-h-[24px] py-1 text-sm whitespace-nowrap text-white/60 hover:text-white transition-colors duration-300 ${focusRing}`}
+              >
+                Deschide harta
+                <ArrowUpRight
+                  size={15}
+                  strokeWidth={1.75}
+                  className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                />
+              </a>
+            </figcaption>
+          </figure>
         </div>
 
         <div className="reveal-block flex flex-wrap items-center gap-6 mt-16 md:mt-20 pt-10 border-t border-white/10">
